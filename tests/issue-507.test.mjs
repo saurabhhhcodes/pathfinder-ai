@@ -17,8 +17,20 @@ it("different users with same inputs have different cache keys for resume improv
   const current = "Software Engineer at Google";
   const type = "experience";
 
-  const keyA = generateCacheKey("improve", userA.id, buildUserProfileContext(userA), current, type);
-  const keyB = generateCacheKey("improve", userB.id, buildUserProfileContext(userB), current, type);
+  const keyA = generateCacheKey(
+    "improve",
+    userA.id,
+    buildUserProfileContext(userA),
+    current,
+    type,
+  );
+  const keyB = generateCacheKey(
+    "improve",
+    userB.id,
+    buildUserProfileContext(userB),
+    current,
+    type,
+  );
 
   expect(keyA).not.toBe(keyB);
 });
@@ -34,10 +46,22 @@ it("different profile contexts for same user result in different cache keys", ()
   const current = "Dev";
   const type = "summary";
 
-  const key1 = generateCacheKey("improve", user.id, buildUserProfileContext(user), current, type);
+  const key1 = generateCacheKey(
+    "improve",
+    user.id,
+    buildUserProfileContext(user),
+    current,
+    type,
+  );
 
   const updatedUser = { ...user, skills: ["React", "Node.js"] };
-  const key2 = generateCacheKey("improve", updatedUser.id, buildUserProfileContext(updatedUser), current, type);
+  const key2 = generateCacheKey(
+    "improve",
+    updatedUser.id,
+    buildUserProfileContext(updatedUser),
+    current,
+    type,
+  );
 
   expect(key1).not.toBe(key2);
 });
@@ -48,8 +72,20 @@ it("ATS cache key is isolated by user and profile context", () => {
   const resume = "Resume content";
   const job = "Job description";
 
-  const keyA = generateCacheKey("ats", userA.id, buildUserProfileContext(userA), resume, job);
-  const keyB = generateCacheKey("ats", userB.id, buildUserProfileContext(userB), resume, job);
+  const keyA = generateCacheKey(
+    "ats",
+    userA.id,
+    buildUserProfileContext(userA),
+    resume,
+    job,
+  );
+  const keyB = generateCacheKey(
+    "ats",
+    userB.id,
+    buildUserProfileContext(userB),
+    resume,
+    job,
+  );
 
   expect(keyA).not.toBe(keyB);
 });

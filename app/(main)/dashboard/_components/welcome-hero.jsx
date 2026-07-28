@@ -3,16 +3,40 @@
 import { useMemo } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { Sparkles, Building2, Target, Clock3, TrendingUp, ShieldCheck, BrainCircuit } from "lucide-react";
+import {
+  Sparkles,
+  Building2,
+  Target,
+  Clock3,
+  TrendingUp,
+  ShieldCheck,
+  BrainCircuit,
+} from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 const ringColors = {
-  "primary": { track: "oklch(var(--primary) / 0.8)", iconBg: "bg-primary/10", iconText: "text-primary" },
-  "emerald-500": { track: "oklch(0.65 0.15 160 / 0.8)", iconBg: "bg-emerald-500/10", iconText: "text-emerald-500" },
-  "blue-500": { track: "oklch(0.55 0.18 250 / 0.8)", iconBg: "bg-blue-500/10", iconText: "text-blue-500" },
-  "purple-500": { track: "oklch(0.55 0.2 300 / 0.8)", iconBg: "bg-purple-500/10", iconText: "text-purple-500" },
+  primary: {
+    track: "oklch(var(--primary) / 0.8)",
+    iconBg: "bg-primary/10",
+    iconText: "text-primary",
+  },
+  "emerald-500": {
+    track: "oklch(0.65 0.15 160 / 0.8)",
+    iconBg: "bg-emerald-500/10",
+    iconText: "text-emerald-500",
+  },
+  "blue-500": {
+    track: "oklch(0.55 0.18 250 / 0.8)",
+    iconBg: "bg-blue-500/10",
+    iconText: "text-blue-500",
+  },
+  "purple-500": {
+    track: "oklch(0.55 0.2 300 / 0.8)",
+    iconBg: "bg-purple-500/10",
+    iconText: "text-purple-500",
+  },
 };
 
 const barColors = {
@@ -62,13 +86,33 @@ function ScoreRing({ value, label, icon: Icon, color, size = "md" }) {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className={cn("flex items-center justify-center rounded-full", size === "lg" ? "h-9 w-9" : "h-7 w-7", scheme.iconBg)}>
-            <Icon className={cn(size === "lg" ? "h-4 w-4" : "h-3.5 w-3.5", scheme.iconText)} />
+          <div
+            className={cn(
+              "flex items-center justify-center rounded-full",
+              size === "lg" ? "h-9 w-9" : "h-7 w-7",
+              scheme.iconBg,
+            )}
+          >
+            <Icon
+              className={cn(
+                size === "lg" ? "h-4 w-4" : "h-3.5 w-3.5",
+                scheme.iconText,
+              )}
+            />
           </div>
         </div>
       </div>
-      <span className={cn("font-black tabular-nums", size === "lg" ? "text-lg" : "text-sm")}>{value}</span>
-      <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{label}</span>
+      <span
+        className={cn(
+          "font-black tabular-nums",
+          size === "lg" ? "text-lg" : "text-sm",
+        )}
+      >
+        {value}
+      </span>
+      <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
+        {label}
+      </span>
     </motion.div>
   );
 }
@@ -93,12 +137,23 @@ function ScoreBar({ value, label, color }) {
   );
 }
 
-export function WelcomeHero({ userName, currentRole, targetRole, insight, careerScore, marketScore, demandScore, growthScore, salaryScore }) {
+export function WelcomeHero({
+  userName,
+  currentRole,
+  targetRole,
+  insight,
+  careerScore,
+  marketScore,
+  demandScore,
+  growthScore,
+  salaryScore,
+}) {
   const { user } = useUser();
   const firstName = user?.firstName || userName;
 
   const hour = new Date().getHours();
-  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const greeting =
+    hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
 
   const lastUpdated = insight?.lastUpdated
     ? formatDistanceToNow(new Date(insight.lastUpdated), { addSuffix: true })
@@ -113,7 +168,11 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
         : "cautious outlook";
 
   const demandColor =
-    insight?.demandLevel === "High" ? "emerald-500" : insight?.demandLevel === "Medium" ? "amber-500" : "red-500";
+    insight?.demandLevel === "High"
+      ? "emerald-500"
+      : insight?.demandLevel === "Medium"
+        ? "amber-500"
+        : "red-500";
 
   return (
     <div className="relative overflow-hidden rounded-[2.5rem] border border-border/50 bg-gradient-to-br from-primary/[0.04] via-background to-background shadow-3d">
@@ -139,7 +198,7 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
                     "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
                     insight.isGrounded
                       ? "bg-emerald-500/10 text-emerald-500"
-                      : "bg-amber-500/10 text-amber-500"
+                      : "bg-amber-500/10 text-amber-500",
                   )}
                 >
                   {insight.isGrounded ? "Grounded AI" : "AI Predicted"}
@@ -153,7 +212,9 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
               transition={{ delay: 0.05 }}
               className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]"
             >
-              <span className="text-gradient-hero">{greeting}, {firstName}</span>
+              <span className="text-gradient-hero">
+                {greeting}, {firstName}
+              </span>
             </motion.h1>
 
             <motion.p
@@ -162,10 +223,23 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
               transition={{ delay: 0.1 }}
               className="text-base md:text-lg text-muted-foreground max-w-3xl leading-relaxed"
             >
-              Your <span className="font-semibold text-foreground">{industryLabel}</span> sector has a{" "}
-              <span className="font-semibold text-foreground">{marketLabel}</span>.{" "}
+              Your{" "}
+              <span className="font-semibold text-foreground">
+                {industryLabel}
+              </span>{" "}
+              sector has a{" "}
+              <span className="font-semibold text-foreground">
+                {marketLabel}
+              </span>
+              .{" "}
               {insight?.growthRate != null && (
-                <>The market is projected to grow <span className="font-semibold text-foreground">{insight.growthRate}%</span>.</>
+                <>
+                  The market is projected to grow{" "}
+                  <span className="font-semibold text-foreground">
+                    {insight.growthRate}%
+                  </span>
+                  .
+                </>
               )}
             </motion.p>
           </div>
@@ -192,10 +266,31 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
           transition={{ delay: 0.2 }}
           className="flex flex-wrap items-center justify-center sm:justify-start gap-6 md:gap-10 py-4"
         >
-          <ScoreRing value={careerScore ?? 70} label="Career" icon={BrainCircuit} color="primary" size="lg" />
-          <ScoreRing value={marketScore ?? 60} label="Market" icon={TrendingUp} color="emerald-500" />
-          <ScoreRing value={salaryScore ?? 50} label="Salary" icon={ShieldCheck} color="blue-500" />
-          <ScoreRing value={growthScore ?? 50} label="Growth" icon={TrendingUp} color="purple-500" />
+          <ScoreRing
+            value={careerScore ?? 70}
+            label="Career"
+            icon={BrainCircuit}
+            color="primary"
+            size="lg"
+          />
+          <ScoreRing
+            value={marketScore ?? 60}
+            label="Market"
+            icon={TrendingUp}
+            color="emerald-500"
+          />
+          <ScoreRing
+            value={salaryScore ?? 50}
+            label="Salary"
+            icon={ShieldCheck}
+            color="blue-500"
+          />
+          <ScoreRing
+            value={growthScore ?? 50}
+            label="Growth"
+            icon={TrendingUp}
+            color="purple-500"
+          />
         </motion.div>
 
         {/* Info badges */}
@@ -224,14 +319,16 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
             </div>
           )}
           {insight?.demandLevel && (
-            <div className={cn(
-              "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold",
-              insight.demandLevel === "High"
-                ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
-                : insight.demandLevel === "Medium"
-                  ? "bg-amber-500/10 text-amber-500 border-amber-500/20"
-                  : "bg-red-500/10 text-red-500 border-red-500/20"
-            )}>
+            <div
+              className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold",
+                insight.demandLevel === "High"
+                  ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+                  : insight.demandLevel === "Medium"
+                    ? "bg-amber-500/10 text-amber-500 border-amber-500/20"
+                    : "bg-red-500/10 text-red-500 border-red-500/20",
+              )}
+            >
               {insight.demandLevel} Demand
             </div>
           )}
@@ -244,10 +341,26 @@ export function WelcomeHero({ userName, currentRole, targetRole, insight, career
           transition={{ delay: 0.35 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-border/30"
         >
-          <ScoreBar value={marketScore ?? 50} label="Market Health" color="emerald-500" />
-          <ScoreBar value={demandScore ?? 50} label="Talent Demand" color="blue-500" />
-          <ScoreBar value={growthScore ?? 50} label="Industry Growth" color="purple-500" />
-          <ScoreBar value={salaryScore ?? 50} label="Salary Potential" color="amber-500" />
+          <ScoreBar
+            value={marketScore ?? 50}
+            label="Market Health"
+            color="emerald-500"
+          />
+          <ScoreBar
+            value={demandScore ?? 50}
+            label="Talent Demand"
+            color="blue-500"
+          />
+          <ScoreBar
+            value={growthScore ?? 50}
+            label="Industry Growth"
+            color="purple-500"
+          />
+          <ScoreBar
+            value={salaryScore ?? 50}
+            label="Salary Potential"
+            color="amber-500"
+          />
         </motion.div>
       </div>
     </div>

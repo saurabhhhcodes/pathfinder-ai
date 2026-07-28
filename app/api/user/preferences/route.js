@@ -31,11 +31,15 @@ export async function GET() {
     }
 
     return Response.json({
-      saveChatHistory: user.saveChatHistory ?? DEFAULT_PREFERENCES.saveChatHistory,
+      saveChatHistory:
+        user.saveChatHistory ?? DEFAULT_PREFERENCES.saveChatHistory,
     });
   } catch (error) {
     console.error("Critical error fetching user preferences:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Internal Server Error");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Internal Server Error",
+    );
   }
 }
 
@@ -60,7 +64,7 @@ export async function PATCH(request) {
       return respondError(
         ERROR_CODES.VALIDATION_ERROR,
         "Invalid user preferences payload",
-        validation.error.flatten().fieldErrors
+        validation.error.flatten().fieldErrors,
       );
     }
 
@@ -72,10 +76,14 @@ export async function PATCH(request) {
       });
 
       return Response.json({
-        saveChatHistory: updatedUser.saveChatHistory ?? DEFAULT_PREFERENCES.saveChatHistory,
+        saveChatHistory:
+          updatedUser.saveChatHistory ?? DEFAULT_PREFERENCES.saveChatHistory,
       });
     } catch (dbError) {
-      console.error("[Preferences API] Prisma error on PATCH:", dbError.message);
+      console.error(
+        "[Preferences API] Prisma error on PATCH:",
+        dbError.message,
+      );
 
       if (dbError.code === "P2025") {
         return respondError(ERROR_CODES.USER_NOT_FOUND);
@@ -83,11 +91,14 @@ export async function PATCH(request) {
 
       return respondError(
         ERROR_CODES.INTERNAL_SERVER_ERROR,
-        "Failed to save preferences"
+        "Failed to save preferences",
       );
     }
   } catch (error) {
     console.error("Critical error updating user preferences:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Internal Server Error");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Internal Server Error",
+    );
   }
 }

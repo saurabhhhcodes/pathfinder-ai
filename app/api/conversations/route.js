@@ -35,7 +35,10 @@ export async function GET() {
     });
   } catch (error) {
     console.error("GET conversations error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to fetch conversations");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to fetch conversations",
+    );
   }
 }
 
@@ -70,7 +73,7 @@ export async function POST(request) {
       return respondError(
         ERROR_CODES.VALIDATION_ERROR,
         "Invalid conversation payload",
-        validation.error.flatten().fieldErrors
+        validation.error.flatten().fieldErrors,
       );
     }
 
@@ -99,7 +102,10 @@ export async function POST(request) {
     return Response.json(conversation);
   } catch (error) {
     console.error("POST conversation error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to create conversation");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to create conversation",
+    );
   }
 }
 
@@ -132,6 +138,9 @@ export async function DELETE() {
     });
   } catch (error) {
     console.error("DELETE conversations error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to clear conversations");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to clear conversations",
+    );
   }
 }

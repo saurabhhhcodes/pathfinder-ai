@@ -27,9 +27,18 @@ const JD_MAX = 6000;
 
 const getQualityHint = (length, max) => {
   if (length === 0) return null;
-  if (length > max) return { text: "🔴 Exceeds limit — please shorten", color: "text-destructive" };
-  if (length < 50) return { text: "🔴 Too short — AI needs more context", color: "text-destructive" };
-  if (length < 200) return { text: "🟡 Getting there...", color: "text-yellow-500" };
+  if (length > max)
+    return {
+      text: "🔴 Exceeds limit — please shorten",
+      color: "text-destructive",
+    };
+  if (length < 50)
+    return {
+      text: "🔴 Too short — AI needs more context",
+      color: "text-destructive",
+    };
+  if (length < 200)
+    return { text: "🟡 Getting there...", color: "text-yellow-500" };
   return { text: "🟢 Good length for AI generation", color: "text-green-500" };
 };
 
@@ -55,7 +64,9 @@ export default function CoverLetterGenerator() {
   useEffect(() => {
     if (generatedLetter) {
       if (generatedLetter.isFallback) {
-        toast.warning("AI generation unavailable. Using generic fallback template.");
+        toast.warning(
+          "AI generation unavailable. Using generic fallback template.",
+        );
       } else {
         toast.success("Cover letter generated successfully!");
         router.push(`/ai-cover-letter/${generatedLetter.id}`);
@@ -79,7 +90,7 @@ export default function CoverLetterGenerator() {
       toast.error(
         error.message?.includes("quota")
           ? "AI quota reached — please try again in a few minutes."
-          : error.message || "Failed to generate cover letter"
+          : error.message || "Failed to generate cover letter",
       );
     }
   };
@@ -132,7 +143,8 @@ export default function CoverLetterGenerator() {
                 placeholder="Paste the job description here"
                 className={cn(
                   "h-32",
-                  jdLength > JD_MAX && "border-destructive focus-visible:ring-destructive"
+                  jdLength > JD_MAX &&
+                    "border-destructive focus-visible:ring-destructive",
                 )}
                 {...register("jobDescription", {
                   onChange: (e) => setJdLength(e.target.value.length),
@@ -141,12 +153,16 @@ export default function CoverLetterGenerator() {
 
               {/* Character counter + quality hint */}
               <div className="flex items-center justify-between text-xs">
-                <span className={cn(
-                  "transition-colors",
-                  jdLength > JD_MAX ? "text-destructive font-medium" :
-                  jdLength > JD_MAX * 0.8 ? "text-yellow-500" :
-                  "text-muted-foreground"
-                )}>
+                <span
+                  className={cn(
+                    "transition-colors",
+                    jdLength > JD_MAX
+                      ? "text-destructive font-medium"
+                      : jdLength > JD_MAX * 0.8
+                        ? "text-yellow-500"
+                        : "text-muted-foreground",
+                  )}
+                >
                   {jdLength} / {JD_MAX} characters
                 </span>
                 {jdHint && (
@@ -165,7 +181,8 @@ export default function CoverLetterGenerator() {
 
             {isOverLimit && (
               <p className="text-sm text-destructive font-medium">
-                ⚠️ Job description exceeds the limit. Please shorten it before generating.
+                ⚠️ Job description exceeds the limit. Please shorten it before
+                generating.
               </p>
             )}
 
@@ -188,7 +205,9 @@ export default function CoverLetterGenerator() {
       {generatedLetter?.isFallback && (
         <div className="mt-8 space-y-4">
           <div className="p-4 bg-yellow-50 text-yellow-900 border border-yellow-200 rounded-lg text-sm">
-            <strong>Note:</strong> AI generation is currently unavailable. Displaying a general cover letter template. Please manually update the brackets with your details.
+            <strong>Note:</strong> AI generation is currently unavailable.
+            Displaying a general cover letter template. Please manually update
+            the brackets with your details.
           </div>
           <CoverLetterPreview content={generatedLetter.content} />
         </div>

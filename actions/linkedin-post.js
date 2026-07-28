@@ -13,7 +13,10 @@ export async function generateLinkedInPosts(topic) {
   if (!userId) return { success: false, errors: { _form: ["Unauthorized"] } };
 
   if (!topic || topic.trim().length < 10) {
-    return { success: false, errors: { _form: ["Please provide a valid topic."] } };
+    return {
+      success: false,
+      errors: { _form: ["Please provide a valid topic."] },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -32,15 +35,13 @@ export async function generateLinkedInPosts(topic) {
       },
     };
   }
-  
+
   const prompt = buildSecurePrompt({
     context: buildUserProfileContext(user),
     task: `You are an expert personal branding coach and social media manager. 
     Draft 3 highly engaging, professional LinkedIn posts about the provided topic. 
     Use engaging hooks, appropriate spacing, emojis, and relevant hashtags to maximize visibility for recruiters.`,
-    untrustedData: [
-      { label: "topic", value: topic, maxLength: 1000 },
-    ],
+    untrustedData: [{ label: "topic", value: topic, maxLength: 1000 }],
     outputRules: `Provide the output in the following JSON format ONLY:
 {
   "posts": [
@@ -76,7 +77,10 @@ export async function generateLinkedInPosts(topic) {
     return { success: true, data: record };
   } catch (error) {
     console.error("LinkedIn Post Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate posts"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate posts"] },
+    };
   }
 }
 

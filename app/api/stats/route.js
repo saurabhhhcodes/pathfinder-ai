@@ -3,17 +3,18 @@ import { respondError, ERROR_CODES } from "@/lib/api/error-handler";
 
 export async function GET() {
   try {
-    const [totalUsers, usersWithAssessments, assessmentStats] = await Promise.all([
-      db.user.count(),
-      db.assessment.groupBy({
-        by: ["userId"],
-        _count: { id: true },
-      }),
-      db.assessment.aggregate({
-        _avg: { quizScore: true },
-        _count: { id: true },
-      }),
-    ]);
+    const [totalUsers, usersWithAssessments, assessmentStats] =
+      await Promise.all([
+        db.user.count(),
+        db.assessment.groupBy({
+          by: ["userId"],
+          _count: { id: true },
+        }),
+        db.assessment.aggregate({
+          _avg: { quizScore: true },
+          _count: { id: true },
+        }),
+      ]);
 
     const careerMatchCount = usersWithAssessments.length;
     const careerMatchRate =
@@ -38,6 +39,9 @@ export async function GET() {
     return Response.json(stats);
   } catch (err) {
     console.error("[api/stats]", err);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to load stats");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to load stats",
+    );
   }
 }

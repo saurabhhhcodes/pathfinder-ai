@@ -67,7 +67,12 @@ function makeFakeRedisClient() {
         const remainingTokens = Math.max(0, burstCapacity - 1);
         data.set(
           key,
-          JSON.stringify({ tokens: remainingTokens, lastRefillAt: now, limitPerMinute, burstCapacity })
+          JSON.stringify({
+            tokens: remainingTokens,
+            lastRefillAt: now,
+            limitPerMinute,
+            burstCapacity,
+          }),
         );
         return [1, remainingTokens, 0];
       }
@@ -79,12 +84,18 @@ function makeFakeRedisClient() {
 
       if (tokens < 1) {
         const missingTokens = 1 - tokens;
-        const retryAfterSeconds = limitPerMinute > 0
-          ? Math.max(1, Math.ceil((missingTokens / limitPerMinute) * 60))
-          : 60;
+        const retryAfterSeconds =
+          limitPerMinute > 0
+            ? Math.max(1, Math.ceil((missingTokens / limitPerMinute) * 60))
+            : 60;
         data.set(
           key,
-          JSON.stringify({ tokens, lastRefillAt, limitPerMinute, burstCapacity })
+          JSON.stringify({
+            tokens,
+            lastRefillAt,
+            limitPerMinute,
+            burstCapacity,
+          }),
         );
         return [0, 0, retryAfterSeconds];
       }
@@ -92,7 +103,7 @@ function makeFakeRedisClient() {
       tokens -= 1;
       data.set(
         key,
-        JSON.stringify({ tokens, lastRefillAt, limitPerMinute, burstCapacity })
+        JSON.stringify({ tokens, lastRefillAt, limitPerMinute, burstCapacity }),
       );
 
       return [1, Math.floor(tokens), 0];
@@ -138,7 +149,7 @@ it("factory fails fast in production when REDIS_URL is missing", () => {
     createRateLimitStore({
       driver: "auto",
       redisUrl: undefined,
-    })
+    }),
   ).toThrow(/REDIS_URL is required in production/i);
 });
 
@@ -150,7 +161,7 @@ it("factory rejects memory driver in production", () => {
     createRateLimitStore({
       driver: "memory",
       redisUrl: process.env.REDIS_URL,
-    })
+    }),
   ).toThrow(/RATE_LIMIT_STORE=memory is not allowed in production/i);
 });
 
@@ -223,7 +234,10 @@ it("rate limiter refills after elapsed time", async () => {
 });
 
 it("memory store evicts stale buckets lazily via getBucket", async () => {
-  const store = createMemoryRateLimitStore({ bucketTtlMs: 1000, cleanupIntervalMs: 0 });
+  const store = createMemoryRateLimitStore({
+    bucketTtlMs: 1000,
+    cleanupIntervalMs: 0,
+  });
 
   await store.setBucket("/api/generate:user:1", {
     tokens: 2,
@@ -256,8 +270,8 @@ it("concurrent requests respect burst capacity with atomic checkAndDeduct", asyn
         burstCapacity: 2,
         store,
         now: 1000,
-      })
-    )
+      }),
+    ),
   );
 
   const allowed = results.filter((r) => r.allowed);
@@ -281,7 +295,10 @@ it("concurrent requests respect burst capacity with atomic checkAndDeduct", asyn
 
 it("memory store evicts stale buckets periodically via cleanupIntervalMs", async () => {
   // Use a small cleanup interval (e.g. 50ms) and short bucket TTL (e.g. 10ms)
-  const store = createMemoryRateLimitStore({ bucketTtlMs: 10, cleanupIntervalMs: 50 });
+  const store = createMemoryRateLimitStore({
+    bucketTtlMs: 10,
+    cleanupIntervalMs: 50,
+  });
 
   await store.setBucket("/api/generate:user:1", {
     tokens: 2,
@@ -301,7 +318,10 @@ it("memory store evicts stale buckets periodically via cleanupIntervalMs", async
 });
 
 it("checkAndDeduct is atomic for a single bucket under concurrency (memory)", async () => {
-  const store = createMemoryRateLimitStore({ bucketTtlMs: 60_000, cleanupIntervalMs: 0 });
+  const store = createMemoryRateLimitStore({
+    bucketTtlMs: 60_000,
+    cleanupIntervalMs: 0,
+  });
   const LIMIT = 20;
 
   // Fire 25 checkAndDeduct calls at the store directly, all racing on one key.
@@ -311,8 +331,8 @@ it("checkAndDeduct is atomic for a single bucket under concurrency (memory)", as
         limitPerMinute: LIMIT,
         burstCapacity: LIMIT,
         now: 1_000,
-      })
-    )
+      }),
+    ),
   );
 
   const allowed = results.filter((r) => r.allowed);
@@ -337,8 +357,7 @@ const concurrencyStores = [
   },
   {
     name: "redis",
-    create: () =>
-      createRedisRateLimitStore({ client: makeFakeRedisClient() }),
+    create: () => createRedisRateLimitStore({ client: makeFakeRedisClient() }),
   },
 ];
 
@@ -360,8 +379,8 @@ describe.each(concurrencyStores)(
             burstCapacity: LIMIT,
             store,
             now: 1_000,
-          })
-        )
+          }),
+        ),
       );
 
       const allowed = results.filter((r) => r.allowed);
@@ -385,7 +404,7 @@ describe.each(concurrencyStores)(
         await store.close();
       }
     });
-  }
+  },
 );
 
 it("DEFAULT_BUCKET_TTL_MS is exported and has the expected value", () => {
@@ -396,9 +415,7 @@ it("cleanupExpiredBuckets wrapper does not throw ReferenceError (the bug fix)", 
   const store = createMemoryRateLimitStore({ bucketTtlMs: 100 });
 
   // Should not throw — this is the exact scenario that caused the bug
-  await expect(
-    cleanupExpiredBuckets(store, 2000)
-  ).resolves.toBeUndefined();
+  await expect(cleanupExpiredBuckets(store, 2000)).resolves.toBeUndefined();
 
   await store.close();
 });
@@ -446,13 +463,9 @@ it("cleanupExpiredBuckets wrapper does not remove fresh buckets", async () => {
 it("cleanupExpiredBuckets wrapper handles store without cleanupExpiredBuckets gracefully", async () => {
   const store = { kind: "custom" };
 
-  await expect(
-    cleanupExpiredBuckets(store)
-  ).resolves.toBeUndefined();
+  await expect(cleanupExpiredBuckets(store)).resolves.toBeUndefined();
 });
 
 it("cleanupExpiredBuckets wrapper handles null store gracefully", async () => {
-  await expect(
-    cleanupExpiredBuckets(null)
-  ).resolves.toBeUndefined();
+  await expect(cleanupExpiredBuckets(null)).resolves.toBeUndefined();
 });

@@ -20,7 +20,7 @@ export async function GET() {
     console.error("[api/ai/gating]", err);
     return respondError(
       ERROR_CODES.INTERNAL_SERVER_ERROR,
-      "Failed to retrieve AI feature gating status"
+      "Failed to retrieve AI feature gating status",
     );
   }
 }

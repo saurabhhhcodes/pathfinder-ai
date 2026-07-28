@@ -7,7 +7,6 @@ export default async function ResumePage() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
         <div className="space-y-4 mb-12">
           <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.2em]">
@@ -18,10 +17,14 @@ export default async function ResumePage() {
             <div>
               <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground flex items-center gap-4">
                 <FileText className="h-8 w-8 md:h-12 md:w-12 text-primary" />
-                Your <span className="text-gradient-primary">Professional Identity</span>
+                Your{" "}
+                <span className="text-gradient-primary">
+                  Professional Identity
+                </span>
               </h1>
               <p className="text-muted-foreground text-sm md:text-base font-medium mt-2">
-                Craft a precision-engineered resume tailored for the modern job market.
+                Craft a precision-engineered resume tailored for the modern job
+                market.
               </p>
             </div>
           </div>

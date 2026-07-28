@@ -13,7 +13,10 @@ export function useCareerShortlist() {
       const stored = localStorage.getItem("career-shortlist");
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.every(c => c && typeof c === 'object' && c.id && c.title)) {
+        if (
+          Array.isArray(parsed) &&
+          parsed.every((c) => c && typeof c === "object" && c.id && c.title)
+        ) {
           setShortlist(parsed);
         } else {
           setShortlist([]);
@@ -34,7 +37,10 @@ export function useCareerShortlist() {
         try {
           if (e.newValue) {
             const parsed = JSON.parse(e.newValue);
-            if (Array.isArray(parsed) && parsed.every(c => c && typeof c === 'object' && c.id && c.title)) {
+            if (
+              Array.isArray(parsed) &&
+              parsed.every((c) => c && typeof c === "object" && c.id && c.title)
+            ) {
               setShortlist(parsed);
             } else {
               setShortlist([]);
@@ -61,7 +67,7 @@ export function useCareerShortlist() {
         new StorageEvent("storage", {
           key: "career-shortlist",
           newValue: JSON.stringify(newShortlist),
-        })
+        }),
       );
     } catch (e) {
       console.error("Failed to save shortlist", e);

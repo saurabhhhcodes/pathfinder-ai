@@ -34,7 +34,11 @@ vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
 }));
 
-import { startCoffeeChat, sendCoffeeChatMessage, generateCoffeeChatFeedback } from "../actions/coffee-chat.js";
+import {
+  startCoffeeChat,
+  sendCoffeeChatMessage,
+  generateCoffeeChatFeedback,
+} from "../actions/coffee-chat.js";
 
 describe("coffee chat actions", () => {
   beforeEach(() => {
@@ -45,7 +49,10 @@ describe("coffee chat actions", () => {
     it("successfully creates a coffee chat session", async () => {
       mocks.auth.mockResolvedValue({ userId: "clerk-user-1" });
       mocks.findUniqueUser.mockResolvedValue({ id: "user-1" });
-      mocks.createSession.mockResolvedValue({ id: "session-1", userId: "user-1" });
+      mocks.createSession.mockResolvedValue({
+        id: "session-1",
+        userId: "user-1",
+      });
 
       const result = await startCoffeeChat("Tech", "Engineer");
       expect(result.success).toBe(true);

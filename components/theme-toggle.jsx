@@ -21,7 +21,12 @@ export function ThemeToggle({ className }) {
 
   if (!mounted) {
     return (
-      <div className={cn("h-9 w-9 rounded-xl border border-border/40 bg-muted/30", className)} />
+      <div
+        className={cn(
+          "h-9 w-9 rounded-xl border border-border/40 bg-muted/30",
+          className,
+        )}
+      />
     );
   }
 
@@ -51,7 +56,10 @@ export function ThemeToggle({ className }) {
       <AnimatePresence>
         {open && (
           <>
-            <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+            <div
+              className="fixed inset-0 z-40"
+              onClick={() => setOpen(false)}
+            />
             <motion.div
               initial={{ opacity: 0, y: -4, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -73,7 +81,7 @@ export function ThemeToggle({ className }) {
                       "w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-semibold transition-all duration-150",
                       isActive
                         ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                     )}
                   >
                     <TIcon className="h-3.5 w-3.5" />

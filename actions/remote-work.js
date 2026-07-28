@@ -14,17 +14,25 @@ export async function generateRemotePitch(role, reasons, objections) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!role || !reasons) {
-    return { success: false, errors: { _form: ["Role and reasons are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Role and reasons are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an expert HR Consultant and Negotiation Coach specializing in remote work transitions.",
+    context:
+      "You are an expert HR Consultant and Negotiation Coach specializing in remote work transitions.",
     task: `Analyze the user's role and reasons for wanting to work remotely (or a 4-day workweek). Consider their manager's anticipated objections.
     Generate a compelling, data-backed business case and a script they can use to pitch this to their manager. Focus on the benefits to the COMPANY (productivity, focus, retention) rather than just personal benefits.`,
     untrustedData: [
       { label: "role", value: role, maxLength: 500 },
       { label: "reasons", value: reasons, maxLength: 2000 },
-      { label: "objections", value: objections || "None provided", maxLength: 2000 },
+      {
+        label: "objections",
+        value: objections || "None provided",
+        maxLength: 2000,
+      },
     ],
     outputRules: `Provide the output in the following JSON format ONLY:
 {
@@ -55,7 +63,10 @@ export async function generateRemotePitch(role, reasons, objections) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Remote Work Pitch Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate pitch"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate pitch"] },
+    };
   }
 }
 

@@ -41,34 +41,50 @@ describe("Auth Route Matchers", () => {
 
     it("matches new feature routes that require authentication", () => {
       expect(isAuthedAppRoute(createMockRequest("/roadmap"))).toBe(true);
-      expect(isAuthedAppRoute(createMockRequest("/roadmap/generate"))).toBe(true);
+      expect(isAuthedAppRoute(createMockRequest("/roadmap/generate"))).toBe(
+        true,
+      );
       expect(isAuthedAppRoute(createMockRequest("/job-tracker"))).toBe(true);
-      expect(isAuthedAppRoute(createMockRequest("/linkedin-optimizer"))).toBe(true);
+      expect(isAuthedAppRoute(createMockRequest("/linkedin-optimizer"))).toBe(
+        true,
+      );
       expect(isAuthedAppRoute(createMockRequest("/project-ideas"))).toBe(true);
       expect(isAuthedAppRoute(createMockRequest("/networking"))).toBe(true);
       expect(isAuthedAppRoute(createMockRequest("/side-hustle"))).toBe(true);
       expect(isAuthedAppRoute(createMockRequest("/remote-work"))).toBe(true);
       expect(isAuthedAppRoute(createMockRequest("/manager-readme"))).toBe(true);
-      expect(isAuthedAppRoute(createMockRequest("/imposter-syndrome"))).toBe(true);
-      expect(isAuthedAppRoute(createMockRequest("/founder-readiness"))).toBe(true);
-      expect(isAuthedAppRoute(createMockRequest("/executive-presence"))).toBe(true);
+      expect(isAuthedAppRoute(createMockRequest("/imposter-syndrome"))).toBe(
+        true,
+      );
+      expect(isAuthedAppRoute(createMockRequest("/founder-readiness"))).toBe(
+        true,
+      );
+      expect(isAuthedAppRoute(createMockRequest("/executive-presence"))).toBe(
+        true,
+      );
     });
 
     it("does not match other routes", () => {
       expect(isAuthedAppRoute(createMockRequest("/"))).toBe(false);
       expect(isAuthedAppRoute(createMockRequest("/sign-in"))).toBe(false);
-      expect(isAuthedAppRoute(createMockRequest("/api/dev/status"))).toBe(false);
+      expect(isAuthedAppRoute(createMockRequest("/api/dev/status"))).toBe(
+        false,
+      );
     });
   });
 
   describe("isProtectedApiRoute", () => {
     it("matches api routes that are not public", () => {
       expect(isProtectedApiRoute(createMockRequest("/api/user"))).toBe(true);
-      expect(isProtectedApiRoute(createMockRequest("/api/resume/create"))).toBe(true);
+      expect(isProtectedApiRoute(createMockRequest("/api/resume/create"))).toBe(
+        true,
+      );
     });
 
     it("does not match public api routes", () => {
-      expect(isProtectedApiRoute(createMockRequest("/api/dev/status"))).toBe(false);
+      expect(isProtectedApiRoute(createMockRequest("/api/dev/status"))).toBe(
+        false,
+      );
     });
 
     it("does not match non-api routes", () => {
@@ -137,7 +153,7 @@ describe("getAuthDecision", () => {
       "/manager-readme",
       "/imposter-syndrome",
       "/founder-readiness",
-      "/executive-presence"
+      "/executive-presence",
     ];
 
     for (const route of routes) {
@@ -145,7 +161,9 @@ describe("getAuthDecision", () => {
       const res = await getAuthDecision(req, unauthed);
       expect(res.action).toBe("redirect");
       expect(res.signInUrl).toContain("/sign-in");
-      expect(res.signInUrl).toContain(`redirect_url=${encodeURIComponent(route)}`);
+      expect(res.signInUrl).toContain(
+        `redirect_url=${encodeURIComponent(route)}`,
+      );
     }
   });
 });

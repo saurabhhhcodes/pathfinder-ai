@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { sideHustleIdeaOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  sideHustleIdeaOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -15,9 +18,9 @@ describe("sideHustleIdeaOutputSchema", () => {
           description: "Build landing pages for local businesses using React.",
           targetAudience: "Local mom and pop shops.",
           pricingStrategy: "$500 per landing page.",
-          firstStep: "Email 5 local businesses today."
-        }
-      ]
+          firstStep: "Email 5 local businesses today.",
+        },
+      ],
     });
     const result = validateOutput(sideHustleIdeaOutputSchema, raw);
     expect(result.success).toBe(true);
@@ -29,9 +32,9 @@ describe("sideHustleIdeaOutputSchema", () => {
     const raw = JSON.stringify({
       ideas: [
         {
-          name: "Idea 1"
-        }
-      ]
+          name: "Idea 1",
+        },
+      ],
     });
     const result = validateOutput(sideHustleIdeaOutputSchema, raw);
     expect(result.success).toBe(false);
@@ -45,7 +48,7 @@ describe("SCHEMA_DESCRIPTIONS.sideHustleIdea", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Create an idea.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.sideHustleIdea
+      SCHEMA_DESCRIPTIONS.sideHustleIdea,
     );
     expect(prompt).toContain("pricingStrategy");
   });
@@ -94,17 +97,18 @@ describe("generateSideHustles", () => {
     });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          ideas: [
-            {
-              name: "Idea 1",
-              description: "Desc",
-              targetAudience: "Audience",
-              pricingStrategy: "Strategy",
-              firstStep: "Step"
-            }
-          ]
-        }),
+        text: () =>
+          JSON.stringify({
+            ideas: [
+              {
+                name: "Idea 1",
+                description: "Desc",
+                targetAudience: "Audience",
+                pricingStrategy: "Strategy",
+                firstStep: "Step",
+              },
+            ],
+          }),
       },
     });
     actionMocks.sideHustleIdeaCreate.mockResolvedValue({ id: "hustle-1" });

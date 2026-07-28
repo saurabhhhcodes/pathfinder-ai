@@ -3,11 +3,17 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { generateGeminiContent } from "@/lib/gemini";
-import { buildSecurePrompt, generateWithStructuredOutput } from "@/lib/prompt-safety";
+import {
+  buildSecurePrompt,
+  generateWithStructuredOutput,
+} from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
 import { validateOutput } from "@/lib/validate";
 import { USER_NOT_FOUND_MESSAGE } from "@/lib/user-errors";
-import { careerRoadmapOutputSchema, SCHEMA_DESCRIPTIONS } from "@/lib/schemas/outputs";
+import {
+  careerRoadmapOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "@/lib/schemas/outputs";
 import { checkRateLimit, formatResetTime } from "@/lib/rate-limit-actions";
 
 const ROADMAP_SYSTEM_CONTEXT = `You are a senior career strategist and technical mentor. Your expertise is creating personalized, actionable career roadmaps that break down long-term goals into concrete milestones. Each milestone should be a stepping stone that builds on the previous one, with clear skills to develop and a realistic time frame.`;
@@ -16,35 +22,40 @@ const FALLBACK_ROADMAP = {
   milestones: [
     {
       title: "Assess Current Skills",
-      description: "Take inventory of your current technical and soft skills to identify gaps.",
+      description:
+        "Take inventory of your current technical and soft skills to identify gaps.",
       skillsToLearn: ["Self-Assessment", "Market Research"],
       estimatedDuration: "1-2 weeks",
-      priority: "high"
+      priority: "high",
     },
     {
       title: "Core Skill Development",
-      description: "Focus on learning the primary skills required for your target role.",
+      description:
+        "Focus on learning the primary skills required for your target role.",
       skillsToLearn: ["Core Domain Skills", "Communication"],
       estimatedDuration: "2-3 months",
-      priority: "high"
+      priority: "high",
     },
     {
       title: "Build Portfolio Projects",
-      description: "Apply what you've learned to build 2-3 substantial projects to demonstrate your abilities.",
+      description:
+        "Apply what you've learned to build 2-3 substantial projects to demonstrate your abilities.",
       skillsToLearn: ["Project Management", "Technical Implementation"],
       estimatedDuration: "1-2 months",
-      priority: "high"
+      priority: "high",
     },
     {
       title: "Networking and Outreach",
-      description: "Connect with professionals in your target role and industry.",
+      description:
+        "Connect with professionals in your target role and industry.",
       skillsToLearn: ["Networking", "Personal Branding"],
       estimatedDuration: "Ongoing",
-      priority: "medium"
-    }
+      priority: "medium",
+    },
   ],
   totalEstimatedTime: "6-12 months",
-  summary: "A general framework for career transition and skill development. Please configure AI to receive a personalized roadmap."
+  summary:
+    "A general framework for career transition and skill development. Please configure AI to receive a personalized roadmap.",
 };
 
 /**
@@ -58,7 +69,9 @@ export async function generateCareerRoadmap() {
 
     const limit = await checkRateLimit(userId, "roadmap");
     if (!limit.allowed) {
-      throw new Error(`Roadmap generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`);
+      throw new Error(
+        `Roadmap generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+      );
     }
 
     const user = await db.user.findUnique({
@@ -88,12 +101,36 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
   "summary": "Brief summary of the roadmap"
 }`,
       untrustedData: [
-        { label: "industry", value: user.industry || "Not specified", maxLength: 200 },
-        { label: "currentRole", value: user.currentRole || "Not specified", maxLength: 200 },
-        { label: "targetRole", value: user.targetRole || "Not specified", maxLength: 200 },
-        { label: "careerGoals", value: user.careerGoals || "Not specified", maxLength: 1000 },
-        { label: "experience", value: String(user.experience || "0") + " years", maxLength: 100 },
-        { label: "skills", value: user.skills?.join(", ") || "Not specified", maxLength: 1000 },
+        {
+          label: "industry",
+          value: user.industry || "Not specified",
+          maxLength: 200,
+        },
+        {
+          label: "currentRole",
+          value: user.currentRole || "Not specified",
+          maxLength: 200,
+        },
+        {
+          label: "targetRole",
+          value: user.targetRole || "Not specified",
+          maxLength: 200,
+        },
+        {
+          label: "careerGoals",
+          value: user.careerGoals || "Not specified",
+          maxLength: 1000,
+        },
+        {
+          label: "experience",
+          value: String(user.experience || "0") + " years",
+          maxLength: 100,
+        },
+        {
+          label: "skills",
+          value: user.skills?.join(", ") || "Not specified",
+          maxLength: 1000,
+        },
         { label: "bio", value: user.bio || "Not specified", maxLength: 2000 },
       ],
     });
@@ -136,12 +173,12 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
     if (process.env.NODE_ENV === "test") {
       throw error;
     }
-    
+
     // We don't save the fallback to the DB so they can try again later
     return {
       content: FALLBACK_ROADMAP,
       userId: user.id,
-      isFallback: true
+      isFallback: true,
     };
   }
 }
@@ -163,13 +200,13 @@ export async function getRoadmap() {
     const roadmap = await db.roadmap.findUnique({
       where: { userId: user.id },
     });
-    
+
     return { roadmap: roadmap || null, error: null };
   } catch (error) {
     console.error("Error fetching roadmap:", error);
-    return { 
-      roadmap: null, 
-      error: error.message || "Failed to load roadmap. Please try again." 
+    return {
+      roadmap: null,
+      error: error.message || "Failed to load roadmap. Please try again.",
     };
   }
 }

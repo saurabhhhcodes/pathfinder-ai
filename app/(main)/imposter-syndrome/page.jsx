@@ -2,10 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Brain, Send, ShieldCheck, Loader2, Heart, Sparkles, BookOpen } from "lucide-react";
+import {
+  Brain,
+  Send,
+  ShieldCheck,
+  Loader2,
+  Heart,
+  Sparkles,
+  BookOpen,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { reframeThoughts, getImposterSyndromes } from "@/actions/imposter-syndrome";
+import {
+  reframeThoughts,
+  getImposterSyndromes,
+} from "@/actions/imposter-syndrome";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
@@ -57,13 +68,17 @@ export default function ImposterSyndromePage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-500">
           <Brain className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Imposter Syndrome Coach</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Imposter Syndrome Coach
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Rewrite the <span className="text-gradient-primary">Narrative.</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Feeling like a fraud? It happens to the best of us. Tell us what your inner critic is saying, and we'll use cognitive reframing to help you see the objective reality of your success.
+          Feeling like a fraud? It happens to the best of us. Tell us what your
+          inner critic is saying, and we'll use cognitive reframing to help you
+          see the objective reality of your success.
         </p>
       </div>
 
@@ -87,7 +102,8 @@ export default function ImposterSyndromePage() {
 
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase text-emerald-500 flex items-center gap-1.5">
-                  <ShieldCheck className="h-3 w-3" /> What are the objective facts?
+                  <ShieldCheck className="h-3 w-3" /> What are the objective
+                  facts?
                 </label>
                 <Textarea
                   placeholder="E.g., I have 5 years of experience, I delivered the Q3 project on time, and my last review said I was a strong performer..."
@@ -96,13 +112,16 @@ export default function ImposterSyndromePage() {
                   className="min-h-[120px] resize-none bg-background/50 border-emerald-500/20 rounded-2xl focus:border-emerald-500"
                 />
                 <p className="text-[10px] text-muted-foreground mt-1">
-                  List raw facts. Don't worry if you don't fully believe them right now.
+                  List raw facts. Don't worry if you don't fully believe them
+                  right now.
                 </p>
               </div>
 
-              <Button 
+              <Button
                 onClick={handleGenerate}
-                disabled={isGenerating || !doubts.trim() || !achievements.trim()}
+                disabled={
+                  isGenerating || !doubts.trim() || !achievements.trim()
+                }
                 className="w-full h-12 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold"
               >
                 {isGenerating ? (
@@ -122,23 +141,31 @@ export default function ImposterSyndromePage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past Reframes</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past Reframes
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentReframe(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentReframe?.id === item.id 
-                        ? "bg-rose-500/10 border border-rose-500/30" 
+                      currentReframe?.id === item.id
+                        ? "bg-rose-500/10 border border-rose-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Sparkles className={`h-4 w-4 shrink-0 ${currentReframe?.id === item.id ? "text-rose-500" : "text-muted-foreground"}`} />
+                      <Sparkles
+                        className={`h-4 w-4 shrink-0 ${currentReframe?.id === item.id ? "text-rose-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">Reframing Exercise</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          Reframing Exercise
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -175,21 +202,34 @@ export default function ImposterSyndromePage() {
                     Cognitive Reframing
                   </h3>
                   <div className="grid grid-cols-1 gap-4">
-                    {currentReframe.reframeData.cognitiveReframes.map((reframe, idx) => (
-                      <div key={idx} className="p-5 glass rounded-2xl border border-border relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-500 to-emerald-500" />
-                        <div className="pl-3 space-y-4">
-                          <div>
-                            <p className="text-xs font-bold uppercase text-red-500 mb-1">The Doubt</p>
-                            <p className="text-sm text-muted-foreground italic">"{reframe.theDoubt}"</p>
-                          </div>
-                          <div className="pt-3 border-t border-border">
-                            <p className="text-xs font-bold uppercase text-emerald-500 mb-1">The Reality</p>
-                            <p className="text-sm text-foreground font-medium">{reframe.theReality}</p>
+                    {currentReframe.reframeData.cognitiveReframes.map(
+                      (reframe, idx) => (
+                        <div
+                          key={idx}
+                          className="p-5 glass rounded-2xl border border-border relative overflow-hidden"
+                        >
+                          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-500 to-emerald-500" />
+                          <div className="pl-3 space-y-4">
+                            <div>
+                              <p className="text-xs font-bold uppercase text-red-500 mb-1">
+                                The Doubt
+                              </p>
+                              <p className="text-sm text-muted-foreground italic">
+                                "{reframe.theDoubt}"
+                              </p>
+                            </div>
+                            <div className="pt-3 border-t border-border">
+                              <p className="text-xs font-bold uppercase text-emerald-500 mb-1">
+                                The Reality
+                              </p>
+                              <p className="text-sm text-foreground font-medium">
+                                {reframe.theReality}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ),
+                    )}
                   </div>
                 </div>
 
@@ -219,8 +259,13 @@ export default function ImposterSyndromePage() {
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-rose-500/30">
                 <Brain className="h-12 w-12 text-rose-500/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No thoughts reframed yet.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Enter your doubts and facts to generate a personalized cognitive reframing exercise.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No thoughts reframed yet.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Enter your doubts and facts to generate a personalized
+                  cognitive reframing exercise.
+                </p>
               </div>
             )}
           </AnimatePresence>

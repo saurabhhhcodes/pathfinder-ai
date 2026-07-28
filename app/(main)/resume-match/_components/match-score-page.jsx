@@ -7,7 +7,10 @@ import MatchForm from "./match-form";
 import MatchResult from "./match-result";
 import MatchHistory from "./match-history";
 
-export default function MatchScorePage({ initialHistory = [], savedResumeContent = "" }) {
+export default function MatchScorePage({
+  initialHistory = [],
+  savedResumeContent = "",
+}) {
   const [activeTab, setActiveTab] = useState("analyze");
   const [analysisResult, setAnalysisResult] = useState(null);
   const [history, setHistory] = useState(initialHistory);
@@ -33,13 +36,13 @@ export default function MatchScorePage({ initialHistory = [], savedResumeContent
     <div className="space-y-8">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 p-1 bg-muted/50 rounded-2xl mb-8">
-          <TabsTrigger 
-            value="analyze" 
+          <TabsTrigger
+            value="analyze"
             className="rounded-xl data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-md transition-all font-semibold"
           >
             Analyze
           </TabsTrigger>
-          <TabsTrigger 
+          <TabsTrigger
             value="history"
             className="rounded-xl data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-md transition-all font-semibold flex items-center gap-2"
           >
@@ -61,22 +64,25 @@ export default function MatchScorePage({ initialHistory = [], savedResumeContent
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <TabsContent value="analyze" className="m-0 border-none p-0 outline-none">
+              <TabsContent
+                value="analyze"
+                className="m-0 border-none p-0 outline-none"
+              >
                 {!analysisResult ? (
-                  <MatchForm 
+                  <MatchForm
                     savedResumeContent={savedResumeContent}
                     onAnalysisComplete={handleAnalysisComplete}
                   />
                 ) : (
-                  <MatchResult 
-                    result={analysisResult} 
-                    onReset={handleReset}
-                  />
+                  <MatchResult result={analysisResult} onReset={handleReset} />
                 )}
               </TabsContent>
 
-              <TabsContent value="history" className="m-0 border-none p-0 outline-none">
-                <MatchHistory 
+              <TabsContent
+                value="history"
+                className="m-0 border-none p-0 outline-none"
+              >
+                <MatchHistory
                   history={history}
                   setHistory={setHistory}
                   onSelect={handleHistorySelect}

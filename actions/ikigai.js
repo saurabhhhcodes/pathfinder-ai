@@ -18,7 +18,8 @@ export async function discoverIkigai(passions, skills, marketNeeds) {
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Expert Career Coach and Life Strategist who specializes in the Ikigai framework.",
+    context:
+      "You are an Expert Career Coach and Life Strategist who specializes in the Ikigai framework.",
     task: `Analyze what the user loves (passions), what they are good at (skills), and what they believe the world needs/will pay for (market needs).
     Find the intersection of these elements to propose 3 distinct 'Ikigai' career paths or side businesses that blend purpose, passion, and profit.`,
     untrustedData: [
@@ -67,7 +68,10 @@ export async function discoverIkigai(passions, skills, marketNeeds) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Ikigai Discovery Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate Ikigai"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate Ikigai"] },
+    };
   }
 }
 

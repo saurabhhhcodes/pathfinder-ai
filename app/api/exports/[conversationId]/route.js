@@ -5,7 +5,6 @@ import { generateMarkdownExport } from "@/lib/export/markdown-export";
 import { getOwnedConversation } from "@/lib/conversation/getConversation";
 import { validateId } from "@/lib/validate";
 
-
 /**
  * GET handler for exporting a conversation by its ID.
  * Supports exporting in JSON and Markdown formats.
@@ -21,16 +20,19 @@ export async function GET(request, context) {
   const idValidation = validateId(params.conversationId, "conversationId");
 
   if (!idValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", idValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Conversation ID is required",
+      idValidation.errors,
+    );
   }
-  const format =
-    new URL(request.url).searchParams.get("format") || "json";
-    if (!["json", "md"].includes(format)) {
-        return respondError(
-            ERROR_CODES.VALIDATION_ERROR,
-            "Supported formats are json and md"
-        );
-    }
+  const format = new URL(request.url).searchParams.get("format") || "json";
+  if (!["json", "md"].includes(format)) {
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Supported formats are json and md",
+    );
+  }
 
   try {
     const result = await getOwnedConversation(idValidation.data);
@@ -44,7 +46,7 @@ export async function GET(request, context) {
     if (!conversation) {
       return respondError(
         ERROR_CODES.RESOURCE_NOT_FOUND,
-        "Conversation not found"
+        "Conversation not found",
       );
     }
 
@@ -53,13 +55,13 @@ export async function GET(request, context) {
     let fileExtension;
 
     if (format === "md") {
-        exportData = generateMarkdownExport(conversation);
-        contentType = "text/markdown";
-        fileExtension = "md";
+      exportData = generateMarkdownExport(conversation);
+      contentType = "text/markdown";
+      fileExtension = "md";
     } else {
-        exportData = generateJsonExport(conversation);
-        contentType = "application/json";
-        fileExtension = "json";
+      exportData = generateJsonExport(conversation);
+      contentType = "application/json";
+      fileExtension = "json";
     }
 
     // Create ExportRecord and AuditLog entries
@@ -95,24 +97,23 @@ export async function GET(request, context) {
 
     // Sanitize filename to remove unsafe characters
     const sanitizedTitle = conversation.title
-      .replace(/[^a-zA-Z0-9_\- ]/g, '')
-      .replace(/\s+/g, '_')
+      .replace(/[^a-zA-Z0-9_\- ]/g, "")
+      .replace(/\s+/g, "_")
       .substring(0, 100);
 
     return new Response(exportData, {
       status: 200,
       headers: {
         "Content-Type": contentType,
-        "Content-Disposition":
-            `attachment; filename="${sanitizedTitle || 'conversation'}.${fileExtension}"`,
-        },
+        "Content-Disposition": `attachment; filename="${sanitizedTitle || "conversation"}.${fileExtension}"`,
+      },
     });
   } catch (error) {
     console.error("Export conversation error:", error);
 
     return respondError(
       ERROR_CODES.INTERNAL_SERVER_ERROR,
-      "Failed to export conversation"
+      "Failed to export conversation",
     );
   }
 }

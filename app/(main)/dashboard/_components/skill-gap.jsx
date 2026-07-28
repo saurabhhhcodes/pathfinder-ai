@@ -2,7 +2,15 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Target, TrendingUp, GraduationCap, AlertCircle, Zap, Sparkles } from "lucide-react";
+import {
+  CheckCircle2,
+  Target,
+  TrendingUp,
+  GraduationCap,
+  AlertCircle,
+  Zap,
+  Sparkles,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +26,7 @@ function SkillBadge({ name, variant, index }) {
           ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-500/15"
           : variant === "recommended"
             ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20 hover:border-blue-500/40 hover:bg-blue-500/15"
-            : "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20 hover:border-purple-500/40 hover:bg-purple-500/15"
+            : "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20 hover:border-purple-500/40 hover:bg-purple-500/15",
       )}
     >
       {variant === "owned" && <CheckCircle2 className="h-3 w-3" />}
@@ -29,7 +37,15 @@ function SkillBadge({ name, variant, index }) {
   );
 }
 
-function SkillCategory({ title, description, skills, variant, icon: Icon, color, count }) {
+function SkillCategory({
+  title,
+  description,
+  skills,
+  variant,
+  icon: Icon,
+  color,
+  count,
+}) {
   if (!skills?.length) return null;
 
   return (
@@ -42,13 +58,21 @@ function SkillCategory({ title, description, skills, variant, icon: Icon, color,
 
       <div className="relative z-10 p-6 space-y-5">
         <div className="flex items-start gap-4">
-          <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-110 shrink-0", color)}>
+          <div
+            className={cn(
+              "h-11 w-11 rounded-xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-110 shrink-0",
+              color,
+            )}
+          >
             <Icon className="h-5 w-5" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
               <h3 className="text-sm font-bold text-foreground">{title}</h3>
-              <Badge variant="secondary" className="rounded-full text-[10px] font-bold px-2 py-0.5 h-5 border border-border/30 bg-muted/30">
+              <Badge
+                variant="secondary"
+                className="rounded-full text-[10px] font-bold px-2 py-0.5 h-5 border border-border/30 bg-muted/30"
+              >
                 {count || skills.length}
               </Badge>
             </div>
@@ -61,7 +85,9 @@ function SkillCategory({ title, description, skills, variant, icon: Icon, color,
             <SkillBadge key={skill} name={skill} variant={variant} index={i} />
           ))}
           {skills.length === 0 && (
-            <p className="text-xs text-muted-foreground italic">No skills listed</p>
+            <p className="text-xs text-muted-foreground italic">
+              No skills listed
+            </p>
           )}
         </div>
       </div>
@@ -72,22 +98,27 @@ function SkillCategory({ title, description, skills, variant, icon: Icon, color,
 export function SkillGap({ insight, userSkills = [] }) {
   const currentSkills = useMemo(
     () => (Array.isArray(userSkills) ? userSkills.filter(Boolean) : []),
-    [userSkills]
+    [userSkills],
   );
   const recommendedSkills = useMemo(
     () => insight?.recommendedSkills || [],
-    [insight]
+    [insight],
   );
   const topSkills = useMemo(() => insight?.topSkills || [], [insight]);
 
   const futureSkills = useMemo(() => {
     const all = [...recommendedSkills, ...topSkills];
-    const existing = new Set([...currentSkills, ...recommendedSkills.map((s) => s.toLowerCase())]);
-    return [...new Set(all)].filter((s) => !existing.has(s.toLowerCase())).slice(0, 6);
+    const existing = new Set([
+      ...currentSkills,
+      ...recommendedSkills.map((s) => s.toLowerCase()),
+    ]);
+    return [...new Set(all)]
+      .filter((s) => !existing.has(s.toLowerCase()))
+      .slice(0, 6);
   }, [currentSkills, recommendedSkills, topSkills]);
 
   const gapCount = recommendedSkills.filter(
-    (s) => !currentSkills.some((cs) => cs.toLowerCase() === s.toLowerCase())
+    (s) => !currentSkills.some((cs) => cs.toLowerCase() === s.toLowerCase()),
   ).length;
 
   return (
@@ -96,8 +127,12 @@ export function SkillGap({ insight, userSkills = [] }) {
         <div className="h-8 w-1 rounded-full bg-gradient-to-b from-amber-500 to-orange-500" />
         <div className="flex-1 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-foreground tracking-tight">Skill Architecture</h2>
-            <p className="text-sm text-muted-foreground">Gap analysis & growth roadmap</p>
+            <h2 className="text-xl font-bold text-foreground tracking-tight">
+              Skill Architecture
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Gap analysis & growth roadmap
+            </p>
           </div>
           {gapCount > 0 && (
             <Badge

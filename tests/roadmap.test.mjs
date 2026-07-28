@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { careerRoadmapOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  careerRoadmapOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -12,21 +15,24 @@ describe("careerRoadmapOutputSchema", () => {
       milestones: [
         {
           title: "Learn Core JavaScript",
-          description: "Master JavaScript fundamentals including closures, promises, and async/await.",
+          description:
+            "Master JavaScript fundamentals including closures, promises, and async/await.",
           skillsToLearn: ["JavaScript", "Node.js basics"],
           estimatedDuration: "3-6 months",
           priority: "high",
         },
         {
           title: "Build Portfolio Projects",
-          description: "Create 3 full-stack projects demonstrating your skills.",
+          description:
+            "Create 3 full-stack projects demonstrating your skills.",
           skillsToLearn: ["React", "Express", "PostgreSQL"],
           estimatedDuration: "6-9 months",
           priority: "high",
         },
         {
           title: "Network & Apply",
-          description: "Build professional network and start applying for target roles.",
+          description:
+            "Build professional network and start applying for target roles.",
           skillsToLearn: ["LinkedIn optimization", "Interview preparation"],
           estimatedDuration: "3-6 months",
           priority: "medium",
@@ -43,33 +49,38 @@ describe("careerRoadmapOutputSchema", () => {
   });
 
   it("strips markdown fences before parsing", () => {
-    const raw = "```json\n" + JSON.stringify({
-      milestones: [
-        {
-          title: "Skill Assessment",
-          description: "Evaluate current skills against target role requirements.",
-          skillsToLearn: ["Self-assessment"],
-          estimatedDuration: "1-2 months",
-          priority: "high",
-        },
-        {
-          title: "Skill Development",
-          description: "Build required skills through structured learning paths.",
-          skillsToLearn: ["Technical skills", "Soft skills"],
-          estimatedDuration: "3-6 months",
-          priority: "high",
-        },
-        {
-          title: "Job Preparation",
-          description: "Prepare resumes and practice interviewing.",
-          skillsToLearn: ["Resume writing", "Mock interviews"],
-          estimatedDuration: "1-3 months",
-          priority: "medium",
-        },
-      ],
-      totalEstimatedTime: "6-12 months",
-      summary: "A focused roadmap for career transition.",
-    }) + "\n```";
+    const raw =
+      "```json\n" +
+      JSON.stringify({
+        milestones: [
+          {
+            title: "Skill Assessment",
+            description:
+              "Evaluate current skills against target role requirements.",
+            skillsToLearn: ["Self-assessment"],
+            estimatedDuration: "1-2 months",
+            priority: "high",
+          },
+          {
+            title: "Skill Development",
+            description:
+              "Build required skills through structured learning paths.",
+            skillsToLearn: ["Technical skills", "Soft skills"],
+            estimatedDuration: "3-6 months",
+            priority: "high",
+          },
+          {
+            title: "Job Preparation",
+            description: "Prepare resumes and practice interviewing.",
+            skillsToLearn: ["Resume writing", "Mock interviews"],
+            estimatedDuration: "1-3 months",
+            priority: "medium",
+          },
+        ],
+        totalEstimatedTime: "6-12 months",
+        summary: "A focused roadmap for career transition.",
+      }) +
+      "\n```";
     const result = validateOutput(careerRoadmapOutputSchema, raw);
     expect(result.success).toBe(true);
   });
@@ -168,7 +179,7 @@ describe("SCHEMA_DESCRIPTIONS.careerRoadmap", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Create a career roadmap.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.careerRoadmap
+      SCHEMA_DESCRIPTIONS.careerRoadmap,
     );
     expect(prompt).toContain("milestones");
     expect(prompt).toContain("totalEstimatedTime");
@@ -227,48 +238,50 @@ describe("generateCareerRoadmap", () => {
 
     actionMocks.auth.mockResolvedValue({ userId: "user-1" });
     actionMocks.checkRateLimit.mockResolvedValue({ allowed: true });
-    actionMocks.findUnique
-      .mockResolvedValueOnce({
-        id: "db-user-1",
-        clerkUserId: "user-1",
-        name: "Test User",
-        currentRole: "Junior Developer",
-        targetRole: "Senior Developer",
-        careerGoals: "Become a tech lead",
-        industry: "Technology",
-        experience: 3,
-        skills: ["JavaScript", "React"],
-        bio: "A passionate developer.",
-      });
+    actionMocks.findUnique.mockResolvedValueOnce({
+      id: "db-user-1",
+      clerkUserId: "user-1",
+      name: "Test User",
+      currentRole: "Junior Developer",
+      targetRole: "Senior Developer",
+      careerGoals: "Become a tech lead",
+      industry: "Technology",
+      experience: 3,
+      skills: ["JavaScript", "React"],
+      bio: "A passionate developer.",
+    });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          milestones: [
-            {
-              title: "Master Advanced JavaScript",
-              description: "Deepen understanding of advanced JavaScript concepts.",
-              skillsToLearn: ["TypeScript", "Design Patterns"],
-              estimatedDuration: "3-6 months",
-              priority: "high",
-            },
-            {
-              title: "Lead Small Team",
-              description: "Take ownership of a feature and mentor junior developers.",
-              skillsToLearn: ["Code review", "Project planning"],
-              estimatedDuration: "6-12 months",
-              priority: "high",
-            },
-            {
-              title: "Architecture Design",
-              description: "Learn to design scalable system architectures.",
-              skillsToLearn: ["System design", "Microservices"],
-              estimatedDuration: "6-12 months",
-              priority: "medium",
-            },
-          ],
-          totalEstimatedTime: "18-24 months",
-          summary: "Path from junior to senior developer.",
-        }),
+        text: () =>
+          JSON.stringify({
+            milestones: [
+              {
+                title: "Master Advanced JavaScript",
+                description:
+                  "Deepen understanding of advanced JavaScript concepts.",
+                skillsToLearn: ["TypeScript", "Design Patterns"],
+                estimatedDuration: "3-6 months",
+                priority: "high",
+              },
+              {
+                title: "Lead Small Team",
+                description:
+                  "Take ownership of a feature and mentor junior developers.",
+                skillsToLearn: ["Code review", "Project planning"],
+                estimatedDuration: "6-12 months",
+                priority: "high",
+              },
+              {
+                title: "Architecture Design",
+                description: "Learn to design scalable system architectures.",
+                skillsToLearn: ["System design", "Microservices"],
+                estimatedDuration: "6-12 months",
+                priority: "medium",
+              },
+            ],
+            totalEstimatedTime: "18-24 months",
+            summary: "Path from junior to senior developer.",
+          }),
       },
     });
     actionMocks.upsert.mockResolvedValue({
@@ -283,7 +296,10 @@ describe("generateCareerRoadmap", () => {
     const result = await generateCareerRoadmap();
 
     expect(actionMocks.auth).toHaveBeenCalled();
-    expect(actionMocks.checkRateLimit).toHaveBeenCalledWith("user-1", "roadmap");
+    expect(actionMocks.checkRateLimit).toHaveBeenCalledWith(
+      "user-1",
+      "roadmap",
+    );
     expect(actionMocks.findUnique).toHaveBeenCalled();
     expect(actionMocks.generateGeminiContent).toHaveBeenCalled();
     expect(actionMocks.upsert).toHaveBeenCalled();
@@ -302,10 +318,15 @@ describe("generateCareerRoadmap", () => {
     const { generateCareerRoadmap } = await import("../actions/roadmap.js");
 
     actionMocks.auth.mockResolvedValue({ userId: "user-1" });
-    actionMocks.checkRateLimit.mockResolvedValue({ allowed: false, resetAt: new Date(Date.now() + 3600000) });
+    actionMocks.checkRateLimit.mockResolvedValue({
+      allowed: false,
+      resetAt: new Date(Date.now() + 3600000),
+    });
     actionMocks.formatResetTime.mockReturnValue("60 minutes");
 
-    await expect(generateCareerRoadmap()).rejects.toThrow("Roadmap generation limit reached");
+    await expect(generateCareerRoadmap()).rejects.toThrow(
+      "Roadmap generation limit reached",
+    );
   });
 
   it("throws when AI generation fails", async () => {
@@ -313,22 +334,25 @@ describe("generateCareerRoadmap", () => {
 
     actionMocks.auth.mockResolvedValue({ userId: "user-1" });
     actionMocks.checkRateLimit.mockResolvedValue({ allowed: true });
-    actionMocks.findUnique
-      .mockResolvedValueOnce({
-        id: "db-user-1",
-        clerkUserId: "user-1",
-        name: "Test User",
-        currentRole: "Junior Developer",
-        targetRole: "Senior Developer",
-        careerGoals: "Become a tech lead",
-        industry: "Technology",
-        experience: 3,
-        skills: ["JavaScript", "React"],
-        bio: "A passionate developer.",
-      });
-    actionMocks.generateGeminiContent.mockRejectedValue(new Error("AI service unavailable"));
+    actionMocks.findUnique.mockResolvedValueOnce({
+      id: "db-user-1",
+      clerkUserId: "user-1",
+      name: "Test User",
+      currentRole: "Junior Developer",
+      targetRole: "Senior Developer",
+      careerGoals: "Become a tech lead",
+      industry: "Technology",
+      experience: 3,
+      skills: ["JavaScript", "React"],
+      bio: "A passionate developer.",
+    });
+    actionMocks.generateGeminiContent.mockRejectedValue(
+      new Error("AI service unavailable"),
+    );
 
-    await expect(generateCareerRoadmap()).rejects.toThrow("AI returned an unexpected format.");
+    await expect(generateCareerRoadmap()).rejects.toThrow(
+      "AI returned an unexpected format.",
+    );
   });
 });
 
@@ -341,10 +365,17 @@ describe("getRoadmap", () => {
     const { getRoadmap } = await import("../actions/roadmap.js");
 
     actionMocks.auth.mockResolvedValue({ userId: "user-1" });
-    actionMocks.findUnique.mockResolvedValue({ id: "db-user-1", clerkUserId: "user-1" });
+    actionMocks.findUnique.mockResolvedValue({
+      id: "db-user-1",
+      clerkUserId: "user-1",
+    });
     actionMocks.roadmapFindUnique.mockResolvedValue({
       id: "roadmap-1",
-      content: { milestones: [], totalEstimatedTime: "12 months", summary: "Test" },
+      content: {
+        milestones: [],
+        totalEstimatedTime: "12 months",
+        summary: "Test",
+      },
     });
 
     const result = await getRoadmap();

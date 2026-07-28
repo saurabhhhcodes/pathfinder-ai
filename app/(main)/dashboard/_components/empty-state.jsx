@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Sparkles, Loader2, BarChart3, Target, TrendingUp, Shield, ArrowRight } from "lucide-react";
+import {
+  Sparkles,
+  Loader2,
+  BarChart3,
+  Target,
+  TrendingUp,
+  Shield,
+  ArrowRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function EmptyState({ userName }) {
@@ -48,7 +56,10 @@ export function EmptyState({ userName }) {
             transition={{ delay: 0.3 }}
             className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground"
           >
-            Welcome, <span className="text-gradient-primary">{userName || "Explorer"}</span>
+            Welcome,{" "}
+            <span className="text-gradient-primary">
+              {userName || "Explorer"}
+            </span>
           </motion.h1>
 
           <motion.p
@@ -57,8 +68,8 @@ export function EmptyState({ userName }) {
             transition={{ delay: 0.4 }}
             className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed font-medium"
           >
-            Your onboarding is complete. Let&apos;s generate personalized industry insights and build your
-            Career Intelligence Hub.
+            Your onboarding is complete. Let&apos;s generate personalized
+            industry insights and build your Career Intelligence Hub.
           </motion.p>
         </div>
 
@@ -69,10 +80,26 @@ export function EmptyState({ userName }) {
           className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-lg mx-auto"
         >
           {[
-            { icon: BarChart3, label: "Market Trends", color: "text-blue-500 bg-blue-500/10" },
-            { icon: Target, label: "Salary Benchmarks", color: "text-emerald-500 bg-emerald-500/10" },
-            { icon: TrendingUp, label: "Growth Analysis", color: "text-purple-500 bg-purple-500/10" },
-            { icon: Shield, label: "Skill Insights", color: "text-amber-500 bg-amber-500/10" },
+            {
+              icon: BarChart3,
+              label: "Market Trends",
+              color: "text-blue-500 bg-blue-500/10",
+            },
+            {
+              icon: Target,
+              label: "Salary Benchmarks",
+              color: "text-emerald-500 bg-emerald-500/10",
+            },
+            {
+              icon: TrendingUp,
+              label: "Growth Analysis",
+              color: "text-purple-500 bg-purple-500/10",
+            },
+            {
+              icon: Shield,
+              label: "Skill Insights",
+              color: "text-amber-500 bg-amber-500/10",
+            },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
@@ -83,7 +110,9 @@ export function EmptyState({ userName }) {
                 transition={{ delay: 0.5 + i * 0.05 }}
                 className="flex flex-col items-center gap-2.5 p-5 rounded-2xl border border-border/40 bg-card/30 hover:bg-card/50 hover:border-primary/30 transition-all duration-300 shadow-soft"
               >
-                <div className={`h-9 w-9 rounded-xl flex items-center justify-center border border-border/40 ${item.color}`}>
+                <div
+                  className={`h-9 w-9 rounded-xl flex items-center justify-center border border-border/40 ${item.color}`}
+                >
                   <Icon className="h-4 w-4" />
                 </div>
                 <span className="text-[10px] font-bold text-muted-foreground text-center leading-tight uppercase tracking-wider">
@@ -119,7 +148,8 @@ export function EmptyState({ userName }) {
             )}
           </Button>
           <p className="text-xs text-muted-foreground mt-3 font-medium">
-            This will analyze your industry and create a personalized intelligence dashboard.
+            This will analyze your industry and create a personalized
+            intelligence dashboard.
           </p>
         </motion.div>
       </motion.div>

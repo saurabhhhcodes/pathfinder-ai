@@ -92,7 +92,10 @@ describe("checkUser", () => {
   });
 
   it("handles 10 simultaneous upserts for the same new user", async () => {
-    const createdUser = { id: "db-user-concurrent", clerkUserId: "clerk-user-concurrent" };
+    const createdUser = {
+      id: "db-user-concurrent",
+      clerkUserId: "clerk-user-concurrent",
+    };
     mocks.currentUser.mockResolvedValue({
       id: "clerk-user-concurrent",
       firstName: "Con",
@@ -103,7 +106,7 @@ describe("checkUser", () => {
     mocks.upsert.mockResolvedValue(createdUser);
 
     const results = await Promise.all(
-      Array.from({ length: 10 }, () => checkUser())
+      Array.from({ length: 10 }, () => checkUser()),
     );
 
     expect(results).toHaveLength(10);

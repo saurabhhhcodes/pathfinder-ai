@@ -49,7 +49,9 @@ describe("GET /api/exports/[conversationId]", () => {
   });
 
   it("returns validation error if format is unsupported", async () => {
-    const request = new Request("http://localhost/api/exports/conv-123?format=csv");
+    const request = new Request(
+      "http://localhost/api/exports/conv-123?format=csv",
+    );
     const context = { params: Promise.resolve({ conversationId: "conv-123" }) };
 
     const response = await GET(request, context);
@@ -89,7 +91,9 @@ describe("GET /api/exports/[conversationId]", () => {
   });
 
   it("successfully exports in json format and writes tracking database records", async () => {
-    const request = new Request("http://localhost/api/exports/conv-123?format=json");
+    const request = new Request(
+      "http://localhost/api/exports/conv-123?format=json",
+    );
     const context = { params: Promise.resolve({ conversationId: "conv-123" }) };
 
     const mockUser = { id: "user-123" };
@@ -109,7 +113,7 @@ describe("GET /api/exports/[conversationId]", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("application/json");
     expect(response.headers.get("Content-Disposition")).toBe(
-      'attachment; filename="My Test Chat.json"'
+      'attachment; filename="My Test Chat.json"',
     );
 
     const text = await response.text();
@@ -141,7 +145,9 @@ describe("GET /api/exports/[conversationId]", () => {
   });
 
   it("successfully exports in md format and writes tracking database records", async () => {
-    const request = new Request("http://localhost/api/exports/conv-123?format=md");
+    const request = new Request(
+      "http://localhost/api/exports/conv-123?format=md",
+    );
     const context = { params: Promise.resolve({ conversationId: "conv-123" }) };
 
     const mockUser = { id: "user-123" };
@@ -152,7 +158,9 @@ describe("GET /api/exports/[conversationId]", () => {
       conversation: mockConversation,
     });
 
-    mocks.generateMarkdownExport.mockReturnValue("# My Test Chat\n\n- User: Hello");
+    mocks.generateMarkdownExport.mockReturnValue(
+      "# My Test Chat\n\n- User: Hello",
+    );
 
     mocks.db.$transaction.mockResolvedValue([]);
 
@@ -160,7 +168,7 @@ describe("GET /api/exports/[conversationId]", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("text/markdown");
     expect(response.headers.get("Content-Disposition")).toBe(
-      'attachment; filename="My Test Chat.md"'
+      'attachment; filename="My Test Chat.md"',
     );
 
     const text = await response.text();

@@ -14,7 +14,10 @@ export async function generateOnboardingPlan(company, role) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!company || !role) {
-    return { success: false, errors: { _form: ["Company and Role are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Company and Role are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
@@ -59,7 +62,12 @@ export async function generateOnboardingPlan(company, role) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Onboarding Plan Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate onboarding plan"] } };
+    return {
+      success: false,
+      errors: {
+        _form: [error.message || "Failed to generate onboarding plan"],
+      },
+    };
   }
 }
 

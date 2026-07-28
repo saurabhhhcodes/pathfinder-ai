@@ -56,7 +56,10 @@ export async function buildReadme(style, boundaries, feedback) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Manager README Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate README"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate README"] },
+    };
   }
 }
 

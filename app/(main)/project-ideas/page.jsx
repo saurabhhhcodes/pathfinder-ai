@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { generateProjectIdeas, getProjectIdeas } from "@/actions/portfolio";
-import { Lightbulb, Sparkles, Target, Wrench, ChevronRight } from "lucide-react";
+import {
+  Lightbulb,
+  Sparkles,
+  Target,
+  Wrench,
+  ChevronRight,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +18,7 @@ export default function ProjectIdeasPage() {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [activeIdeas, setActiveIdeas] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     targetRole: "Frontend Developer",
     skillGap: "React Native",
@@ -47,9 +53,9 @@ export default function ProjectIdeasPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
@@ -63,7 +69,8 @@ export default function ProjectIdeasPage() {
               Project <span className="text-gradient-primary">Ideas</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base font-medium">
-              Turn your skill gaps into impressive resume portfolio projects with step-by-step roadmaps.
+              Turn your skill gaps into impressive resume portfolio projects
+              with step-by-step roadmaps.
             </p>
           </div>
         </motion.div>
@@ -71,8 +78,10 @@ export default function ProjectIdeasPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4 space-y-6">
             <div className="bg-card border border-border p-6 rounded-3xl shadow-sm">
-              <h3 className="font-bold text-lg mb-6">What do you want to learn?</h3>
-              
+              <h3 className="font-bold text-lg mb-6">
+                What do you want to learn?
+              </h3>
+
               <form onSubmit={handleGenerate} className="space-y-5">
                 <div className="space-y-4">
                   <div className="relative">
@@ -82,7 +91,9 @@ export default function ProjectIdeasPage() {
                       placeholder="Target Role (e.g. Frontend Developer)"
                       className="pl-10 h-12 rounded-xl bg-background border-border focus-visible:ring-primary"
                       value={formData.targetRole}
-                      onChange={e => setFormData({ ...formData, targetRole: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, targetRole: e.target.value })
+                      }
                     />
                   </div>
 
@@ -93,7 +104,9 @@ export default function ProjectIdeasPage() {
                       placeholder="Skill Gap (e.g. Next.js, Docker)"
                       className="pl-10 h-12 rounded-xl bg-background border-border focus-visible:ring-primary"
                       value={formData.skillGap}
-                      onChange={e => setFormData({ ...formData, skillGap: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, skillGap: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -103,7 +116,8 @@ export default function ProjectIdeasPage() {
                   disabled={loading}
                   className="w-full h-12 rounded-xl font-bold"
                 >
-                  {loading ? "Brainstorming..." : "Generate Ideas"} <Sparkles className="ml-2 h-4 w-4" />
+                  {loading ? "Brainstorming..." : "Generate Ideas"}{" "}
+                  <Sparkles className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </div>
@@ -113,7 +127,7 @@ export default function ProjectIdeasPage() {
             {activeIdeas ? (
               <div className="space-y-6">
                 {activeIdeas.projects?.map((project, idx) => (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1 }}
@@ -123,22 +137,28 @@ export default function ProjectIdeasPage() {
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <h2 className="text-xl font-bold">{project.title}</h2>
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-2 ${
-                          project.difficulty === 'Beginner' ? 'bg-green-500/10 text-green-500' :
-                          project.difficulty === 'Intermediate' ? 'bg-orange-500/10 text-orange-500' :
-                          'bg-red-500/10 text-red-500'
-                        }`}>
+                        <span
+                          className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-2 ${
+                            project.difficulty === "Beginner"
+                              ? "bg-green-500/10 text-green-500"
+                              : project.difficulty === "Intermediate"
+                                ? "bg-orange-500/10 text-orange-500"
+                                : "bg-red-500/10 text-red-500"
+                          }`}
+                        >
                           {project.difficulty}
                         </span>
                       </div>
                     </div>
-                    
+
                     <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                       {project.description}
                     </p>
 
                     <div className="bg-muted/30 p-5 rounded-2xl border border-border">
-                      <h4 className="font-bold text-sm mb-4">Implementation Roadmap</h4>
+                      <h4 className="font-bold text-sm mb-4">
+                        Implementation Roadmap
+                      </h4>
                       <div className="space-y-3">
                         {project.roadmap?.map((step, sIdx) => (
                           <div key={sIdx} className="flex items-start gap-3">
@@ -161,7 +181,8 @@ export default function ProjectIdeasPage() {
                   </div>
                   <h3 className="text-xl font-bold">No Projects Generated</h3>
                   <p className="text-muted-foreground text-sm">
-                    Enter your target role and a skill you want to learn to get custom side-project ideas.
+                    Enter your target role and a skill you want to learn to get
+                    custom side-project ideas.
                   </p>
                 </div>
               </div>

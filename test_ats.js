@@ -1,9 +1,9 @@
-const { getATSAnalyses } = require('./actions/ats');
+const { getATSAnalyses } = require("./actions/ats");
 async function run() {
   try {
     await getATSAnalyses();
     console.log("SUCCESS");
-  } catch(e) {
+  } catch (e) {
     console.error("ERROR", e);
   }
 }

@@ -1,6 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 
-describe('Reproduce Issue 65', () => {
+describe("Reproduce Issue 65", () => {
   let prisma;
 
   beforeAll(async () => {
@@ -12,9 +12,9 @@ describe('Reproduce Issue 65', () => {
     await prisma.$disconnect(); // Close the database connection
   });
 
-  it('should not throw an error when fetching ATS analyses', async () => {
+  it("should not throw an error when fetching ATS analyses", async () => {
     try {
-      const user = { id: 'test-user-id' }; // Mock user object
+      const user = { id: "test-user-id" }; // Mock user object
       await prisma.atsAnalysis.findMany({
         where: { userId: user.id },
         orderBy: { createdAt: "desc" },

@@ -48,7 +48,13 @@ vi.mock("@/lib/prisma", () => {
       create: vi.fn(async () => ({})),
       findMany: vi.fn(async () => []),
     },
-    $transaction: vi.fn(async (fn) => fn({ user: { findUnique: vi.fn() }, conversation: { findFirst: vi.fn() }, message: { create: vi.fn() } })),
+    $transaction: vi.fn(async (fn) =>
+      fn({
+        user: { findUnique: vi.fn() },
+        conversation: { findFirst: vi.fn() },
+        message: { create: vi.fn() },
+      }),
+    ),
   };
   return { db };
 });
@@ -83,7 +89,11 @@ vi.mock("@/lib/schemas/forms", () => {
   class FakeSchema {
     safeParse(input) {
       // Mirror lib/validate.js: pass-through after minimal sanitation check.
-      if (input && typeof input.prompt === "string" && input.prompt.trim().length > 0) {
+      if (
+        input &&
+        typeof input.prompt === "string" &&
+        input.prompt.trim().length > 0
+      ) {
         return { success: true, data: { prompt: input.prompt.trim() } };
       }
       return {
@@ -104,14 +114,19 @@ vi.mock("@/lib/schemas/forms", () => {
 });
 
 vi.mock("@/lib/rate-limit", () => ({
-  getRateLimitIdentifier: vi.fn(() => ({ kind: "user", value: "user_test_470" })),
+  getRateLimitIdentifier: vi.fn(() => ({
+    kind: "user",
+    value: "user_test_470",
+  })),
   enforceRateLimit: vi.fn(async () => ({
     allowed: true,
     remaining: 19,
     limitPerMinute: 20,
     burstCapacity: 10,
   })),
-  buildRateLimitResponse: vi.fn(() => new Response("rate limited", { status: 429 })),
+  buildRateLimitResponse: vi.fn(
+    () => new Response("rate limited", { status: 429 }),
+  ),
 }));
 
 vi.mock("@/lib/prompt-guard", () => ({
@@ -122,10 +137,13 @@ vi.mock("@/lib/prompt-guard", () => ({
   })),
   buildSseErrorResponse: vi.fn(
     (message, status = 400) =>
-      new Response(`event: error\ndata: ${JSON.stringify({ error: message })}\n\n`, {
-        status,
-        headers: { "Content-Type": "text/event-stream" },
-      })
+      new Response(
+        `event: error\ndata: ${JSON.stringify({ error: message })}\n\n`,
+        {
+          status,
+          headers: { "Content-Type": "text/event-stream" },
+        },
+      ),
   ),
 }));
 
@@ -135,7 +153,7 @@ vi.mock("@/lib/cors", () => ({
     headers: new Headers(),
   })),
   buildCorsDeniedResponse: vi.fn(
-    () => new Response("cors denied", { status: 403 })
+    () => new Response("cors denied", { status: 403 }),
   ),
 }));
 
@@ -145,14 +163,14 @@ vi.mock("@/lib/api/error-handler", () => ({
       new Response(JSON.stringify({ error: message || code }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
-      })
+      }),
   ),
   respondSseError: vi.fn(
     () =>
       new Response("event: error\ndata: {}\n\n", {
         status: 500,
         headers: { "Content-Type": "text/event-stream" },
-      })
+      }),
   ),
   ERROR_CODES: {
     UNAUTHORIZED: "UNAUTHORIZED",

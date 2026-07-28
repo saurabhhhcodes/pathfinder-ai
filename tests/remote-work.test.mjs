@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { remoteWorkPitchOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  remoteWorkPitchOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -12,16 +15,19 @@ describe("remoteWorkPitchOutputSchema", () => {
       businessCase: [
         "Increased focus time by eliminating a 2-hour daily commute.",
         "Better timezone alignment with the offshore engineering team.",
-        "Proven track record of high productivity during previous remote days."
+        "Proven track record of high productivity during previous remote days.",
       ],
       counterObjections: [
         {
           objection: "We need you in the office for spontaneous collaboration.",
-          rebuttal: "I will establish dedicated core hours for sync communication and maintain active presence on Slack/Zoom."
-        }
+          rebuttal:
+            "I will establish dedicated core hours for sync communication and maintain active presence on Slack/Zoom.",
+        },
       ],
-      writtenProposal: "Dear Manager, I would like to formally request a transition to a remote work schedule...",
-      verbalScript: "Hi Manager, thanks for making time. I wanted to discuss my current working arrangement..."
+      writtenProposal:
+        "Dear Manager, I would like to formally request a transition to a remote work schedule...",
+      verbalScript:
+        "Hi Manager, thanks for making time. I wanted to discuss my current working arrangement...",
     });
     const result = validateOutput(remoteWorkPitchOutputSchema, raw);
     expect(result.success).toBe(true);
@@ -32,7 +38,7 @@ describe("remoteWorkPitchOutputSchema", () => {
 
   it("rejects output missing required fields", () => {
     const raw = JSON.stringify({
-      businessCase: ["Just one point"]
+      businessCase: ["Just one point"],
       // Missing counterObjections, writtenProposal, verbalScript
     });
     const result = validateOutput(remoteWorkPitchOutputSchema, raw);
@@ -47,7 +53,7 @@ describe("SCHEMA_DESCRIPTIONS.remoteWorkPitch", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Create a pitch.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.remoteWorkPitch
+      SCHEMA_DESCRIPTIONS.remoteWorkPitch,
     );
     expect(prompt).toContain("businessCase");
   });
@@ -96,19 +102,22 @@ describe("generateRemotePitch", () => {
     });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          businessCase: ["Point 1"],
-          counterObjections: [
-            { objection: "Obj 1", rebuttal: "Rebuttal 1" }
-          ],
-          writtenProposal: "Proposal",
-          verbalScript: "Script"
-        }),
+        text: () =>
+          JSON.stringify({
+            businessCase: ["Point 1"],
+            counterObjections: [{ objection: "Obj 1", rebuttal: "Rebuttal 1" }],
+            writtenProposal: "Proposal",
+            verbalScript: "Script",
+          }),
       },
     });
     actionMocks.remoteWorkPitchCreate.mockResolvedValue({ id: "pitch-1" });
 
-    const result = await generateRemotePitch("Software Engineer", "Long commute", "Fear of low productivity");
+    const result = await generateRemotePitch(
+      "Software Engineer",
+      "Long commute",
+      "Fear of low productivity",
+    );
 
     expect(actionMocks.auth).toHaveBeenCalled();
     expect(actionMocks.generateGeminiContent).toHaveBeenCalled();

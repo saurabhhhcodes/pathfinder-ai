@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp, Users, BarChart3, Lightbulb, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import {
+  TrendingUp,
+  Users,
+  BarChart3,
+  Lightbulb,
+  ArrowUpRight,
+  ArrowDownRight,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const metrics = [
@@ -72,21 +79,37 @@ function IntelligenceCard({ metric, insight, index }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      transition={{
+        delay: index * 0.08,
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      }}
       className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card shadow-soft hover:shadow-card-hover hover:border-primary/30 transition-all duration-500"
     >
-      <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500", metric.color)} />
+      <div
+        className={cn(
+          "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+          metric.color,
+        )}
+      />
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-32 h-32 bg-foreground/[0.02] rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-500" />
 
       <div className="relative z-10 p-6 space-y-5">
         <div className="flex items-center justify-between">
-          <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg", metric.iconBg)}>
+          <div
+            className={cn(
+              "w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg",
+              metric.iconBg,
+            )}
+          >
             <Icon className="h-5 w-5" />
           </div>
-          <span className={cn(
-            "inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-transparent",
-            metric.badgeBg
-          )}>
+          <span
+            className={cn(
+              "inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-transparent",
+              metric.badgeBg,
+            )}
+          >
             {badge.icon && <badge.icon className="h-3 w-3" />}
             {badge.label}
           </span>
@@ -113,7 +136,9 @@ function IntelligenceCard({ metric, insight, index }) {
               )}
             </div>
           ) : (
-            <p className="text-2xl md:text-3xl font-black text-foreground tracking-tight">{value}</p>
+            <p className="text-2xl md:text-3xl font-black text-foreground tracking-tight">
+              {value}
+            </p>
           )}
         </div>
       </div>
@@ -127,14 +152,23 @@ export function IndustryIntelligence({ insight }) {
       <div className="flex items-center gap-4">
         <div className="h-8 w-1 rounded-full bg-gradient-to-b from-primary to-purple-500" />
         <div>
-          <h2 className="text-xl font-bold text-foreground tracking-tight">Industry Intelligence</h2>
-          <p className="text-sm text-muted-foreground">Key metrics for your sector</p>
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
+            Industry Intelligence
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Key metrics for your sector
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         {metrics.map((metric, i) => (
-          <IntelligenceCard key={metric.key} metric={metric} insight={insight} index={i} />
+          <IntelligenceCard
+            key={metric.key}
+            metric={metric}
+            insight={insight}
+            index={i}
+          />
         ))}
       </div>
     </div>

@@ -26,7 +26,10 @@ const useFetch = (cb) => {
         if (response.success === false) {
           throw new Error(response.error || "An error occurred");
         }
-        if (response.error && (response.data === null || response.data === undefined)) {
+        if (
+          response.error &&
+          (response.data === null || response.data === undefined)
+        ) {
           throw new Error(response.error);
         }
       }

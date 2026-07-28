@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Send, CheckCircle2, FileText, Loader2, Plane, MessageSquare } from "lucide-react";
+import {
+  Globe,
+  Send,
+  CheckCircle2,
+  FileText,
+  Loader2,
+  Plane,
+  MessageSquare,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -65,13 +73,18 @@ export default function VisaGuidePage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500">
           <Globe className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Visa & Immigration Guide</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Visa & Immigration Guide
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-          Navigate Sponsorship <span className="text-gradient-primary">Safely.</span>
+          Navigate Sponsorship{" "}
+          <span className="text-gradient-primary">Safely.</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Need an H-1B, OPT, or O-1? We'll help you craft the perfect cover letter clause, a strategic timeline, and tactful email scripts to discuss sponsorship with HR without getting disqualified early.
+          Need an H-1B, OPT, or O-1? We'll help you craft the perfect cover
+          letter clause, a strategic timeline, and tactful email scripts to
+          discuss sponsorship with HR without getting disqualified early.
         </p>
       </div>
 
@@ -82,7 +95,9 @@ export default function VisaGuidePage() {
             <h3 className="text-lg font-bold mb-4">Your Situation</h3>
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">Current/Target Visa Type</label>
+                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">
+                  Current/Target Visa Type
+                </label>
                 <Input
                   placeholder="E.g., F-1 OPT (Stem), H-1B, TN..."
                   value={visaType}
@@ -91,7 +106,9 @@ export default function VisaGuidePage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">Target Role</label>
+                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">
+                  Target Role
+                </label>
                 <Input
                   placeholder="E.g., Senior Data Scientist"
                   value={targetRole}
@@ -100,7 +117,9 @@ export default function VisaGuidePage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">Specific Concerns (Optional)</label>
+                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">
+                  Specific Concerns (Optional)
+                </label>
                 <Textarea
                   placeholder="E.g., My OPT expires in 6 months, companies are filtering out international students..."
                   value={concerns}
@@ -108,9 +127,11 @@ export default function VisaGuidePage() {
                   className="min-h-[100px] resize-none bg-background/50 border-border/50 rounded-2xl"
                 />
               </div>
-              <Button 
+              <Button
                 onClick={handleGenerate}
-                disabled={isGenerating || !visaType.trim() || !targetRole.trim()}
+                disabled={
+                  isGenerating || !visaType.trim() || !targetRole.trim()
+                }
                 className="w-full h-12 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-bold"
               >
                 {isGenerating ? (
@@ -130,23 +151,31 @@ export default function VisaGuidePage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past Strategies</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past Strategies
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentStrategy(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentStrategy?.id === item.id 
-                        ? "bg-indigo-500/10 border border-indigo-500/30" 
+                      currentStrategy?.id === item.id
+                        ? "bg-indigo-500/10 border border-indigo-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Plane className={`h-4 w-4 shrink-0 ${currentStrategy?.id === item.id ? "text-indigo-500" : "text-muted-foreground"}`} />
+                      <Plane
+                        className={`h-4 w-4 shrink-0 ${currentStrategy?.id === item.id ? "text-indigo-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">{item.visaType}</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          {item.visaType}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -173,14 +202,18 @@ export default function VisaGuidePage() {
                     Strategic Timeline
                   </h3>
                   <div className="space-y-4">
-                    {currentStrategy.strategyData.strategicTimeline.map((step, idx) => (
-                      <div key={idx} className="flex gap-4 items-start">
-                        <div className="h-8 w-8 rounded-full bg-indigo-500/20 text-indigo-500 flex items-center justify-center font-bold shrink-0">
-                          {idx + 1}
+                    {currentStrategy.strategyData.strategicTimeline.map(
+                      (step, idx) => (
+                        <div key={idx} className="flex gap-4 items-start">
+                          <div className="h-8 w-8 rounded-full bg-indigo-500/20 text-indigo-500 flex items-center justify-center font-bold shrink-0">
+                            {idx + 1}
+                          </div>
+                          <p className="text-sm text-foreground mt-1.5 leading-relaxed">
+                            {step}
+                          </p>
                         </div>
-                        <p className="text-sm text-foreground mt-1.5 leading-relaxed">{step}</p>
-                      </div>
-                    ))}
+                      ),
+                    )}
                   </div>
                 </div>
 
@@ -193,7 +226,16 @@ export default function VisaGuidePage() {
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
                     "{currentStrategy.strategyData.coverLetterClause}"
                   </p>
-                  <Button size="sm" variant="secondary" className="mt-4 rounded-xl" onClick={() => copyToClipboard(currentStrategy.strategyData.coverLetterClause)}>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="mt-4 rounded-xl"
+                    onClick={() =>
+                      copyToClipboard(
+                        currentStrategy.strategyData.coverLetterClause,
+                      )
+                    }
+                  >
                     Copy Clause
                   </Button>
                 </div>
@@ -207,7 +249,16 @@ export default function VisaGuidePage() {
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
                     {currentStrategy.strategyData.hrEmailScript}
                   </p>
-                  <Button size="sm" variant="secondary" className="mt-4 rounded-xl" onClick={() => copyToClipboard(currentStrategy.strategyData.hrEmailScript)}>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="mt-4 rounded-xl"
+                    onClick={() =>
+                      copyToClipboard(
+                        currentStrategy.strategyData.hrEmailScript,
+                      )
+                    }
+                  >
                     Copy Email
                   </Button>
                 </div>
@@ -219,20 +270,31 @@ export default function VisaGuidePage() {
                     Interview Talking Points
                   </h3>
                   <ul className="space-y-3">
-                    {currentStrategy.strategyData.interviewTalkingPoints.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-amber-500 mt-1 font-bold">•</span>
-                        <span className="text-sm text-foreground leading-relaxed">{point}</span>
-                      </li>
-                    ))}
+                    {currentStrategy.strategyData.interviewTalkingPoints.map(
+                      (point, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="text-amber-500 mt-1 font-bold">
+                            •
+                          </span>
+                          <span className="text-sm text-foreground leading-relaxed">
+                            {point}
+                          </span>
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </div>
               </motion.div>
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-border">
                 <Globe className="h-12 w-12 text-muted-foreground/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No strategies generated.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Fill out the form to safely navigate your visa sponsorship process.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No strategies generated.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Fill out the form to safely navigate your visa sponsorship
+                  process.
+                </p>
               </div>
             )}
           </AnimatePresence>

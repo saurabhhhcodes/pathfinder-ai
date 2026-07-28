@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Send, Loader2, MessageSquare, ShieldAlert, Target, Settings, Info } from "lucide-react";
+import {
+  BookOpen,
+  Send,
+  Loader2,
+  MessageSquare,
+  ShieldAlert,
+  Target,
+  Settings,
+  Info,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { buildReadme, getManagerReadmes } from "@/actions/manager-readme";
@@ -65,13 +74,17 @@ export default function ManagerReadmePage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-500">
           <Settings className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Manager README Builder</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Manager README Builder
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Lead with <span className="text-gradient-primary">Clarity.</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          A "Manager README" is an operating manual for how to work with you. It accelerates trust and removes friction for new teams. Dump your working style here and we'll format it beautifully.
+          A "Manager README" is an operating manual for how to work with you. It
+          accelerates trust and removes friction for new teams. Dump your
+          working style here and we'll format it beautifully.
         </p>
       </div>
 
@@ -117,9 +130,14 @@ export default function ManagerReadmePage() {
                 />
               </div>
 
-              <Button 
+              <Button
                 onClick={handleGenerate}
-                disabled={isGenerating || !style.trim() || !boundaries.trim() || !feedback.trim()}
+                disabled={
+                  isGenerating ||
+                  !style.trim() ||
+                  !boundaries.trim() ||
+                  !feedback.trim()
+                }
                 className="w-full h-12 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white font-bold mt-2"
               >
                 {isGenerating ? (
@@ -139,23 +157,31 @@ export default function ManagerReadmePage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past READMEs</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past READMEs
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentReadme(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentReadme?.id === item.id 
-                        ? "bg-cyan-500/10 border border-cyan-500/30" 
+                      currentReadme?.id === item.id
+                        ? "bg-cyan-500/10 border border-cyan-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <BookOpen className={`h-4 w-4 shrink-0 ${currentReadme?.id === item.id ? "text-cyan-500" : "text-muted-foreground"}`} />
+                      <BookOpen
+                        className={`h-4 w-4 shrink-0 ${currentReadme?.id === item.id ? "text-cyan-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">Manager README</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          Manager README
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -177,11 +203,18 @@ export default function ManagerReadmePage() {
               >
                 <div className="p-8 glass rounded-3xl border border-border bg-background/50 relative">
                   <div className="absolute top-6 right-6">
-                    <Button size="sm" variant="outline" className="rounded-xl" onClick={() => copyToClipboard(currentReadme.readmeData.readmeMarkdown)}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="rounded-xl"
+                      onClick={() =>
+                        copyToClipboard(currentReadme.readmeData.readmeMarkdown)
+                      }
+                    >
                       Copy Markdown
                     </Button>
                   </div>
-                  
+
                   <div className="prose prose-sm dark:prose-invert max-w-none">
                     <ReactMarkdown>
                       {currentReadme.readmeData.readmeMarkdown}
@@ -194,9 +227,14 @@ export default function ManagerReadmePage() {
                     <Info className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-blue-500 mb-1">How to use this</h4>
+                    <h4 className="text-sm font-bold text-blue-500 mb-1">
+                      How to use this
+                    </h4>
                     <p className="text-sm text-foreground leading-relaxed">
-                      Copy the Markdown above and paste it into a Notion page, Confluence doc, or GitHub repository. Share it with new hires during their first week, or pin it in your team's Slack channel.
+                      Copy the Markdown above and paste it into a Notion page,
+                      Confluence doc, or GitHub repository. Share it with new
+                      hires during their first week, or pin it in your team's
+                      Slack channel.
                     </p>
                   </div>
                 </div>
@@ -204,8 +242,13 @@ export default function ManagerReadmePage() {
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-cyan-500/30">
                 <BookOpen className="h-12 w-12 text-cyan-500/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No READMEs generated.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Provide your communication styles and boundaries, and we'll format them into a beautiful markdown document.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No READMEs generated.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Provide your communication styles and boundaries, and we'll
+                  format them into a beautiful markdown document.
+                </p>
               </div>
             )}
           </AnimatePresence>

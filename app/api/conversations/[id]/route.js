@@ -8,7 +8,11 @@ export async function GET(request, context) {
   const idValidation = validateId(params.id);
 
   if (!idValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", idValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Conversation ID is required",
+      idValidation.errors,
+    );
   }
 
   try {
@@ -43,13 +47,19 @@ export async function GET(request, context) {
     });
 
     if (!conversation) {
-      return respondError(ERROR_CODES.RESOURCE_NOT_FOUND, "Conversation not found");
+      return respondError(
+        ERROR_CODES.RESOURCE_NOT_FOUND,
+        "Conversation not found",
+      );
     }
 
     return Response.json(conversation);
   } catch (error) {
     console.error("GET single conversation error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to fetch conversation");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to fetch conversation",
+    );
   }
 }
 
@@ -58,7 +68,11 @@ export async function DELETE(request, context) {
   const idValidation = validateId(params.id);
 
   if (!idValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", idValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Conversation ID is required",
+      idValidation.errors,
+    );
   }
 
   try {
@@ -88,13 +102,16 @@ export async function DELETE(request, context) {
     if (count === 0) {
       return respondError(
         ERROR_CODES.RESOURCE_NOT_FOUND,
-        "Conversation not found"
+        "Conversation not found",
       );
     }
 
     return Response.json({ success: true });
   } catch (error) {
     console.error("DELETE conversation error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to delete conversation");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to delete conversation",
+    );
   }
 }

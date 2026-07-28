@@ -110,7 +110,12 @@ export async function getUserOnboardingStatus() {
 
       const email = clerkUser.emailAddresses?.[0]?.emailAddress;
       if (!email) {
-        return { isOnboarded: false, user: null, isSignedIn: true, error: "Email not found" };
+        return {
+          isOnboarded: false,
+          user: null,
+          isSignedIn: true,
+          error: "Email not found",
+        };
       }
 
       user = await db.user.upsert({

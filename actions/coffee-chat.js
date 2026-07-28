@@ -71,13 +71,21 @@ export async function sendCoffeeChatMessage(sessionId, userMessage) {
   const session = await db.coffeeChatSession.findFirst({
     where: { id: sessionId, userId: user.id },
   });
-  if (!session) return { success: false, errors: { _form: ["Session not found"] } };
-  const session = await db.coffeeChatSession.findUnique({ 
-    where: { id: sessionId, userId: user.id } 
+  if (!session)
+    return { success: false, errors: { _form: ["Session not found"] } };
+  const session = await db.coffeeChatSession.findUnique({
+    where: { id: sessionId, userId: user.id },
   });
-  if (!session) return { success: false, errors: { _form: ["Session not found or unauthorized"] } };
+  if (!session)
+    return {
+      success: false,
+      errors: { _form: ["Session not found or unauthorized"] },
+    };
 
-  const updatedHistory = [...session.chatHistory, { role: "user", content: userMessage }];
+  const updatedHistory = [
+    ...session.chatHistory,
+    { role: "user", content: userMessage },
+  ];
 
   const prompt = buildSecurePrompt({
     context: `You are a Senior Executive in the ${session.industry} industry, managing ${session.targetRole}s.
@@ -87,7 +95,11 @@ export async function sendCoffeeChatMessage(sessionId, userMessage) {
     Keep your response to 2-3 short paragraphs maximum.`,
     task: `Read the conversation history and respond to the latest user message.`,
     untrustedData: [
-      { label: "conversationHistory", value: JSON.stringify(updatedHistory), maxLength: 5000 },
+      {
+        label: "conversationHistory",
+        value: JSON.stringify(updatedHistory),
+        maxLength: 5000,
+      },
     ],
     outputRules: `Provide the output in the following JSON format ONLY:
 {
@@ -110,7 +122,10 @@ export async function sendCoffeeChatMessage(sessionId, userMessage) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Coffee Chat Reply Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to get reply"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to get reply"] },
+    };
   }
 }
 
@@ -124,17 +139,27 @@ export async function generateCoffeeChatFeedback(sessionId) {
   const session = await db.coffeeChatSession.findFirst({
     where: { id: sessionId, userId: user.id },
   });
-  if (!session) return { success: false, errors: { _form: ["Session not found"] } };
-  const session = await db.coffeeChatSession.findUnique({ 
-    where: { id: sessionId, userId: user.id } 
+  if (!session)
+    return { success: false, errors: { _form: ["Session not found"] } };
+  const session = await db.coffeeChatSession.findUnique({
+    where: { id: sessionId, userId: user.id },
   });
-  if (!session) return { success: false, errors: { _form: ["Session not found or unauthorized"] } };
+  if (!session)
+    return {
+      success: false,
+      errors: { _form: ["Session not found or unauthorized"] },
+    };
 
   const prompt = buildSecurePrompt({
-    context: "You are an expert career coach analyzing an informational interview (coffee chat).",
+    context:
+      "You are an expert career coach analyzing an informational interview (coffee chat).",
     task: `Analyze the transcript of the coffee chat. Evaluate how well the user asked questions, built rapport, and pitched themselves without sounding desperate. Provide constructive feedback.`,
     untrustedData: [
-      { label: "chatHistory", value: JSON.stringify(session.chatHistory), maxLength: 5000 },
+      {
+        label: "chatHistory",
+        value: JSON.stringify(session.chatHistory),
+        maxLength: 5000,
+      },
     ],
     outputRules: `Provide the output in the following JSON format ONLY:
 {
@@ -158,7 +183,10 @@ export async function generateCoffeeChatFeedback(sessionId) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Coffee Chat Feedback Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate feedback"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate feedback"] },
+    };
   }
 }
 

@@ -108,9 +108,7 @@ describe("fallback", () => {
   it("throws GeminiError when every model in the chain is unavailable", async () => {
     expect.assertions(1);
 
-    mocks.generateContent.mockRejectedValue(
-      createMockError(404, "not found"),
-    );
+    mocks.generateContent.mockRejectedValue(createMockError(404, "not found"));
 
     await expect(generateGeminiContent("Hi")).rejects.toThrow(GeminiError);
   });

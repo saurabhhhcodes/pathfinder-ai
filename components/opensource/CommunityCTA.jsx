@@ -26,40 +26,57 @@ export function CommunityCTA() {
 
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
             Become a{" "}
-            <span className="text-gradient-primary">PathFinder AI</span>
-            {" "}Contributor
+            <span className="text-gradient-primary">PathFinder AI</span>{" "}
+            Contributor
           </h2>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Whether you&apos;re fixing bugs, improving documentation, designing interfaces, or building new features, your contributions are welcome.
+            Whether you&apos;re fixing bugs, improving documentation, designing
+            interfaces, or building new features, your contributions are
+            welcome.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button asChild
+            <Button
+              asChild
               size="lg"
               className="h-14 px-10 rounded-2xl text-base font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform duration-300 group bg-primary text-primary-foreground"
             >
-              <a href="https://github.com/harshdwivediiiii/pathfinder-ai" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/harshdwivediiiii/pathfinder-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 View Repository
                 <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
-            <Button asChild
+            <Button
+              asChild
               size="lg"
               variant="outline"
               className="h-14 px-10 rounded-2xl text-base font-bold border-border/50 glass hover:bg-muted/50 transition-all duration-300 group"
             >
-              <a href="https://github.com/harshdwivediiiii/pathfinder-ai/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/harshdwivediiiii/pathfinder-ai/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Good First Issues
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
-            <Button asChild
+            <Button
+              asChild
               size="lg"
               variant="outline"
               className="h-14 px-10 rounded-2xl text-base font-bold border-border/50 glass hover:bg-muted/50 transition-all duration-300 group"
             >
-              <a href="https://github.com/harshdwivediiiii/pathfinder-ai/discussions" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/harshdwivediiiii/pathfinder-ai/discussions"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Join Community
                 <MessageCircle className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>

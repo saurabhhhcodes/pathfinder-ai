@@ -56,14 +56,14 @@ The `pr-labeler.yml` workflow uses **Conventional Commit prefixes** in PR titles
 to auto-label pull requests. Please use one of the following prefixes in your
 PR title:
 
-| Prefix     | When to use                        |
-|------------|------------------------------------|
-| `feat:`    | A new feature                      |
-| `fix:`     | A bug fix                          |
-| `docs:`    | Documentation only                 |
-| `chore:`   | Maintenance (deps, config)         |
-| `refactor:`| Code restructuring, no behavior change |
-| `test:`    | Adding or updating tests           |
-| `style:`   | UI/formatting tweaks               |
+| Prefix      | When to use                            |
+| ----------- | -------------------------------------- |
+| `feat:`     | A new feature                          |
+| `fix:`      | A bug fix                              |
+| `docs:`     | Documentation only                     |
+| `chore:`    | Maintenance (deps, config)             |
+| `refactor:` | Code restructuring, no behavior change |
+| `test:`     | Adding or updating tests               |
+| `style:`    | UI/formatting tweaks                   |
 
 **Example:** `feat: add resume analytics dashboard`

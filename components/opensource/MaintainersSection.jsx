@@ -25,7 +25,12 @@ export function MaintainersSection() {
         <StaggerItem key={m.login}>
           <motion.div
             whileHover={{ y: -6, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 120, damping: 25, mass: 0.8 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 25,
+              mass: 0.8,
+            }}
             className="group relative h-full"
           >
             <Link
@@ -52,7 +57,9 @@ export function MaintainersSection() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <h4 className="text-lg font-bold text-foreground">{m.name}</h4>
+                  <h4 className="text-lg font-bold text-foreground">
+                    {m.name}
+                  </h4>
                   <p className="text-sm text-muted-foreground">{m.role}</p>
                 </div>
 

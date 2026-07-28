@@ -2,7 +2,15 @@
 
 import { motion } from "framer-motion";
 
-export function FadeUp({ children, delay = 0, duration = 0.8, className, once = true, y = 40, ...props }) {
+export function FadeUp({
+  children,
+  delay = 0,
+  duration = 0.8,
+  className,
+  once = true,
+  y = 40,
+  ...props
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y }}

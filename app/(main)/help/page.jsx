@@ -139,8 +139,8 @@ export default function HelpPage() {
             How can we help you?
           </h1>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
-            Everything you need to get the most out of Pathfinder AI — from
-            your first sign-in to landing your dream job.
+            Everything you need to get the most out of Pathfinder AI — from your
+            first sign-in to landing your dream job.
           </p>
         </div>
       </div>
@@ -187,7 +187,9 @@ export default function HelpPage() {
                     Step {step}
                   </p>
                   <h3 className="font-semibold text-white mb-2">{heading}</h3>
-                  <p className="text-sm text-white/50 leading-relaxed">{body}</p>
+                  <p className="text-sm text-white/50 leading-relaxed">
+                    {body}
+                  </p>
                 </div>
               ))}
             </div>

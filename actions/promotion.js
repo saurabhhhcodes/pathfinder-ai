@@ -12,7 +12,10 @@ export async function generatePromotionStrategy(achievements, targetRole) {
   if (!userId) return { success: false, errors: { _form: ["Unauthorized"] } };
 
   if (!achievements || !targetRole) {
-    return { success: false, errors: { _form: ["Achievements and Target Role are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Achievements and Target Role are required."] },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -21,7 +24,9 @@ export async function generatePromotionStrategy(achievements, targetRole) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   const prompt = buildSecurePrompt({
-    context: buildUserProfileContext(user) + "\nYou are an expert executive coach specializing in internal promotions and salary negotiation.",
+    context:
+      buildUserProfileContext(user) +
+      "\nYou are an expert executive coach specializing in internal promotions and salary negotiation.",
     task: `Generate a structured 'Brag Document' and a negotiation script for a candidate trying to get promoted to '${targetRole}'.
     Analyze their achievements to calculate their implied ROI to the company. Provide a verbatim script they can use in a 1-on-1 with their manager.`,
     untrustedData: [
@@ -59,7 +64,12 @@ export async function generatePromotionStrategy(achievements, targetRole) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Promotion Strategy Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate promotion strategy"] } };
+    return {
+      success: false,
+      errors: {
+        _form: [error.message || "Failed to generate promotion strategy"],
+      },
+    };
   }
 }
 

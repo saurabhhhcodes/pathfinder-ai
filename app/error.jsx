@@ -26,22 +26,25 @@ export default function Error({ error, reset }) {
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-3xl font-black tracking-tight text-foreground">Critical Error</h1>
+          <h1 className="text-3xl font-black tracking-tight text-foreground">
+            Critical Error
+          </h1>
           <p className="text-muted-foreground leading-relaxed font-medium">
-            {error?.message || "Our neural engine encountered an unexpected interruption while processing your request."}
+            {error?.message ||
+              "Our neural engine encountered an unexpected interruption while processing your request."}
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-4">
-          <Button 
-            onClick={() => reset()} 
+          <Button
+            onClick={() => reset()}
             className="w-full sm:w-auto h-12 rounded-2xl px-8 font-bold gap-2 shadow-lg shadow-primary/20"
           >
             <RefreshCcw className="h-4 w-4" />
             Retry System
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             asChild
             className="w-full sm:w-auto h-12 rounded-2xl px-8 font-bold gap-2 border-border bg-background/50 hover:bg-muted"
           >

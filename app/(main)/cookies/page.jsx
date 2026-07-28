@@ -104,11 +104,18 @@ export default function CookiesPage() {
             >
               Cookies Policy
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-muted-foreground text-lg">
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground text-lg"
+            >
               Last updated: June 2026
             </motion.p>
-            <motion.p variants={fadeUp} className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              This policy explains how PathFinder AI uses cookies and similar technologies to provide and improve our services.
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground mt-4 max-w-xl mx-auto"
+            >
+              This policy explains how PathFinder AI uses cookies and similar
+              technologies to provide and improve our services.
             </motion.p>
           </motion.div>
         </div>
@@ -117,13 +124,8 @@ export default function CookiesPage() {
       {/* Content */}
       <div className="container mx-auto px-4 md:px-6 py-16">
         <div className="max-w-3xl mx-auto space-y-16">
-
           {/* Cookie types table */}
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={stagger}
-          >
+          <motion.div initial="hidden" animate="show" variants={stagger}>
             <motion.h2 variants={fadeUp} className="text-2xl font-bold mb-6">
               Types of Cookies We Use
             </motion.h2>
@@ -135,7 +137,9 @@ export default function CookiesPage() {
                   className="border border-border rounded-2xl p-6 bg-card hover:border-primary/30 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-foreground">{cookie.name}</h3>
+                    <h3 className="font-semibold text-foreground">
+                      {cookie.name}
+                    </h3>
                     <span
                       className={`text-xs px-3 py-1 rounded-full font-medium ${
                         cookie.required
@@ -150,7 +154,9 @@ export default function CookiesPage() {
                     {cookie.description}
                   </p>
                   <p className="text-xs text-muted-foreground/70">
-                    <span className="font-medium text-muted-foreground">Examples: </span>
+                    <span className="font-medium text-muted-foreground">
+                      Examples:{" "}
+                    </span>
                     {cookie.examples}
                   </p>
                 </motion.div>

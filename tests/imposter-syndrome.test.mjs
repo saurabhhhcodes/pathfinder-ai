@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { imposterSyndromeOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  imposterSyndromeOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -9,15 +12,20 @@ import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 describe("imposterSyndromeOutputSchema", () => {
   it("accepts valid imposter syndrome output", () => {
     const raw = JSON.stringify({
-      empathyStatement: "It is completely normal to feel this way, especially when you are taking on new responsibilities and stepping out of your comfort zone.",
+      empathyStatement:
+        "It is completely normal to feel this way, especially when you are taking on new responsibilities and stepping out of your comfort zone.",
       cognitiveReframes: [
         {
-          theDoubt: "I only got this promotion because I was in the right place at the right time.",
-          theReality: "You secured this promotion because you consistently delivered high-quality work, effectively managed complex projects, and demonstrated strong leadership skills."
-        }
+          theDoubt:
+            "I only got this promotion because I was in the right place at the right time.",
+          theReality:
+            "You secured this promotion because you consistently delivered high-quality work, effectively managed complex projects, and demonstrated strong leadership skills.",
+        },
       ],
-      powerMantra: "I have earned my place through hard work and proven capabilities.",
-      actionableAdvice: "Write down three specific contributions you made this week and review them before your next team meeting."
+      powerMantra:
+        "I have earned my place through hard work and proven capabilities.",
+      actionableAdvice:
+        "Write down three specific contributions you made this week and review them before your next team meeting.",
     });
     const result = validateOutput(imposterSyndromeOutputSchema, raw);
     expect(result.success).toBe(true);
@@ -27,7 +35,7 @@ describe("imposterSyndromeOutputSchema", () => {
 
   it("rejects output missing required fields", () => {
     const raw = JSON.stringify({
-      empathyStatement: "I hear you."
+      empathyStatement: "I hear you.",
     });
     const result = validateOutput(imposterSyndromeOutputSchema, raw);
     expect(result.success).toBe(false);
@@ -41,7 +49,7 @@ describe("SCHEMA_DESCRIPTIONS.imposterSyndrome", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Reframe thoughts.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.imposterSyndrome
+      SCHEMA_DESCRIPTIONS.imposterSyndrome,
     );
     expect(prompt).toContain("powerMantra");
   });
@@ -94,14 +102,13 @@ describe("reframeThoughts", () => {
     });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          empathyStatement: "It's normal.",
-          cognitiveReframes: [
-            { theDoubt: "Doubt", theReality: "Reality" }
-          ],
-          powerMantra: "Mantra",
-          actionableAdvice: "Advice"
-        }),
+        text: () =>
+          JSON.stringify({
+            empathyStatement: "It's normal.",
+            cognitiveReframes: [{ theDoubt: "Doubt", theReality: "Reality" }],
+            powerMantra: "Mantra",
+            actionableAdvice: "Advice",
+          }),
       },
     });
     actionMocks.imposterSyndromeCreate.mockResolvedValue({ id: "imposter-1" });

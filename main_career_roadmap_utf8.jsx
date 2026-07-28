@@ -5,12 +5,48 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
 
 const milestones = [
-  { label: "Student", desc: "Foundation & learning", year: "Year 1", x: 50, y: 30 },
-  { label: "Intern", desc: "Real-world experience", year: "Year 2", x: 85, y: 18 },
-  { label: "Junior Dev", desc: "Building products", year: "Year 3-4", x: 92, y: 40 },
-  { label: "Software Engineer", desc: "Ship at scale", year: "Year 5+", x: 75, y: 68 },
-  { label: "Senior Engineer", desc: "Lead & architect", year: "Year 8+", x: 40, y: 80 },
-  { label: "Staff Engineer", desc: "Org-wide impact", year: "Year 10+", x: 15, y: 60 },
+  {
+    label: "Student",
+    desc: "Foundation & learning",
+    year: "Year 1",
+    x: 50,
+    y: 30,
+  },
+  {
+    label: "Intern",
+    desc: "Real-world experience",
+    year: "Year 2",
+    x: 85,
+    y: 18,
+  },
+  {
+    label: "Junior Dev",
+    desc: "Building products",
+    year: "Year 3-4",
+    x: 92,
+    y: 40,
+  },
+  {
+    label: "Software Engineer",
+    desc: "Ship at scale",
+    year: "Year 5+",
+    x: 75,
+    y: 68,
+  },
+  {
+    label: "Senior Engineer",
+    desc: "Lead & architect",
+    year: "Year 8+",
+    x: 40,
+    y: 80,
+  },
+  {
+    label: "Staff Engineer",
+    desc: "Org-wide impact",
+    year: "Year 10+",
+    x: 15,
+    y: 60,
+  },
 ];
 
 export function CareerRoadmapSection() {
@@ -28,7 +64,11 @@ export function CareerRoadmapSection() {
     .join(" ");
 
   return (
-    <section ref={ref} id="career-roadmap" className="relative py-32 md:py-48 overflow-hidden">
+    <section
+      ref={ref}
+      id="career-roadmap"
+      className="relative py-32 md:py-48 overflow-hidden"
+    >
       <div className="container mx-auto px-4 md:px-6">
         <FadeUp className="max-w-3xl mx-auto text-center mb-20 space-y-4">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold uppercase tracking-widest text-primary">
@@ -39,20 +79,30 @@ export function CareerRoadmapSection() {
             <span className="text-gradient-primary">Career Progression</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Visualize your path from student to industry leader with AI-tailored milestones.
+            Visualize your path from student to industry leader with AI-tailored
+            milestones.
           </p>
         </FadeUp>
 
         <div className="relative mx-auto max-w-4xl">
           <svg viewBox="0 0 500 360" className="w-full h-auto">
             <defs>
-              <linearGradient id="roadmapGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient
+                id="roadmapGrad2"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="oklch(var(--primary) / 0.6)" />
                 <stop offset="100%" stopColor="oklch(var(--primary) / 0.1)" />
               </linearGradient>
               <filter id="glow2">
                 <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
               </filter>
             </defs>
 
@@ -130,7 +180,9 @@ export function CareerRoadmapSection() {
           {milestones.map((m) => (
             <StaggerItem key={m.label}>
               <div className="glass rounded-xl p-4 text-center border border-border/30 space-y-1 hover:border-primary/30 transition-all duration-300">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-primary">{m.year}</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
+                  {m.year}
+                </span>
                 <p className="text-xs font-bold text-foreground">{m.label}</p>
               </div>
             </StaggerItem>

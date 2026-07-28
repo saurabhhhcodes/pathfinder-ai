@@ -85,11 +85,18 @@ export default function TermsOfServicePage() {
             >
               Terms of Service
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-muted-foreground text-lg">
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground text-lg"
+            >
               Last updated: June 2026
             </motion.p>
-            <motion.p variants={fadeUp} className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Please read these terms carefully before using PathFinder AI. By using our platform, you agree to be bound by these terms.
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground mt-4 max-w-xl mx-auto"
+            >
+              Please read these terms carefully before using PathFinder AI. By
+              using our platform, you agree to be bound by these terms.
             </motion.p>
           </motion.div>
         </div>
@@ -126,7 +133,8 @@ export default function TermsOfServicePage() {
             >
               <h2 className="text-xl font-semibold mb-2">Questions?</h2>
               <p className="text-muted-foreground mb-4">
-                If you have any questions about these Terms of Service, contact us at:
+                If you have any questions about these Terms of Service, contact
+                us at:
               </p>
               <a
                 href="mailto:harshvardhandwivedi18@gmail.com"

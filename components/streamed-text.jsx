@@ -26,7 +26,11 @@ const CodeBlock = ({ children }) => {
           onClick={onCopy}
           className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all opacity-0 group-hover:opacity-100"
         >
-          {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5 text-muted-foreground" />}
+          {copied ? (
+            <Check className="h-3.5 w-3.5 text-emerald-400" />
+          ) : (
+            <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+          )}
         </button>
       </div>
       <div className="flex items-center gap-2 px-4 py-2 border-x border-t border-border rounded-t-xl bg-muted/50 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -42,10 +46,14 @@ const CodeBlock = ({ children }) => {
 
 export const markdownComponents = {
   h1: ({ children }) => (
-    <h1 className="text-2xl font-black tracking-tight text-foreground mt-8 mb-4 border-b border-border pb-2">{children}</h1>
+    <h1 className="text-2xl font-black tracking-tight text-foreground mt-8 mb-4 border-b border-border pb-2">
+      {children}
+    </h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-xl font-bold tracking-tight text-foreground mt-6 mb-3">{children}</h2>
+    <h2 className="text-xl font-bold tracking-tight text-foreground mt-6 mb-3">
+      {children}
+    </h2>
   ),
   h3: ({ children }) => (
     <h3 className="text-lg font-bold text-foreground mt-5 mb-2">{children}</h3>
@@ -91,7 +99,7 @@ function StreamedText({
   emptyMessage = "AI response will appear here...",
 }) {
   const [debouncedText] = useDebounce(text, 20);
-  
+
   if (error) {
     return (
       <div className="flex items-start gap-4 rounded-3xl border border-destructive/20 bg-destructive/5 p-6 text-sm text-destructive shadow-sm">
@@ -99,8 +107,12 @@ function StreamedText({
           <AlertTriangle className="h-5 w-5" />
         </div>
         <div>
-          <p className="font-black uppercase tracking-widest text-[10px] mb-1">Neural Engine Error</p>
-          <p className="text-destructive/80 leading-relaxed font-medium">{error}</p>
+          <p className="font-black uppercase tracking-widest text-[10px] mb-1">
+            Neural Engine Error
+          </p>
+          <p className="text-destructive/80 leading-relaxed font-medium">
+            {error}
+          </p>
         </div>
       </div>
     );
@@ -108,7 +120,9 @@ function StreamedText({
 
   if (!text && !isLoading) {
     return (
-      <p className="text-muted-foreground text-sm font-medium animate-pulse">{emptyMessage}</p>
+      <p className="text-muted-foreground text-sm font-medium animate-pulse">
+        {emptyMessage}
+      </p>
     );
   }
 
@@ -123,10 +137,10 @@ function StreamedText({
       </ReactMarkdown>
 
       {isLoading && (
-        <motion.span 
+        <motion.span
           animate={{ opacity: [0, 1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity }}
-          className="inline-block w-2.5 h-5 ml-1 bg-primary rounded-sm align-middle" 
+          className="inline-block w-2.5 h-5 ml-1 bg-primary rounded-sm align-middle"
         />
       )}
     </div>

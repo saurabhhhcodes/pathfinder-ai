@@ -14,11 +14,17 @@ export async function analyzeRelocation(currentCity, targetCity, salary) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!currentCity || !targetCity || !salary) {
-    return { success: false, errors: { _form: ["Current city, target city, and salary are required."] } };
+    return {
+      success: false,
+      errors: {
+        _form: ["Current city, target city, and salary are required."],
+      },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Expert Compensation Analyst and Relocation Consultant.",
+    context:
+      "You are an Expert Compensation Analyst and Relocation Consultant.",
     task: `Analyze the user's potential relocation from their current city to the target city, along with the offered salary.
     Estimate the cost of living difference, calculate a rough 'equivalent' salary, and provide negotiation scripts to ask for a relocation bonus and a Cost of Living Adjustment (COLA).`,
     untrustedData: [
@@ -54,7 +60,10 @@ export async function analyzeRelocation(currentCity, targetCity, salary) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Relocation Analysis Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to analyze relocation"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to analyze relocation"] },
+    };
   }
 }
 

@@ -4,7 +4,11 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { isFeatureEnabled } from "@/lib/ai-gating";
-import { ATS_ANALYSIS_CACHE_TTL_MS, cachedGenerateGeminiContent, generateCacheKey } from "@/lib/cache";
+import {
+  ATS_ANALYSIS_CACHE_TTL_MS,
+  cachedGenerateGeminiContent,
+  generateCacheKey,
+} from "@/lib/cache";
 import { generateGeminiContent } from "@/lib/gemini";
 import { buildSecurePrompt } from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
@@ -21,13 +25,23 @@ import { USER_NOT_FOUND_MESSAGE } from "@/lib/errors";
 export async function analyzeATS(rawParams) {
   try {
     if (!isFeatureEnabled("ats")) {
-      return { success: false, errors: { _form: ["ATS analysis feature is currently disabled (missing configuration)."] } };
+      return {
+        success: false,
+        errors: {
+          _form: [
+            "ATS analysis feature is currently disabled (missing configuration).",
+          ],
+        },
+      };
     }
 
     const { userId } = await auth();
 
     if (!userId) {
-      return { success: false, errors: { _form: ["Sign-in required to scan applications."] } };
+      return {
+        success: false,
+        errors: { _form: ["Sign-in required to scan applications."] },
+      };
     }
 
     const limit = await checkRateLimit(userId, "ats");
@@ -35,7 +49,9 @@ export async function analyzeATS(rawParams) {
       return {
         success: false,
         errors: {
-          _form: [`ATS analysis limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+          _form: [
+            `ATS analysis limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+          ],
         },
       };
     }
@@ -45,7 +61,8 @@ export async function analyzeATS(rawParams) {
       return { success: false, errors: validation.errors };
     }
 
-    const { resumeContent, jobDescription, jobTitle, companyName } = validation.data;
+    const { resumeContent, jobDescription, jobTitle, companyName } =
+      validation.data;
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
@@ -60,8 +77,16 @@ export async function analyzeATS(rawParams) {
       untrustedData: [
         { label: "resumeContent", value: resumeContent, maxLength: 8000 },
         { label: "jobDescription", value: jobDescription, maxLength: 8000 },
-        { label: "jobTitle", value: jobTitle || "Not specified", maxLength: 200 },
-        { label: "companyName", value: companyName || "Not specified", maxLength: 200 },
+        {
+          label: "jobTitle",
+          value: jobTitle || "Not specified",
+          maxLength: 200,
+        },
+        {
+          label: "companyName",
+          value: companyName || "Not specified",
+          maxLength: 200,
+        },
       ],
       outputRules: `Provide your analysis in the following JSON format ONLY - no extra text, no markdown fences:
 {
@@ -102,7 +127,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation outside the JSON.
       resumeContent,
       jobDescription,
       jobTitle,
-      companyName
+      companyName,
     );
 
     const result = await cachedGenerateGeminiContent(
@@ -111,28 +136,52 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation outside the JSON.
       {
         key: cacheKey,
         ttl: ATS_ANALYSIS_CACHE_TTL_MS,
-      }
+      },
     );
-    const outputValidation = validateOutput(atsAnalysisOutputSchema, result.response.text());
+    const outputValidation = validateOutput(
+      atsAnalysisOutputSchema,
+      result.response.text(),
+    );
     if (!outputValidation.success) {
-      console.error("ATS analysis output validation failed:", outputValidation.errors);
-      return { success: false, errors: { _form: ["AI returned an unexpected format. Please try again."] } };
+      console.error(
+        "ATS analysis output validation failed:",
+        outputValidation.errors,
+      );
+      return {
+        success: false,
+        errors: {
+          _form: ["AI returned an unexpected format. Please try again."],
+        },
+      };
     }
     const parsedAnalysis = outputValidation.data;
 
-    const matchedKeywords = Array.isArray(parsedAnalysis.matchedKeywords) ? parsedAnalysis.matchedKeywords.map(String) : [];
-    const missingKeywords = Array.isArray(parsedAnalysis.missingKeywords) ? parsedAnalysis.missingKeywords.map(String) : [];
-    
-    const rawSuggestions = Array.isArray(parsedAnalysis.suggestions) ? parsedAnalysis.suggestions : [];
-    const rawHighlights = Array.isArray(parsedAnalysis.highlights) ? parsedAnalysis.highlights : [];
-    const highlightSuggestions = rawHighlights.map(h => ({
-      category: "highlight",
-      type: h.type || "weak_impact",
-      text: h.text || "",
-      tip: h.suggestion || h.tip || ""
-    })).filter(h => h.text.trim().length > 0);
+    const matchedKeywords = Array.isArray(parsedAnalysis.matchedKeywords)
+      ? parsedAnalysis.matchedKeywords.map(String)
+      : [];
+    const missingKeywords = Array.isArray(parsedAnalysis.missingKeywords)
+      ? parsedAnalysis.missingKeywords.map(String)
+      : [];
 
-    const suggestions = normalizeAtsSuggestions([...rawSuggestions, ...highlightSuggestions]);
+    const rawSuggestions = Array.isArray(parsedAnalysis.suggestions)
+      ? parsedAnalysis.suggestions
+      : [];
+    const rawHighlights = Array.isArray(parsedAnalysis.highlights)
+      ? parsedAnalysis.highlights
+      : [];
+    const highlightSuggestions = rawHighlights
+      .map((h) => ({
+        category: "highlight",
+        type: h.type || "weak_impact",
+        text: h.text || "",
+        tip: h.suggestion || h.tip || "",
+      }))
+      .filter((h) => h.text.trim().length > 0);
+
+    const suggestions = normalizeAtsSuggestions([
+      ...rawSuggestions,
+      ...highlightSuggestions,
+    ]);
 
     const record = await db.atsAnalysis.create({
       data: {
@@ -153,7 +202,10 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no explanation outside the JSON.
     return { success: true, data: record };
   } catch (error) {
     console.error("[ATS Action Error]:", error);
-    return { success: false, errors: { _form: [error.message || String(error)] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || String(error)] },
+    };
   }
 }
 
@@ -191,7 +243,10 @@ export async function getATSAnalyses() {
 export async function deleteATSAnalysis(id) {
   try {
     if (!id || typeof id !== "string" || id.trim().length === 0) {
-      return { success: false, errors: { _form: ["Invalid analysis identifier format provided."] } };
+      return {
+        success: false,
+        errors: { _form: ["Invalid analysis identifier format provided."] },
+      };
     }
 
     const { userId } = await auth();
@@ -210,8 +265,8 @@ export async function deleteATSAnalysis(id) {
       where: {
         id: id.trim(),
         userId: user.id,
-        },
-      });
+      },
+    });
 
     if (count === 0) {
       return {
@@ -226,6 +281,9 @@ export async function deleteATSAnalysis(id) {
     return { success: true };
   } catch (error) {
     console.error("Failed to safely delete ATS entry:", error);
-    return { success: false, errors: { _form: [error.message || String(error)] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || String(error)] },
+    };
   }
 }

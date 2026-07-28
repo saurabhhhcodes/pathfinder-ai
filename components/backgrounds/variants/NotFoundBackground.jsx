@@ -14,7 +14,9 @@ const GLITCH_PARTICLES = Array.from({ length: 15 }, (_, i) => ({
 
 export default function NotFoundBackground() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 
@@ -32,12 +34,19 @@ export default function NotFoundBackground() {
       />
       <motion.div
         animate={{ opacity: [0.06, 0.12, 0.06] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
         className="absolute bottom-[20%] left-[15%] h-[12rem] w-[12rem] rounded-full bg-purple-500/10 blur-[70px]"
       />
-      <div className="absolute inset-0 opacity-[0.04]"
+      <div
+        className="absolute inset-0 opacity-[0.04]"
         style={{
-          background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px)",
+          background:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px)",
         }}
       />
       {GLITCH_PARTICLES.map((p, i) => (
@@ -66,12 +75,16 @@ export default function NotFoundBackground() {
       ))}
       <div
         className="absolute inset-0 opacity-[0.02] mix-blend-soft-light"
-        style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}
+        style={{
+          backgroundImage:
+            "url('https://grainy-gradients.vercel.app/noise.svg')",
+        }}
       />
       <motion.div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)",
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)",
           transform: "skewX(-20deg)",
         }}
         animate={{ x: ["-100%", "200%"] }}

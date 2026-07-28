@@ -80,12 +80,17 @@ export default function DashboardNavbar() {
   }, []);
 
   const breadcrumb = Object.entries(BREADCRUMB_MAP).find(([path]) =>
-    pathname.startsWith(path)
+    pathname.startsWith(path),
   );
   const currentPage = breadcrumb?.[1] ?? "Dashboard";
 
   const recentNotifications = [
-    { id: 1, title: "New industry insight available", time: "2m ago", unread: true },
+    {
+      id: 1,
+      title: "New industry insight available",
+      time: "2m ago",
+      unread: true,
+    },
     { id: 2, title: "Salary data refreshed", time: "1h ago", unread: false },
   ];
 
@@ -96,7 +101,7 @@ export default function DashboardNavbar() {
           "sticky top-0 z-40 w-full transition-all duration-300",
           scrolled
             ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-soft"
-            : "bg-background/50 backdrop-blur-sm border-b border-border/30"
+            : "bg-background/50 backdrop-blur-sm border-b border-border/30",
         )}
       >
         <div className="px-4 sm:px-6 lg:px-8">
@@ -116,7 +121,10 @@ export default function DashboardNavbar() {
                 )}
               </button>
 
-              <Link href="/dashboard" className="flex items-center gap-2 shrink-0 group">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 shrink-0 group"
+              >
                 <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-md shadow-primary/20">
                   <Sparkles className="h-3.5 w-3.5 text-white" />
                 </div>
@@ -127,7 +135,9 @@ export default function DashboardNavbar() {
 
               <div className="hidden md:flex items-center gap-1.5 text-xs text-muted-foreground">
                 <ChevronRight className="h-3 w-3" />
-                <span className="font-semibold text-foreground">{currentPage}</span>
+                <span className="font-semibold text-foreground">
+                  {currentPage}
+                </span>
               </div>
             </div>
 
@@ -164,7 +174,10 @@ export default function DashboardNavbar() {
                 <AnimatePresence>
                   {notifOpen && (
                     <>
-                      <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setNotifOpen(false)}
+                      />
                       <motion.div
                         initial={{ opacity: 0, y: -4, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -173,11 +186,15 @@ export default function DashboardNavbar() {
                         className="absolute right-0 top-full mt-1.5 z-50 w-72 rounded-xl border border-border/50 bg-card shadow-glass-lg backdrop-blur-xl overflow-hidden"
                       >
                         <div className="p-3 border-b border-border/30">
-                          <p className="text-xs font-bold text-foreground">Notifications</p>
+                          <p className="text-xs font-bold text-foreground">
+                            Notifications
+                          </p>
                         </div>
                         {recentNotifications.length === 0 ? (
                           <div className="p-6 text-center">
-                            <p className="text-xs text-muted-foreground">No notifications yet</p>
+                            <p className="text-xs text-muted-foreground">
+                              No notifications yet
+                            </p>
                           </div>
                         ) : (
                           <div className="max-h-64 overflow-auto">
@@ -189,19 +206,25 @@ export default function DashboardNavbar() {
                                 <span
                                   className={cn(
                                     "h-2 w-2 rounded-full mt-1 shrink-0",
-                                    n.unread ? "bg-primary" : "bg-muted-foreground/30"
+                                    n.unread
+                                      ? "bg-primary"
+                                      : "bg-muted-foreground/30",
                                   )}
                                 />
                                 <div className="flex-1 min-w-0">
                                   <p
                                     className={cn(
                                       "text-xs",
-                                      n.unread ? "font-bold text-foreground" : "font-medium text-muted-foreground"
+                                      n.unread
+                                        ? "font-bold text-foreground"
+                                        : "font-medium text-muted-foreground",
                                     )}
                                   >
                                     {n.title}
                                   </p>
-                                  <p className="text-[10px] text-muted-foreground/50 mt-0.5">{n.time}</p>
+                                  <p className="text-[10px] text-muted-foreground/50 mt-0.5">
+                                    {n.time}
+                                  </p>
                                 </div>
                               </button>
                             ))}
@@ -225,7 +248,10 @@ export default function DashboardNavbar() {
                 <AnimatePresence>
                   {helpOpen && (
                     <>
-                      <div className="fixed inset-0 z-40" onClick={() => setHelpOpen(false)} />
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setHelpOpen(false)}
+                      />
                       <motion.div
                         initial={{ opacity: 0, y: -4, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -270,7 +296,10 @@ export default function DashboardNavbar() {
                 <AnimatePresence>
                   {userMenuOpen && (
                     <>
-                      <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setUserMenuOpen(false)}
+                      />
                       <motion.div
                         initial={{ opacity: 0, y: -4, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -288,8 +317,16 @@ export default function DashboardNavbar() {
                         </div>
                         <div className="p-1">
                           {[
-                            { label: "Profile", href: "/dashboard/settings", icon: Settings },
-                            { label: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
+                            {
+                              label: "Profile",
+                              href: "/dashboard/settings",
+                              icon: Settings,
+                            },
+                            {
+                              label: "Billing",
+                              href: "/dashboard/settings/billing",
+                              icon: CreditCard,
+                            },
                           ].map((item) => {
                             const Icon = item.icon;
                             return (
@@ -327,7 +364,10 @@ export default function DashboardNavbar() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            <div className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)} />
+            <div
+              className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm lg:hidden"
+              onClick={() => setMobileOpen(false)}
+            />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
@@ -359,7 +399,7 @@ export default function DashboardNavbar() {
                         "flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all",
                         pathname === item.href
                           ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                       )}
                     >
                       {item.label}
@@ -376,7 +416,10 @@ export default function DashboardNavbar() {
       <AnimatePresence>
         {searchOpen && (
           <>
-            <div className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm" onClick={() => setSearchOpen(false)} />
+            <div
+              className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm"
+              onClick={() => setSearchOpen(false)}
+            />
             <motion.div
               initial={{ opacity: 0, y: -8, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -402,7 +445,7 @@ export default function DashboardNavbar() {
                   {QUICK_ACTIONS.filter(
                     (a) =>
                       !searchQuery ||
-                      a.label.toLowerCase().includes(searchQuery.toLowerCase())
+                      a.label.toLowerCase().includes(searchQuery.toLowerCase()),
                   ).map((item) => (
                     <Link
                       key={item.href}
@@ -417,10 +460,12 @@ export default function DashboardNavbar() {
                   {QUICK_ACTIONS.filter(
                     (a) =>
                       !searchQuery ||
-                      a.label.toLowerCase().includes(searchQuery.toLowerCase())
+                      a.label.toLowerCase().includes(searchQuery.toLowerCase()),
                   ).length === 0 && (
                     <div className="p-6 text-center">
-                      <p className="text-xs text-muted-foreground">No results found</p>
+                      <p className="text-xs text-muted-foreground">
+                        No results found
+                      </p>
                     </div>
                   )}
                 </div>

@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { generateStarStory, getStarStories } from "@/actions/star-story";
-import { Star, Sparkles, MessageSquare, Target, Zap, Trophy, Copy } from "lucide-react";
+import {
+  Star,
+  Sparkles,
+  MessageSquare,
+  Target,
+  Zap,
+  Trophy,
+  Copy,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -48,9 +56,9 @@ export default function StarBuilderPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
@@ -64,7 +72,8 @@ export default function StarBuilderPage() {
               STAR Story <span className="text-gradient-primary">Builder</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base font-medium">
-              Turn messy experiences into perfectly structured interview answers.
+              Turn messy experiences into perfectly structured interview
+              answers.
             </p>
           </div>
         </motion.div>
@@ -73,7 +82,7 @@ export default function StarBuilderPage() {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-card border border-border p-6 rounded-3xl shadow-sm">
               <h3 className="font-bold text-lg mb-4">Raw Experience</h3>
-              
+
               <form onSubmit={handleGenerate} className="space-y-5">
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider ml-1 flex items-center gap-1.5">
@@ -93,7 +102,8 @@ export default function StarBuilderPage() {
                   disabled={loading || rawExperience.length < 20}
                   className="w-full h-12 rounded-xl font-bold"
                 >
-                  {loading ? "Structuring..." : "Build STAR Story"} <Sparkles className="ml-2 h-4 w-4" />
+                  {loading ? "Structuring..." : "Build STAR Story"}{" "}
+                  <Sparkles className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </div>
@@ -101,14 +111,22 @@ export default function StarBuilderPage() {
 
           <div className="lg:col-span-7">
             {activeStory ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-card border border-border p-8 rounded-3xl shadow-xl space-y-8"
               >
                 <div className="flex items-center justify-between border-b border-border/50 pb-4">
                   <h2 className="text-2xl font-bold">{activeStory.title}</h2>
-                  <Button variant="ghost" size="icon" onClick={() => copyToClipboard(`${activeStory.situation}\n${activeStory.task}\n${activeStory.action}\n${activeStory.result}`)}>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() =>
+                      copyToClipboard(
+                        `${activeStory.situation}\n${activeStory.task}\n${activeStory.action}\n${activeStory.result}`,
+                      )
+                    }
+                  >
                     <Copy className="h-4 w-4" />
                   </Button>
                 </div>
@@ -119,7 +137,9 @@ export default function StarBuilderPage() {
                     <h3 className="font-bold text-sm uppercase tracking-widest text-blue-500 mb-2 flex items-center gap-2">
                       <Target className="h-4 w-4" /> Situation
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{activeStory.situation}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {activeStory.situation}
+                    </p>
                   </div>
 
                   <div className="bg-muted/30 p-5 rounded-2xl border border-border relative overflow-hidden">
@@ -127,7 +147,9 @@ export default function StarBuilderPage() {
                     <h3 className="font-bold text-sm uppercase tracking-widest text-orange-500 mb-2 flex items-center gap-2">
                       <MessageSquare className="h-4 w-4" /> Task
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{activeStory.task}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {activeStory.task}
+                    </p>
                   </div>
 
                   <div className="bg-muted/30 p-5 rounded-2xl border border-border relative overflow-hidden">
@@ -135,7 +157,9 @@ export default function StarBuilderPage() {
                     <h3 className="font-bold text-sm uppercase tracking-widest text-purple-500 mb-2 flex items-center gap-2">
                       <Zap className="h-4 w-4" /> Action
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{activeStory.action}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {activeStory.action}
+                    </p>
                   </div>
 
                   <div className="bg-muted/30 p-5 rounded-2xl border border-border relative overflow-hidden">
@@ -143,7 +167,9 @@ export default function StarBuilderPage() {
                     <h3 className="font-bold text-sm uppercase tracking-widest text-green-500 mb-2 flex items-center gap-2">
                       <Trophy className="h-4 w-4" /> Result
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{activeStory.result}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {activeStory.result}
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -155,7 +181,8 @@ export default function StarBuilderPage() {
                   </div>
                   <h3 className="text-xl font-bold">No Stories Built</h3>
                   <p className="text-muted-foreground text-sm">
-                    Enter a messy experience on the left to instantly generate a clean, powerful STAR story for your next interview.
+                    Enter a messy experience on the left to instantly generate a
+                    clean, powerful STAR story for your next interview.
                   </p>
                 </div>
               </div>

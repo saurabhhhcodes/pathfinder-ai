@@ -27,8 +27,12 @@ it("respondSseError respects CORS policy for allowed same-origin requests", asyn
   const res = respondSseError(request, ERROR_CODES.UNAUTHORIZED);
 
   expect(res.status).toBe(401);
-  expect(res.headers.get("Content-Type")).toBe("text/event-stream; charset=utf-8");
-  expect(res.headers.get("Access-Control-Allow-Origin")).toBe("http://localhost:3000");
+  expect(res.headers.get("Content-Type")).toBe(
+    "text/event-stream; charset=utf-8",
+  );
+  expect(res.headers.get("Access-Control-Allow-Origin")).toBe(
+    "http://localhost:3000",
+  );
 });
 
 it("respondSseError omits ACAO header when request has no origin (no CORS needed)", async () => {
@@ -45,7 +49,9 @@ it("respondSseError returns ACAO for configured cross-origin origins", async () 
   const res = respondSseError(request, ERROR_CODES.UNAUTHORIZED);
 
   expect(res.status).toBe(401);
-  expect(res.headers.get("Access-Control-Allow-Origin")).toBe("https://app.example.com");
+  expect(res.headers.get("Access-Control-Allow-Origin")).toBe(
+    "https://app.example.com",
+  );
 });
 
 it("respondSseError does not leak ACAO:* for disallowed origins", async () => {
@@ -69,7 +75,9 @@ it("respondSseError includes CORS methods and headers for allowed origins", asyn
   const res = respondSseError(request, ERROR_CODES.UNAUTHORIZED);
 
   expect(res.headers.get("Access-Control-Allow-Methods")).toBe("POST, OPTIONS");
-  expect(res.headers.get("Access-Control-Allow-Headers")).toBe("Content-Type, Authorization");
+  expect(res.headers.get("Access-Control-Allow-Headers")).toBe(
+    "Content-Type, Authorization",
+  );
 });
 
 it("respondSseError returns correct status codes for different error codes", async () => {
@@ -95,7 +103,11 @@ it("respondSseError returns correct status codes for different error codes", asy
 
 it("respondSseError includes custom message in SSE body", async () => {
   const request = makeRequest("http://localhost:3000");
-  const res = respondSseError(request, ERROR_CODES.UNAUTHORIZED, "Custom auth message");
+  const res = respondSseError(
+    request,
+    ERROR_CODES.UNAUTHORIZED,
+    "Custom auth message",
+  );
 
   const text = await res.text();
   expect(text).toContain("event: error");
@@ -106,7 +118,9 @@ it("respondSseError has SSE content type even without CORS headers", async () =>
   const request = makeRequest("https://evil.example");
   const res = respondSseError(request, ERROR_CODES.UNAUTHORIZED);
 
-  expect(res.headers.get("Content-Type")).toBe("text/event-stream; charset=utf-8");
+  expect(res.headers.get("Content-Type")).toBe(
+    "text/event-stream; charset=utf-8",
+  );
   expect(res.headers.get("Cache-Control")).toBeTruthy();
 });
 
@@ -117,7 +131,9 @@ it("respondSseRateLimitError respects CORS policy for allowed same-origin reques
   const res = respondSseRateLimitError(request, 30);
 
   expect(res.status).toBe(429);
-  expect(res.headers.get("Access-Control-Allow-Origin")).toBe("http://localhost:3000");
+  expect(res.headers.get("Access-Control-Allow-Origin")).toBe(
+    "http://localhost:3000",
+  );
   expect(res.headers.get("Retry-After")).toBe("30");
 });
 
@@ -157,7 +173,9 @@ it("createErrorResponse still works", () => {
 });
 
 it("createErrorResponse includes details when provided", () => {
-  const err = createErrorResponse(ERROR_CODES.VALIDATION_ERROR, null, { field: "prompt" });
+  const err = createErrorResponse(ERROR_CODES.VALIDATION_ERROR, null, {
+    field: "prompt",
+  });
   expect(err.error.details).toEqual({ field: "prompt" });
 });
 
@@ -173,7 +191,9 @@ it("respondSseRateLimitError includes SSE content type and Retry-After", async (
   const res = respondSseRateLimitError(request, 15);
 
   expect(res.status).toBe(429);
-  expect(res.headers.get("Content-Type")).toBe("text/event-stream; charset=utf-8");
+  expect(res.headers.get("Content-Type")).toBe(
+    "text/event-stream; charset=utf-8",
+  );
   const text = await res.text();
   expect(text).toContain("event: error");
   expect(text).toContain("RATE_LIMIT_EXCEEDED");

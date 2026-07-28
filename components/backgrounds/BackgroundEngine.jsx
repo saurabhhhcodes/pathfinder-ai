@@ -24,7 +24,8 @@ function getBackgroundForPath(pathname) {
   if (pathname.startsWith("/interview")) return "interview";
   if (pathname.startsWith("/ats-analyzer")) return "analytics";
   if (pathname.startsWith("/settings")) return "settings";
-  if (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up")) return "auth";
+  if (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up"))
+    return "auth";
   return "not-found";
 }
 
@@ -60,7 +61,9 @@ export default function BackgroundEngine() {
   const BackgroundComponent = BACKGROUND_MAP[bgKey] || NotFoundBackground;
 
   if (prefersReducedMotion) {
-    return <div className="fixed inset-0 z-[-1] bg-background pointer-events-none" />;
+    return (
+      <div className="fixed inset-0 z-[-1] bg-background pointer-events-none" />
+    );
   }
 
   return (

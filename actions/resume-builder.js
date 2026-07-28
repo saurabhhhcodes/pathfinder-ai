@@ -27,15 +27,24 @@ export async function generateResumeContent(jobDescription) {
     return {
       success: false,
       errors: {
-        _form: [`Resume generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+        _form: [
+          `Resume generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+        ],
       },
     };
   }
 
   if (!jobDescription || jobDescription.trim().length < 50) {
-    return { success: false, errors: { _form: ["Please provide a valid job description (at least 50 characters)."] } };
+    return {
+      success: false,
+      errors: {
+        _form: [
+          "Please provide a valid job description (at least 50 characters).",
+        ],
+      },
+    };
   }
-  
+
   const user = await getResumeBuilderUser(userId);
   if (!validateAuthenticatedUser(user)) {
     return createErrorResponse("User not found");
@@ -46,7 +55,11 @@ export async function generateResumeContent(jobDescription) {
     task: `You are an expert Executive Resume Writer. Create a tailored, ATS-compliant resume based on the user's profile and the target job description. 
     Ensure keywords from the job description are naturally integrated. Focus on impact and metrics.`,
     untrustedData: [
-      { label: "jobDescription", value: jobDescription, maxLength: JOB_DESCRIPTION_MAX_LENGTH },
+      {
+        label: "jobDescription",
+        value: jobDescription,
+        maxLength: JOB_DESCRIPTION_MAX_LENGTH,
+      },
     ],
     outputRules: `Provide the resume data in the following JSON format ONLY:
 {
@@ -92,10 +105,15 @@ export async function generateResumeContent(jobDescription) {
 
   try {
     const aiResult = await generateGeminiContent(prompt);
-    const validation = validateOutput(resumeOutputSchema, aiResult.response.text());
+    const validation = validateOutput(
+      resumeOutputSchema,
+      aiResult.response.text(),
+    );
     if (!validation.success) {
       console.error("Resume output validation failed:", validation.errors);
-      return createErrorResponse("AI returned an unexpected format. Please try again.");
+      return createErrorResponse(
+        "AI returned an unexpected format. Please try again.",
+      );
     }
     const parsedData = validation.data;
 
@@ -111,9 +129,7 @@ export async function generateResumeContent(jobDescription) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Resume Generation Error:", error);
-    return createErrorResponse(
-  error.message || "Failed to generate resume"
-);
+    return createErrorResponse(error.message || "Failed to generate resume");
   }
 }
 

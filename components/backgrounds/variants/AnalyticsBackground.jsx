@@ -20,7 +20,9 @@ const BARS = [
 
 export default function AnalyticsBackground() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 
@@ -33,7 +35,12 @@ export default function AnalyticsBackground() {
       />
       <motion.div
         animate={{ opacity: [0.06, 0.12, 0.06] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
         className="absolute bottom-[-10%] left-[-5%] h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[100px]"
       />
       <div className="absolute bottom-0 left-0 right-0 h-[40%] flex items-end justify-center gap-3 px-10 opacity-[0.04]">
@@ -52,14 +59,19 @@ export default function AnalyticsBackground() {
           />
         ))}
       </div>
-      <div className="absolute inset-0 opacity-[0.03]"
+      <div
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          background: "linear-gradient(0deg, transparent 0%, rgba(6,182,212,0.03) 50%, transparent 100%)",
+          background:
+            "linear-gradient(0deg, transparent 0%, rgba(6,182,212,0.03) 50%, transparent 100%)",
         }}
       />
       <div
         className="absolute inset-0 opacity-[0.02] mix-blend-soft-light"
-        style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}
+        style={{
+          backgroundImage:
+            "url('https://grainy-gradients.vercel.app/noise.svg')",
+        }}
       />
     </div>
   );

@@ -160,7 +160,10 @@ export default function Quiz() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={() => generateQuizFn(selectedCategory)} className="w-full">
+          <Button
+            onClick={() => generateQuizFn(selectedCategory)}
+            className="w-full"
+          >
             Start {selectedCategory} Quiz
           </Button>
         </CardFooter>
@@ -173,14 +176,17 @@ export default function Quiz() {
     return (
       <Card className="mx-2 border-destructive/20 bg-destructive/5 text-center">
         <CardHeader>
-          <CardTitle className="text-destructive font-bold">Error Loading Quiz</CardTitle>
+          <CardTitle className="text-destructive font-bold">
+            Error Loading Quiz
+          </CardTitle>
           <CardDescription>
             The generated quiz questions did not match the expected format.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Please try starting a new quiz. If the issue persists, contact support.
+            Please try starting a new quiz. If the issue persists, contact
+            support.
           </p>
         </CardContent>
         <CardFooter>
@@ -200,11 +206,14 @@ export default function Quiz() {
       <CardHeader>
         {isFallback && (
           <div className="mb-4 p-4 bg-yellow-50 text-yellow-900 border border-yellow-200 rounded-lg text-sm">
-            <strong>Note:</strong> AI generation is currently unavailable. Using generic fallback questions.
+            <strong>Note:</strong> AI generation is currently unavailable. Using
+            generic fallback questions.
           </div>
         )}
         <CardTitle className="flex items-center justify-between">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <span className="text-xs font-normal text-muted-foreground px-2 py-1 bg-muted rounded-full">
             {selectedCategory}
           </span>

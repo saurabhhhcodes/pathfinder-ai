@@ -23,7 +23,13 @@ describe("checkRateLimit - Newly Configured Actions", () => {
     vi.clearAllMocks();
   });
 
-  const newActions = ["linkedin", "negotiation", "networking", "portfolio", "resumeBuilder"];
+  const newActions = [
+    "linkedin",
+    "negotiation",
+    "networking",
+    "portfolio",
+    "resumeBuilder",
+  ];
 
   newActions.forEach((action) => {
     it(`allows requests within the limit for action: ${action}`, async () => {
@@ -52,7 +58,7 @@ describe("checkRateLimit - Newly Configured Actions", () => {
 
   it("throws an error for unknown action keys", async () => {
     await expect(checkRateLimit("user-1", "unknownActionKey")).rejects.toThrow(
-      "Unknown rate limit action: unknownActionKey"
+      "Unknown rate limit action: unknownActionKey",
     );
   });
 });

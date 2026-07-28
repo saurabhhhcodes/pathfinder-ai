@@ -11,13 +11,13 @@ import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 // ── stripMarkdownFences ────────────────────────────────────────────────────
 
 it("stripMarkdownFences removes ```json fences", () => {
-  const input = "```json\n{\"key\": \"value\"}\n```";
+  const input = '```json\n{"key": "value"}\n```';
   const result = stripMarkdownFences(input);
   expect(result).toBe('{"key": "value"}');
 });
 
 it("stripMarkdownFences removes plain ``` fences", () => {
-  const input = "```\n{\"key\": \"value\"}\n```";
+  const input = '```\n{"key": "value"}\n```';
   const result = stripMarkdownFences(input);
   expect(result).toBe('{"key": "value"}');
 });
@@ -32,7 +32,8 @@ it("stripMarkdownFences leaves plain JSON untouched", () => {
 
 it("validateOutput accepts valid resume improvement output", () => {
   const raw = JSON.stringify({
-    improvedContent: "Led a team of 5 engineers to deliver a microservices migration, reducing latency by 40%.",
+    improvedContent:
+      "Led a team of 5 engineers to deliver a microservices migration, reducing latency by 40%.",
     highlights: ["Reduced latency by 40%", "Led team of 5 engineers"],
   });
   const result = validateOutput(resumeImprovementOutputSchema, raw);
@@ -42,23 +43,31 @@ it("validateOutput accepts valid resume improvement output", () => {
 });
 
 it("validateOutput strips markdown fences before parsing resume output", () => {
-  const raw = "```json\n" + JSON.stringify({
-    improvedContent: "Designed scalable APIs serving 1M+ requests/day.",
-    highlights: ["Scalable APIs", "1M+ requests/day"],
-  }) + "\n```";
+  const raw =
+    "```json\n" +
+    JSON.stringify({
+      improvedContent: "Designed scalable APIs serving 1M+ requests/day.",
+      highlights: ["Scalable APIs", "1M+ requests/day"],
+    }) +
+    "\n```";
   const result = validateOutput(resumeImprovementOutputSchema, raw);
   expect(result.success).toBe(true);
 });
 
 it("validateOutput rejects resume output with missing highlights", () => {
-  const raw = JSON.stringify({ improvedContent: "Some improved content here." });
+  const raw = JSON.stringify({
+    improvedContent: "Some improved content here.",
+  });
   const result = validateOutput(resumeImprovementOutputSchema, raw);
   expect(result.success).toBe(false);
   expect(result.errors.highlights).toBeDefined();
 });
 
 it("validateOutput rejects malformed JSON", () => {
-  const result = validateOutput(resumeImprovementOutputSchema, "not json at all");
+  const result = validateOutput(
+    resumeImprovementOutputSchema,
+    "not json at all",
+  );
   expect(result.success).toBe(false);
   expect(result.errors._output[0]).toContain("valid JSON");
 });
@@ -100,7 +109,7 @@ it("buildFormatCorrectionPrompt includes schema description", () => {
   const prompt = buildFormatCorrectionPrompt(
     "Write a resume bullet.",
     "This is not JSON",
-    '{"improvedContent": "string", "highlights": ["string"]}'
+    '{"improvedContent": "string", "highlights": ["string"]}',
   );
   expect(prompt).toContain("improvedContent");
   expect(prompt).toContain("did not match the required JSON format");
@@ -120,9 +129,15 @@ it("validateOutput accepts valid interview questions output", () => {
     questions: [
       {
         question: "What is polymorphism in OOP?",
-        options: ["A design pattern", "Ability of objects to take many forms", "A data structure", "A sorting algorithm"],
+        options: [
+          "A design pattern",
+          "Ability of objects to take many forms",
+          "A data structure",
+          "A sorting algorithm",
+        ],
         correctAnswer: "Ability of objects to take many forms",
-        explanation: "Polymorphism allows objects of different types to be treated as instances of the same class.",
+        explanation:
+          "Polymorphism allows objects of different types to be treated as instances of the same class.",
       },
     ],
   });

@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Sparkles, User, Briefcase, GraduationCap, Award, ChevronRight } from "lucide-react";
+import {
+  Loader2,
+  Sparkles,
+  User,
+  Briefcase,
+  GraduationCap,
+  Award,
+  ChevronRight,
+} from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -37,7 +45,8 @@ const BIO_MAX = 500;
 const getQualityHint = (length, max) => {
   if (length === 0) return null;
   if (length > max) return { text: "Too long", color: "text-destructive" };
-  if (length < 30) return { text: "Needs detail", color: "text-muted-foreground" };
+  if (length < 30)
+    return { text: "Needs detail", color: "text-muted-foreground" };
   if (length < 100) return { text: "Getting there", color: "text-primary/70" };
   return { text: "Perfect!", color: "text-emerald-500 font-bold" };
 };
@@ -95,7 +104,10 @@ const OnboardingForm = ({ industries }) => {
       {/* Background Decorative Blob */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full -z-10 opacity-20 pointer-events-none">
         <div className="absolute top-0 left-0 w-64 h-64 bg-primary/30 rounded-full blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/30 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: "2s" }} />
+        <div
+          className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/30 rounded-full blur-[100px] animate-pulse-slow"
+          style={{ animationDelay: "2s" }}
+        />
       </div>
 
       <motion.div
@@ -106,14 +118,15 @@ const OnboardingForm = ({ industries }) => {
       >
         <Card className="rounded-[2.5rem] border-border shadow-2xl bg-card/80 backdrop-blur-xl overflow-hidden">
           <div className="h-2 bg-gradient-to-r from-primary via-purple-500 to-pink-500 w-full" />
-          
+
           <CardHeader className="p-8 md:p-12 text-center space-y-4">
             <div className="mx-auto w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-2">
               <Sparkles className="h-8 w-8" />
             </div>
             <div className="space-y-2">
               <CardTitle className="text-3xl md:text-5xl font-black tracking-tight text-foreground">
-                Build Your <span className="text-gradient-primary">AI Profile</span>
+                Build Your{" "}
+                <span className="text-gradient-primary">AI Profile</span>
               </CardTitle>
               <CardDescription className="text-base md:text-lg font-medium text-muted-foreground">
                 Let&apos;s personalize your career journey with precision data.
@@ -126,25 +139,37 @@ const OnboardingForm = ({ industries }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Industry Selection */}
                 <div className="space-y-3">
-                  <Label htmlFor="industry" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Label
+                    htmlFor="industry"
+                    className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                  >
                     <Briefcase className="h-3 w-3 text-primary" />
                     Industry
                   </Label>
                   <Select
                     onValueChange={(value) => {
                       setValue("industry", value);
-                      setSelectedIndustry(industries.find((ind) => ind.id === value));
+                      setSelectedIndustry(
+                        industries.find((ind) => ind.id === value),
+                      );
                       setValue("subIndustry", "");
                     }}
                   >
-                    <SelectTrigger id="industry" className="h-12 rounded-xl bg-background/50 border-border focus:ring-primary/20">
+                    <SelectTrigger
+                      id="industry"
+                      className="h-12 rounded-xl bg-background/50 border-border focus:ring-primary/20"
+                    >
                       <SelectValue placeholder="Select Industry" />
                     </SelectTrigger>
                     <SelectContent className="rounded-xl border-border shadow-xl">
                       <SelectGroup>
                         <SelectLabel>Available Sectors</SelectLabel>
                         {industries.map((ind) => (
-                          <SelectItem key={ind.id} value={ind.id} className="rounded-lg m-1">
+                          <SelectItem
+                            key={ind.id}
+                            value={ind.id}
+                            className="rounded-lg m-1"
+                          >
                             {ind.name}
                           </SelectItem>
                         ))}
@@ -152,7 +177,9 @@ const OnboardingForm = ({ industries }) => {
                     </SelectContent>
                   </Select>
                   {errors.industry && (
-                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">{errors.industry.message}</p>
+                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">
+                      {errors.industry.message}
+                    </p>
                   )}
                 </div>
 
@@ -166,19 +193,33 @@ const OnboardingForm = ({ industries }) => {
                       exit={{ opacity: 0, x: 20 }}
                       className="space-y-3"
                     >
-                      <Label htmlFor="subIndustry" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                      <Label
+                        htmlFor="subIndustry"
+                        className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                      >
                         <GraduationCap className="h-3 w-3 text-primary" />
                         Specialization
                       </Label>
-                      <Select onValueChange={(value) => setValue("subIndustry", value)}>
-                        <SelectTrigger id="subIndustry" className="h-12 rounded-xl bg-background/50 border-border">
+                      <Select
+                        onValueChange={(value) =>
+                          setValue("subIndustry", value)
+                        }
+                      >
+                        <SelectTrigger
+                          id="subIndustry"
+                          className="h-12 rounded-xl bg-background/50 border-border"
+                        >
                           <SelectValue placeholder="Select Specialization" />
                         </SelectTrigger>
                         <SelectContent className="rounded-xl border-border shadow-xl">
                           <SelectGroup>
                             <SelectLabel>Sub-sectors</SelectLabel>
                             {selectedIndustry?.subIndustries.map((sub) => (
-                              <SelectItem key={sub} value={sub} className="rounded-lg m-1">
+                              <SelectItem
+                                key={sub}
+                                value={sub}
+                                className="rounded-lg m-1"
+                              >
                                 {sub}
                               </SelectItem>
                             ))}
@@ -186,12 +227,16 @@ const OnboardingForm = ({ industries }) => {
                         </SelectContent>
                       </Select>
                       {errors.subIndustry && (
-                        <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">{errors.subIndustry.message}</p>
+                        <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">
+                          {errors.subIndustry.message}
+                        </p>
                       )}
                     </motion.div>
                   ) : (
                     <div className="h-[76px] rounded-xl border border-dashed border-border bg-muted/20 flex items-center justify-center p-4">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Select industry first</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                        Select industry first
+                      </p>
                     </div>
                   )}
                 </AnimatePresence>
@@ -199,7 +244,10 @@ const OnboardingForm = ({ industries }) => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <Label htmlFor="currentRole" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Label
+                    htmlFor="currentRole"
+                    className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                  >
                     <User className="h-3 w-3 text-primary" />
                     Current Role
                   </Label>
@@ -212,7 +260,10 @@ const OnboardingForm = ({ industries }) => {
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="targetRole" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Label
+                    htmlFor="targetRole"
+                    className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                  >
                     <Briefcase className="h-3 w-3 text-primary" />
                     Target Role
                   </Label>
@@ -223,7 +274,9 @@ const OnboardingForm = ({ industries }) => {
                     {...register("targetRole")}
                   />
                   {errors.targetRole && (
-                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">{errors.targetRole.message}</p>
+                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">
+                      {errors.targetRole.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -231,7 +284,10 @@ const OnboardingForm = ({ industries }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Experience */}
                 <div className="space-y-3">
-                  <Label htmlFor="experience" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Label
+                    htmlFor="experience"
+                    className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                  >
                     <Award className="h-3 w-3 text-primary" />
                     Years Experience
                   </Label>
@@ -245,13 +301,18 @@ const OnboardingForm = ({ industries }) => {
                     {...register("experience")}
                   />
                   {errors.experience && (
-                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">{errors.experience.message}</p>
+                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">
+                      {errors.experience.message}
+                    </p>
                   )}
                 </div>
 
                 {/* Skills */}
                 <div className="space-y-3">
-                  <Label htmlFor="skills" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Label
+                    htmlFor="skills"
+                    className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                  >
                     <Sparkles className="h-3 w-3 text-primary" />
                     Key Skills
                   </Label>
@@ -262,13 +323,18 @@ const OnboardingForm = ({ industries }) => {
                     {...register("skills")}
                   />
                   {errors.skills && (
-                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">{errors.skills.message}</p>
+                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">
+                      {errors.skills.message}
+                    </p>
                   )}
                 </div>
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="careerGoals" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                <Label
+                  htmlFor="careerGoals"
+                  className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                >
                   <Sparkles className="h-3 w-3 text-primary" />
                   Career Goals
                 </Label>
@@ -283,14 +349,21 @@ const OnboardingForm = ({ industries }) => {
               {/* Bio */}
               <div className="space-y-3">
                 <div className="flex justify-between items-end">
-                  <Label htmlFor="bio" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Label
+                    htmlFor="bio"
+                    className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                  >
                     <User className="h-3 w-3 text-primary" />
                     Professional Bio
                   </Label>
-                  <span className={cn(
-                    "text-[10px] font-bold uppercase tracking-widest",
-                    isOverLimit ? "text-destructive" : "text-muted-foreground"
-                  )}>
+                  <span
+                    className={cn(
+                      "text-[10px] font-bold uppercase tracking-widest",
+                      isOverLimit
+                        ? "text-destructive"
+                        : "text-muted-foreground",
+                    )}
+                  >
                     {bioLength} / {BIO_MAX}
                   </span>
                 </div>
@@ -299,7 +372,8 @@ const OnboardingForm = ({ industries }) => {
                   placeholder="Summarize your professional journey and key achievements..."
                   className={cn(
                     "h-40 rounded-2xl bg-background/50 border-border focus:ring-primary/20 p-4 leading-relaxed",
-                    isOverLimit && "border-destructive focus-visible:ring-destructive"
+                    isOverLimit &&
+                      "border-destructive focus-visible:ring-destructive",
                   )}
                   {...register("bio", {
                     onChange: (e) => setBioLength(e.target.value.length),
@@ -307,13 +381,20 @@ const OnboardingForm = ({ industries }) => {
                 />
                 <div className="flex justify-end">
                   {bioHint && (
-                    <span className={cn("text-[10px] uppercase tracking-widest font-bold", bioHint.color)}>
+                    <span
+                      className={cn(
+                        "text-[10px] uppercase tracking-widest font-bold",
+                        bioHint.color,
+                      )}
+                    >
                       {bioHint.text}
                     </span>
                   )}
                 </div>
                 {errors.bio && (
-                  <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">{errors.bio.message}</p>
+                  <p className="text-[10px] font-bold text-destructive uppercase tracking-wide">
+                    {errors.bio.message}
+                  </p>
                 )}
               </div>
 

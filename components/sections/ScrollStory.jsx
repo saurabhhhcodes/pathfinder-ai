@@ -1,42 +1,60 @@
 ﻿"use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { Target, MapPin, FileText, Mic, LayoutDashboard, Sparkles } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+  AnimatePresence,
+} from "framer-motion";
+import {
+  Target,
+  MapPin,
+  FileText,
+  Mic,
+  LayoutDashboard,
+  Sparkles,
+} from "lucide-react";
 
 const stages = [
   {
     id: "goal",
     headline: "What's your career goal?",
-    subheadline: "Tell us where you want to go, and we'll build a path to get you there.",
+    subheadline:
+      "Tell us where you want to go, and we'll build a path to get you there.",
     icon: Target,
     stageNum: "01",
   },
   {
     id: "roadmap",
     headline: "AI generates your roadmap",
-    subheadline: "A personalized career progression from student to industry leader.",
+    subheadline:
+      "A personalized career progression from student to industry leader.",
     icon: MapPin,
     stageNum: "02",
   },
   {
     id: "resume",
     headline: "Premium ATS-ready resume",
-    subheadline: "Built for the modern job market. Every keyword, every section, optimized.",
+    subheadline:
+      "Built for the modern job market. Every keyword, every section, optimized.",
     icon: FileText,
     stageNum: "03",
   },
   {
     id: "interview",
     headline: "AI interview coach",
-    subheadline: "Practice with purpose. Get real-time feedback. Land the offer.",
+    subheadline:
+      "Practice with purpose. Get real-time feedback. Land the offer.",
     icon: Mic,
     stageNum: "04",
   },
   {
     id: "dashboard",
     headline: "Your complete career hub",
-    subheadline: "Everything you need to accelerate your career, unified in one place.",
+    subheadline:
+      "Everything you need to accelerate your career, unified in one place.",
     icon: LayoutDashboard,
     stageNum: "05",
   },
@@ -73,9 +91,13 @@ function GoalStage() {
         className="space-y-8 w-full max-w-3xl"
       >
         <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500">Stage 01</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500">
+            Stage 01
+          </span>
           <span className="h-1 w-1 rounded-full bg-blue-500/40" />
-          <span className="text-[10px] font-medium text-muted-foreground">Goal Setting</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            Goal Setting
+          </span>
         </div>
 
         <div className="space-y-4">
@@ -95,7 +117,11 @@ function GoalStage() {
             </label>
             <div className="flex items-center gap-2">
               <span className="text-xl md:text-2xl font-medium text-foreground">
-                {text || <span className="text-muted-foreground/60">Start typing your goal...</span>}
+                {text || (
+                  <span className="text-muted-foreground/60">
+                    Start typing your goal...
+                  </span>
+                )}
                 {showCursor && (
                   <span className="inline-block w-[2px] h-[1.1em] bg-blue-500 ml-0.5 align-middle animate-pulse" />
                 )}
@@ -104,7 +130,10 @@ function GoalStage() {
             <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
               <div className="flex -space-x-1.5">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-6 w-6 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground">
+                  <div
+                    key={i}
+                    className="h-6 w-6 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground"
+                  >
                     {String.fromCharCode(64 + i)}
                   </div>
                 ))}
@@ -120,7 +149,10 @@ function GoalStage() {
 
 function RoadmapStage() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "center center"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 70%", "center center"],
+  });
   const [currentP, setCurrentP] = useState(0);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -141,10 +173,15 @@ function RoadmapStage() {
     y: 50 + i * 60,
   }));
 
-  const pathData = nodePositions.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" ");
+  const pathData = nodePositions
+    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`)
+    .join(" ");
 
   return (
-    <div ref={ref} className="flex flex-col items-start justify-center w-full relative z-10">
+    <div
+      ref={ref}
+      className="flex flex-col items-start justify-center w-full relative z-10"
+    >
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
@@ -152,9 +189,13 @@ function RoadmapStage() {
         className="space-y-8 w-full max-w-3xl"
       >
         <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Stage 02</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-500">
+            Stage 02
+          </span>
           <span className="h-1 w-1 rounded-full bg-emerald-500/40" />
-          <span className="text-[10px] font-medium text-muted-foreground">Career Roadmap</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            Career Roadmap
+          </span>
         </div>
 
         <div className="space-y-4">
@@ -167,7 +208,11 @@ function RoadmapStage() {
         </div>
 
         <div className="relative w-full max-w-md bg-card/60 backdrop-blur-md border border-border/50 rounded-3xl p-6 shadow-xl">
-          <svg className="w-full h-72 md:h-80" viewBox="0 0 400 340" fill="none">
+          <svg
+            className="w-full h-72 md:h-80"
+            viewBox="0 0 400 340"
+            fill="none"
+          >
             <defs>
               <linearGradient id="roadmapActive" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="oklch(var(--primary) / 1)" />
@@ -226,20 +271,39 @@ function RoadmapStage() {
                     cx={pos.x}
                     cy={pos.y}
                     r={isActive ? 12 : 8}
-                    fill={isActive ? "oklch(var(--primary) / 1)" : "oklch(var(--card) / 1)"}
-                    stroke={isActive ? "oklch(var(--primary) / 1)" : "oklch(var(--border) / 0.6)"}
+                    fill={
+                      isActive
+                        ? "oklch(var(--primary) / 1)"
+                        : "oklch(var(--card) / 1)"
+                    }
+                    stroke={
+                      isActive
+                        ? "oklch(var(--primary) / 1)"
+                        : "oklch(var(--border) / 0.6)"
+                    }
                     strokeWidth="2"
-                    style={{ transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)" }}
+                    style={{
+                      transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
                     filter={isActive ? "url(#nodeGlow)" : "none"}
                   />
                   {isActive && (
-                    <circle cx={pos.x} cy={pos.y} r="4" fill="oklch(var(--card) / 1)" />
+                    <circle
+                      cx={pos.x}
+                      cy={pos.y}
+                      r="4"
+                      fill="oklch(var(--card) / 1)"
+                    />
                   )}
                   <text
                     x={pos.x}
                     y={pos.y + 30}
                     textAnchor="middle"
-                    fill={isActive ? "oklch(var(--foreground) / 1)" : "oklch(var(--muted-foreground) / 0.55)"}
+                    fill={
+                      isActive
+                        ? "oklch(var(--foreground) / 1)"
+                        : "oklch(var(--muted-foreground) / 0.55)"
+                    }
                     fontSize="11"
                     fontWeight="700"
                     style={{ transition: "fill 0.5s" }}
@@ -250,7 +314,11 @@ function RoadmapStage() {
                     x={pos.x}
                     y={pos.y + 44}
                     textAnchor="middle"
-                    fill={isActive ? "oklch(var(--muted-foreground) / 0.8)" : "oklch(var(--muted-foreground) / 0.5)"}
+                    fill={
+                      isActive
+                        ? "oklch(var(--muted-foreground) / 0.8)"
+                        : "oklch(var(--muted-foreground) / 0.5)"
+                    }
                     fontSize="9"
                     style={{ transition: "fill 0.5s" }}
                   >
@@ -268,7 +336,10 @@ function RoadmapStage() {
 
 function ResumeStage() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "center center"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 80%", "center center"],
+  });
   const displayScore = useTransform(scrollYProgress, [0, 1], [0, 95]);
   const [currentScore, setCurrentScore] = useState(0);
 
@@ -277,7 +348,10 @@ function ResumeStage() {
   });
 
   return (
-    <div ref={ref} className="flex flex-col items-start justify-center w-full relative z-10">
+    <div
+      ref={ref}
+      className="flex flex-col items-start justify-center w-full relative z-10"
+    >
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
@@ -285,9 +359,13 @@ function ResumeStage() {
         className="space-y-8 w-full max-w-3xl"
       >
         <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-amber-500">Stage 03</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-amber-500">
+            Stage 03
+          </span>
           <span className="h-1 w-1 rounded-full bg-amber-500/40" />
-          <span className="text-[10px] font-medium text-muted-foreground">Resume Optimization</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            Resume Optimization
+          </span>
         </div>
 
         <div className="space-y-4">
@@ -302,7 +380,7 @@ function ResumeStage() {
         <div className="relative w-full max-w-md">
           <div className="glass rounded-[2rem] p-8 border border-border shadow-2xl relative overflow-hidden bg-card/60 backdrop-blur-md">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-50 pointer-events-none" />
-            
+
             <div className="relative z-10 flex items-center justify-between mb-8">
               <div className="space-y-1">
                 <h4 className="font-bold text-foreground">ATS Match Score</h4>
@@ -319,23 +397,33 @@ function ResumeStage() {
                     strokeWidth="4"
                     strokeDasharray="175.9"
                     initial={{ strokeDashoffset: 175.9 }}
-                    style={{ strokeDashoffset: useTransform(scrollYProgress, [0, 1], [175.9, 175.9 * (1 - 0.95)]) }}
+                    style={{
+                      strokeDashoffset: useTransform(
+                        scrollYProgress,
+                        [0, 1],
+                        [175.9, 175.9 * (1 - 0.95)],
+                      ),
+                    }}
                     strokeLinecap="round"
                   />
                 </svg>
-                <span className="font-black text-lg text-foreground">{currentScore}%</span>
+                <span className="font-black text-lg text-foreground">
+                  {currentScore}%
+                </span>
               </div>
             </div>
 
             <div className="space-y-4 relative z-10">
-              {["Keywords Optimized", "Format Standardized", "Action Verbs Added"].map((item, i) => (
+              {[
+                "Keywords Optimized",
+                "Format Standardized",
+                "Action Verbs Added",
+              ].map((item, i) => (
                 <div key={item} className="flex items-center gap-3">
                   <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                     <Sparkles className="h-3 w-3" />
                   </div>
-                  <motion.div
-                    className="h-2 bg-muted rounded-full overflow-hidden flex-grow"
-                  >
+                  <motion.div className="h-2 bg-muted rounded-full overflow-hidden flex-grow">
                     <motion.div
                       className="h-full bg-primary"
                       initial={{ width: "0%" }}
@@ -362,9 +450,13 @@ function InterviewStage() {
         className="space-y-8 w-full max-w-3xl"
       >
         <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-purple-500">Stage 04</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-purple-500">
+            Stage 04
+          </span>
           <span className="h-1 w-1 rounded-full bg-purple-500/40" />
-          <span className="text-[10px] font-medium text-muted-foreground">Mock Interviews</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            Mock Interviews
+          </span>
         </div>
 
         <div className="space-y-4">
@@ -387,18 +479,19 @@ function InterviewStage() {
                 <p className="text-xs text-muted-foreground">Listening...</p>
               </div>
             </div>
-            
+
             <div className="space-y-3 pt-2">
               <div className="bg-muted p-3 rounded-2xl rounded-tl-sm text-sm text-foreground max-w-[85%]">
                 Tell me about a time you optimized a complex system.
               </div>
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
                 className="bg-primary p-3 rounded-2xl rounded-tr-sm text-sm text-primary-foreground max-w-[85%] ml-auto"
               >
-                At my last role, I identified a bottleneck in our rendering pipeline and...
+                At my last role, I identified a bottleneck in our rendering
+                pipeline and...
               </motion.div>
             </div>
           </div>
@@ -418,9 +511,13 @@ function DashboardStage() {
         className="space-y-8 w-full max-w-3xl"
       >
         <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-rose-500">Stage 05</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-rose-500">
+            Stage 05
+          </span>
           <span className="h-1 w-1 rounded-full bg-rose-500/40" />
-          <span className="text-[10px] font-medium text-muted-foreground">Career Hub</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            Career Hub
+          </span>
         </div>
 
         <div className="space-y-4">
@@ -441,9 +538,16 @@ function DashboardStage() {
                 { label: "ATS Score", value: "95%", color: "text-emerald-500" },
                 { label: "Insights", value: "Active", color: "text-blue-500" },
               ].map((stat, i) => (
-                <div key={i} className="p-4 rounded-xl border border-border/50 bg-background/50">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">{stat.label}</p>
-                  <p className={`text-2xl font-black ${stat.color}`}>{stat.value}</p>
+                <div
+                  key={i}
+                  className="p-4 rounded-xl border border-border/50 bg-background/50"
+                >
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                    {stat.label}
+                  </p>
+                  <p className={`text-2xl font-black ${stat.color}`}>
+                    {stat.value}
+                  </p>
                 </div>
               ))}
             </div>
@@ -473,7 +577,7 @@ export function ScrollStory() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     stageRefs.current.forEach((ref) => {
@@ -499,17 +603,27 @@ export function ScrollStory() {
 
   const renderActiveStage = () => {
     switch (activeStage) {
-      case 0: return <GoalStage key="stage0" />;
-      case 1: return <RoadmapStage key="stage1" />;
-      case 2: return <ResumeStage key="stage2" />;
-      case 3: return <InterviewStage key="stage3" />;
-      case 4: return <DashboardStage key="stage4" />;
-      default: return null;
+      case 0:
+        return <GoalStage key="stage0" />;
+      case 1:
+        return <RoadmapStage key="stage1" />;
+      case 2:
+        return <ResumeStage key="stage2" />;
+      case 3:
+        return <InterviewStage key="stage3" />;
+      case 4:
+        return <DashboardStage key="stage4" />;
+      default:
+        return null;
     }
   };
 
   return (
-    <section id="scroll-story" ref={containerRef} className="relative h-[500vh]">
+    <section
+      id="scroll-story"
+      ref={containerRef}
+      className="relative h-[500vh]"
+    >
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {[0, 1, 2, 3, 4].map((i) => (
           <div
@@ -521,7 +635,10 @@ export function ScrollStory() {
         ))}
       </div>
 
-      <div ref={stickyRef} className="sticky top-0 h-screen overflow-hidden flex items-center bg-background">
+      <div
+        ref={stickyRef}
+        className="sticky top-0 h-screen overflow-hidden flex items-center bg-background"
+      >
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px] -translate-y-1/4 translate-x-1/4 pointer-events-none z-0" />
         <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[140px] translate-y-1/4 -translate-x-1/4 pointer-events-none z-0" />
         <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[140px] -translate-y-1/2 -translate-x-1/2 pointer-events-none z-0" />
@@ -533,8 +650,8 @@ export function ScrollStory() {
               onClick={() => {
                 setActiveStage(i);
                 window.scrollTo({
-                  top: containerRef.current.offsetTop + (i * window.innerHeight),
-                  behavior: "smooth"
+                  top: containerRef.current.offsetTop + i * window.innerHeight,
+                  behavior: "smooth",
                 });
               }}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${activeStage === i ? "bg-primary scale-125" : "bg-border hover:bg-primary/50"}`}
@@ -543,7 +660,9 @@ export function ScrollStory() {
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-50 animate-bounce text-muted-foreground">
-          <span className="text-[10px] uppercase tracking-widest font-bold">Scroll to Explore</span>
+          <span className="text-[10px] uppercase tracking-widest font-bold">
+            Scroll to Explore
+          </span>
           <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
         </div>
 
@@ -564,4 +683,3 @@ export function ScrollStory() {
     </section>
   );
 }
-

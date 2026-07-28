@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { executivePresenceOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  executivePresenceOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -14,11 +17,14 @@ describe("executivePresenceOutputSchema", () => {
         {
           from: "I think we should...",
           to: "I recommend we...",
-          why: "It sounds more authoritative."
-        }
+          why: "It sounds more authoritative.",
+        },
       ],
-      meetingStrategy: ["Pre-wire key stakeholders", "Open with the bottom line"],
-      gravitasBuilders: ["Practice the power pause"]
+      meetingStrategy: [
+        "Pre-wire key stakeholders",
+        "Open with the bottom line",
+      ],
+      gravitasBuilders: ["Practice the power pause"],
     });
     const result = validateOutput(executivePresenceOutputSchema, raw);
     expect(result.success).toBe(true);
@@ -30,7 +36,7 @@ describe("executivePresenceOutputSchema", () => {
 
   it("rejects output missing required fields", () => {
     const raw = JSON.stringify({
-      personaSummary: "A confident leader."
+      personaSummary: "A confident leader.",
     });
     const result = validateOutput(executivePresenceOutputSchema, raw);
     expect(result.success).toBe(false);
@@ -44,7 +50,7 @@ describe("SCHEMA_DESCRIPTIONS.executivePresence", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Create a plan.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.executivePresence
+      SCHEMA_DESCRIPTIONS.executivePresence,
     );
     expect(prompt).toContain("personaSummary");
     expect(prompt).toContain("gravitasBuilders");
@@ -94,7 +100,8 @@ describe("generateExecutivePresence", () => {
   });
 
   it("generates an executive presence plan successfully", async () => {
-    const { generateExecutivePresence } = await import("../actions/executive-presence.js");
+    const { generateExecutivePresence } =
+      await import("../actions/executive-presence.js");
 
     actionMocks.auth.mockResolvedValue({ userId: "user-1" });
     actionMocks.checkRateLimit.mockResolvedValue({ allowed: true });
@@ -105,12 +112,15 @@ describe("generateExecutivePresence", () => {
     });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          personaSummary: "Confident.",
-          communicationUpgrades: [{ from: "weak", to: "strong", why: "reason" }],
-          meetingStrategy: ["Str 1"],
-          gravitasBuilders: ["Builder 1"]
-        }),
+        text: () =>
+          JSON.stringify({
+            personaSummary: "Confident.",
+            communicationUpgrades: [
+              { from: "weak", to: "strong", why: "reason" },
+            ],
+            meetingStrategy: ["Str 1"],
+            gravitasBuilders: ["Builder 1"],
+          }),
       },
     });
     actionMocks.executivePresenceCreate.mockResolvedValue({ id: "plan-1" });
@@ -122,7 +132,10 @@ describe("generateExecutivePresence", () => {
     const result = await generateExecutivePresence(formData);
 
     expect(actionMocks.auth).toHaveBeenCalled();
-    expect(actionMocks.checkRateLimit).toHaveBeenCalledWith("user-1", "executive_presence");
+    expect(actionMocks.checkRateLimit).toHaveBeenCalledWith(
+      "user-1",
+      "executive_presence",
+    );
     expect(actionMocks.generateGeminiContent).toHaveBeenCalled();
     expect(actionMocks.executivePresenceCreate).toHaveBeenCalled();
     expect(result.id).toBe("plan-1");

@@ -8,12 +8,14 @@ const steps = [
   {
     icon: GitFork,
     title: "Fork Repository",
-    description: "Fork the PathFinder AI repository to your GitHub account and clone it locally.",
+    description:
+      "Fork the PathFinder AI repository to your GitHub account and clone it locally.",
   },
   {
     icon: Search,
     title: "Pick an Issue",
-    description: "Browse open issues and find one that matches your skills and interests.",
+    description:
+      "Browse open issues and find one that matches your skills and interests.",
   },
   {
     icon: GitPullRequest,
@@ -23,7 +25,8 @@ const steps = [
   {
     icon: GitMerge,
     title: "Get Merged",
-    description: "After review and approval, your contribution becomes part of PathFinder AI.",
+    description:
+      "After review and approval, your contribution becomes part of PathFinder AI.",
   },
 ];
 

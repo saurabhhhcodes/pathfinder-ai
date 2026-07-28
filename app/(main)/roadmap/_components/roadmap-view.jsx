@@ -25,10 +25,12 @@ function MilestoneCard({ milestone, index, total }) {
     <div className="relative flex gap-6 group">
       {/* Timeline connector */}
       <div className="flex flex-col items-center">
-        <div className={cn(
-          "h-10 w-10 rounded-2xl flex items-center justify-center text-sm font-black shrink-0 border-2 transition-all duration-300",
-          "bg-primary/10 border-primary/30 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary"
-        )}>
+        <div
+          className={cn(
+            "h-10 w-10 rounded-2xl flex items-center justify-center text-sm font-black shrink-0 border-2 transition-all duration-300",
+            "bg-primary/10 border-primary/30 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary",
+          )}
+        >
           {index + 1}
         </div>
         {index < total - 1 && (
@@ -51,7 +53,10 @@ function MilestoneCard({ milestone, index, total }) {
                 </span>
                 <Badge
                   variant="outline"
-                  className={cn("text-[10px] font-bold uppercase tracking-wider", PRIORITY_STYLES[milestone.priority])}
+                  className={cn(
+                    "text-[10px] font-bold uppercase tracking-wider",
+                    PRIORITY_STYLES[milestone.priority],
+                  )}
                 >
                   <PriorityIcon className="h-3 w-3 mr-1" />
                   {milestone.priority}
@@ -91,12 +96,19 @@ function MilestoneCard({ milestone, index, total }) {
 }
 
 export default function RoadmapView({ roadmap }) {
-  const content = roadmap?.content || { milestones: [], totalEstimatedTime: "", summary: "" };
+  const content = roadmap?.content || {
+    milestones: [],
+    totalEstimatedTime: "",
+    summary: "",
+  };
   const milestones = content.milestones || [];
-  const completedMilestones = milestones.filter((m) => m.priority === "completed").length;
-  const progress = milestones.length > 0
-    ? Math.round((completedMilestones / milestones.length) * 100)
-    : 0;
+  const completedMilestones = milestones.filter(
+    (m) => m.priority === "completed",
+  ).length;
+  const progress =
+    milestones.length > 0
+      ? Math.round((completedMilestones / milestones.length) * 100)
+      : 0;
 
   return (
     <div className="space-y-8">
@@ -119,14 +131,20 @@ export default function RoadmapView({ roadmap }) {
             {content.totalEstimatedTime && (
               <div className="flex items-center gap-2 text-sm">
                 <Calendar className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">Estimated timeline:</span>
-                <span className="font-bold text-foreground">{content.totalEstimatedTime}</span>
+                <span className="text-muted-foreground">
+                  Estimated timeline:
+                </span>
+                <span className="font-bold text-foreground">
+                  {content.totalEstimatedTime}
+                </span>
               </div>
             )}
             <div className="flex items-center gap-2 text-sm">
               <Trophy className="h-4 w-4 text-primary" />
               <span className="text-muted-foreground">Milestones:</span>
-              <span className="font-bold text-foreground">{milestones.length}</span>
+              <span className="font-bold text-foreground">
+                {milestones.length}
+              </span>
             </div>
           </div>
 

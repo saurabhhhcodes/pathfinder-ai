@@ -19,7 +19,9 @@ export async function generateNetworkingEmail(data) {
     return {
       success: false,
       errors: {
-        _form: [`Networking email generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+        _form: [
+          `Networking email generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+        ],
       },
     };
   }
@@ -36,10 +38,22 @@ export async function generateNetworkingEmail(data) {
     context: buildUserProfileContext(user),
     task: "You are an expert career coach and professional copywriter. Write a highly personalized, effective networking email based on the user's goal.",
     untrustedData: [
-      { label: "recipientName", value: validation.data.recipientName || "Hiring Manager", maxLength: 200 },
-      { label: "company", value: validation.data.company || "Your Company", maxLength: 200 },
+      {
+        label: "recipientName",
+        value: validation.data.recipientName || "Hiring Manager",
+        maxLength: 200,
+      },
+      {
+        label: "company",
+        value: validation.data.company || "Your Company",
+        maxLength: 200,
+      },
       { label: "goal", value: validation.data.goal, maxLength: 200 },
-      { label: "context", value: validation.data.context || "No additional context provided.", maxLength: 1500 },
+      {
+        label: "context",
+        value: validation.data.context || "No additional context provided.",
+        maxLength: 1500,
+      },
     ],
     outputRules: `Provide exactly 3 variations of the email. Use clear formatting, subject lines, and appropriate tone.
 Variation 1: Direct and concise.
@@ -67,7 +81,10 @@ Output the 3 variations clearly separated by headings (e.g. ### Variation 1). Do
     return { success: true, data: record };
   } catch (error) {
     console.error("Networking Email Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate emails"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate emails"] },
+    };
   }
 }
 

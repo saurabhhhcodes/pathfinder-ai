@@ -2,7 +2,14 @@
 
 import { motion } from "framer-motion";
 
-export function ScaleIn({ children, delay = 0, duration = 0.6, className, once = true, ...props }) {
+export function ScaleIn({
+  children,
+  delay = 0,
+  duration = 0.6,
+  className,
+  once = true,
+  ...props
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}

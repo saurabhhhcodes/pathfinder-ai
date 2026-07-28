@@ -14,11 +14,17 @@ export async function calculateRate(skills, experience, targetIncome) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!skills || !experience || !targetIncome) {
-    return { success: false, errors: { _form: ["Skills, experience, and target income are required."] } };
+    return {
+      success: false,
+      errors: {
+        _form: ["Skills, experience, and target income are required."],
+      },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Expert Freelance Business Consultant and Pricing Strategist.",
+    context:
+      "You are an Expert Freelance Business Consultant and Pricing Strategist.",
     task: `Analyze the user's skills, experience level, and annual target income.
     Calculate a realistic, competitive hourly rate and a project-based pricing structure for them. Then, generate scripts they can use to justify this rate to potential clients who push back on pricing.`,
     untrustedData: [
@@ -56,7 +62,10 @@ export async function calculateRate(skills, experience, targetIncome) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Freelance Rate Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to calculate rate"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to calculate rate"] },
+    };
   }
 }
 

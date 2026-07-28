@@ -40,7 +40,10 @@ export function InterviewCoachShowcase() {
   ];
 
   return (
-    <section id="interview-coach" className="relative py-8 md:py-12 overflow-hidden">
+    <section
+      id="interview-coach"
+      className="relative py-8 md:py-12 overflow-hidden"
+    >
       <div className="container mx-auto px-4 md:px-6">
         <FadeUp className="max-w-3xl mx-auto text-center mb-20 space-y-4">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold uppercase tracking-widest text-primary">
@@ -52,7 +55,8 @@ export function InterviewCoachShowcase() {
             <span className="text-gradient-primary">Interview</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Practice with our AI interviewer. Get real-time feedback and improve with every session.
+            Practice with our AI interviewer. Get real-time feedback and improve
+            with every session.
           </p>
         </FadeUp>
 
@@ -67,7 +71,10 @@ export function InterviewCoachShowcase() {
               </div>
               <div className="flex items-center gap-1.5">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-1.5 w-1.5 rounded-full bg-chart-2" />
+                  <div
+                    key={i}
+                    className="h-1.5 w-1.5 rounded-full bg-chart-2"
+                  />
                 ))}
               </div>
             </div>
@@ -105,12 +112,16 @@ export function InterviewCoachShowcase() {
                   />
                 ))}
               </div>
-              <span className="text-xs text-muted-foreground animate-pulse">You are speaking...</span>
+              <span className="text-xs text-muted-foreground animate-pulse">
+                You are speaking...
+              </span>
             </div>
 
             <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
               <div className="flex-1 h-10 rounded-lg bg-background border border-border/50 px-4 flex items-center">
-                <span className="text-xs text-muted-foreground">Type your response...</span>
+                <span className="text-xs text-muted-foreground">
+                  Type your response...
+                </span>
               </div>
               <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
                 <Send className="h-4 w-4 text-primary-foreground" />
@@ -124,18 +135,26 @@ export function InterviewCoachShowcase() {
                 Real-time feedback that drives improvement
               </h3>
               <p className="text-muted-foreground leading-relaxed mt-3">
-                Our AI analyzes your responses for clarity, structure, and impact. Get actionable
-                suggestions to level up your interview game.
+                Our AI analyzes your responses for clarity, structure, and
+                impact. Get actionable suggestions to level up your interview
+                game.
               </p>
             </FadeUp>
 
             <StaggerContainer className="space-y-3">
               {metrics.map((metric) => (
                 <StaggerItem key={metric.label}>
-                  <TiltCard className="glass rounded-xl p-4 border border-border/30 space-y-2" tiltDegree={3}>
+                  <TiltCard
+                    className="glass rounded-xl p-4 border border-border/30 space-y-2"
+                    tiltDegree={3}
+                  >
                     <div className="flex justify-between text-sm">
-                      <span className="font-medium text-foreground">{metric.label}</span>
-                      <span className="font-bold text-primary">{metric.score}%</span>
+                      <span className="font-medium text-foreground">
+                        {metric.label}
+                      </span>
+                      <span className="font-bold text-primary">
+                        {metric.score}%
+                      </span>
                     </div>
                     <div className="h-1.5 rounded-full bg-muted/50 overflow-hidden">
                       <motion.div
@@ -156,7 +175,9 @@ export function InterviewCoachShowcase() {
                 whileHover={{ y: -2, scale: 1.01 }}
                 className="glass rounded-2xl p-6 border border-primary/30 bg-primary/[0.03] text-center shadow-lg"
               >
-                <p className="text-3xl font-black text-primary">{feedbackScore}/100</p>
+                <p className="text-3xl font-black text-primary">
+                  {feedbackScore}/100
+                </p>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-2">
                   Overall Interview Score
                 </p>

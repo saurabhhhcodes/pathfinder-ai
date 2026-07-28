@@ -2,10 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LineChart, Send, FileText, Loader2, Trophy, Target, AlertTriangle } from "lucide-react";
+import {
+  LineChart,
+  Send,
+  FileText,
+  Loader2,
+  Trophy,
+  Target,
+  AlertTriangle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { generateSelfAssessment, getPerformanceReviews } from "@/actions/performance-review";
+import {
+  generateSelfAssessment,
+  getPerformanceReviews,
+} from "@/actions/performance-review";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
@@ -64,13 +75,17 @@ export default function PerformanceReviewPage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500">
           <LineChart className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Performance Review Writer</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Performance Review Writer
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Ace Your <span className="text-gradient-primary">Review.</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Blank-page anxiety during review season? Dump your raw achievements and challenges here, and we'll draft a highly professional, metrics-driven self-assessment.
+          Blank-page anxiety during review season? Dump your raw achievements
+          and challenges here, and we'll draft a highly professional,
+          metrics-driven self-assessment.
         </p>
       </div>
 
@@ -94,7 +109,8 @@ export default function PerformanceReviewPage() {
 
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase text-amber-500 flex items-center gap-1.5">
-                  <AlertTriangle className="h-3 w-3" /> Challenges Faced (Optional)
+                  <AlertTriangle className="h-3 w-3" /> Challenges Faced
+                  (Optional)
                 </label>
                 <Textarea
                   placeholder="E.g., We lost a senior engineer mid-project so I had to step up and learn Kubernetes fast..."
@@ -116,7 +132,7 @@ export default function PerformanceReviewPage() {
                 />
               </div>
 
-              <Button 
+              <Button
                 onClick={handleGenerate}
                 disabled={isGenerating || !achievements.trim() || !goals.trim()}
                 className="w-full h-12 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-bold mt-2"
@@ -138,23 +154,31 @@ export default function PerformanceReviewPage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past Reviews</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past Reviews
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentReview(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentReview?.id === item.id 
-                        ? "bg-blue-500/10 border border-blue-500/30" 
+                      currentReview?.id === item.id
+                        ? "bg-blue-500/10 border border-blue-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <FileText className={`h-4 w-4 shrink-0 ${currentReview?.id === item.id ? "text-blue-500" : "text-muted-foreground"}`} />
+                      <FileText
+                        className={`h-4 w-4 shrink-0 ${currentReview?.id === item.id ? "text-blue-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">Self-Assessment Draft</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          Self-Assessment Draft
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -176,11 +200,20 @@ export default function PerformanceReviewPage() {
               >
                 {/* Executive Summary */}
                 <div className="p-6 glass rounded-3xl border border-blue-500/30 bg-blue-500/5">
-                  <h3 className="text-sm font-bold text-blue-500 uppercase tracking-widest mb-3">Executive Summary</h3>
+                  <h3 className="text-sm font-bold text-blue-500 uppercase tracking-widest mb-3">
+                    Executive Summary
+                  </h3>
                   <p className="text-base text-foreground leading-relaxed italic">
                     "{currentReview.reviewData.executiveSummary}"
                   </p>
-                  <Button size="sm" variant="secondary" className="mt-4 rounded-xl text-xs" onClick={() => copyToClipboard(currentReview.reviewData.executiveSummary)}>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="mt-4 rounded-xl text-xs"
+                    onClick={() =>
+                      copyToClipboard(currentReview.reviewData.executiveSummary)
+                    }
+                  >
                     Copy Summary
                   </Button>
                 </div>
@@ -192,13 +225,22 @@ export default function PerformanceReviewPage() {
                     Key Achievements
                   </h3>
                   <div className="space-y-5">
-                    {currentReview.reviewData.keyAchievements.map((ach, idx) => (
-                      <div key={idx} className="relative pl-5 border-l-2 border-emerald-500/20">
-                        <div className="absolute w-2.5 h-2.5 bg-emerald-500 rounded-full -left-[6px] top-1.5" />
-                        <h4 className="text-sm font-bold text-foreground">{ach.title}</h4>
-                        <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{ach.impact}</p>
-                      </div>
-                    ))}
+                    {currentReview.reviewData.keyAchievements.map(
+                      (ach, idx) => (
+                        <div
+                          key={idx}
+                          className="relative pl-5 border-l-2 border-emerald-500/20"
+                        >
+                          <div className="absolute w-2.5 h-2.5 bg-emerald-500 rounded-full -left-[6px] top-1.5" />
+                          <h4 className="text-sm font-bold text-foreground">
+                            {ach.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                            {ach.impact}
+                          </p>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
 
@@ -232,20 +274,31 @@ export default function PerformanceReviewPage() {
                     Manager 1-on-1 Talking Points
                   </h3>
                   <ul className="space-y-2">
-                    {currentReview.reviewData.managerTalkingPoints.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-violet-500 mt-1 font-bold">•</span>
-                        <span className="text-sm text-muted-foreground leading-relaxed">{point}</span>
-                      </li>
-                    ))}
+                    {currentReview.reviewData.managerTalkingPoints.map(
+                      (point, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="text-violet-500 mt-1 font-bold">
+                            •
+                          </span>
+                          <span className="text-sm text-muted-foreground leading-relaxed">
+                            {point}
+                          </span>
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </div>
               </motion.div>
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-blue-500/30">
                 <LineChart className="h-12 w-12 text-blue-500/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No reviews drafted yet.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Dump your raw notes on the left, and we will turn them into a polished self-assessment.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No reviews drafted yet.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Dump your raw notes on the left, and we will turn them into a
+                  polished self-assessment.
+                </p>
               </div>
             )}
           </AnimatePresence>

@@ -3,7 +3,13 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-export function TiltCard({ children, className, tiltDegree = 10, glare = true, ...props }) {
+export function TiltCard({
+  children,
+  className,
+  tiltDegree = 10,
+  glare = true,
+  ...props
+}) {
   const ref = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
@@ -28,7 +34,6 @@ export function TiltCard({ children, className, tiltDegree = 10, glare = true, .
     setTilt({ x: y * -tiltDegree, y: x * tiltDegree });
     setGlarePos({ x: nx * 100, y: ny * 100 });
   };
-
 
   const handleMouseLeave = () => {
     setTilt({ x: 0, y: 0 });

@@ -62,22 +62,23 @@ describe("improveWithAI", () => {
     mocks.auth.mockResolvedValue({ userId: "user-1" });
     mocks.findUnique.mockResolvedValue(mockUser);
     mocks.checkRateLimit.mockResolvedValue({ allowed: true });
-    
+
     mocks.generateCacheKey.mockReturnValue("improve:test-key");
-    
+
     mocks.cachedGenerateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          improvedContent: "Improved description...",
-          highlights: ["Did X", "Achieved Y"],
-        }),
+        text: () =>
+          JSON.stringify({
+            improvedContent: "Improved description...",
+            highlights: ["Did X", "Achieved Y"],
+          }),
       },
     });
 
     const result = await improveWithAI(rawParams);
 
     expect(result.success).toBe(true);
-    
+
     // Verify that generateCacheKey was called exactly once with the expected parameters
     expect(mocks.generateCacheKey).toHaveBeenCalledTimes(1);
     expect(mocks.generateCacheKey).toHaveBeenCalledWith(
@@ -85,7 +86,7 @@ describe("improveWithAI", () => {
       mockUser.id,
       buildUserProfileContext(mockUser),
       rawParams.current,
-      rawParams.type
+      rawParams.type,
     );
 
     // Verify cachedGenerateGeminiContent is called with the resolved key
@@ -95,7 +96,7 @@ describe("improveWithAI", () => {
       expect.objectContaining({
         key: "improve:test-key",
         ttl: expect.any(Number),
-      })
+      }),
     );
   });
 });

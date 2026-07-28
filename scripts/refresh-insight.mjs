@@ -1,12 +1,15 @@
-import 'dotenv/config';
-import { PrismaClient } from '@prisma/client';
-import { generateIndustryInsightData, getIndustryInsightRefreshTime } from '../lib/industry-insights.js';
+import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
+import {
+  generateIndustryInsightData,
+  getIndustryInsightRefreshTime,
+} from "../lib/industry-insights.js";
 
 const db = new PrismaClient();
-const industry = process.argv[2] || 'tech-software-development';
+const industry = process.argv[2] || "tech-software-development";
 
-async function main(){
-  try{
+async function main() {
+  try {
     console.log(`Refreshing insights for: ${industry}`);
     const insights = await generateIndustryInsightData(industry);
     const nextUpdate = getIndustryInsightRefreshTime();
@@ -37,14 +40,14 @@ async function main(){
         isGrounded: insights.isGrounded,
         lastUpdated: new Date(),
         nextUpdate,
-      }
+      },
     });
 
     console.log(JSON.stringify({ industry, industryInsight }, null, 2));
-  }catch(e){
-    console.error('Error refreshing IndustryInsight:', e);
+  } catch (e) {
+    console.error("Error refreshing IndustryInsight:", e);
     process.exitCode = 1;
-  }finally{
+  } finally {
     await db.$disconnect();
   }
 }

@@ -6,7 +6,10 @@ import CoverLetterPreview from "../_components/cover-letter-preview";
 import DownloadPdf from "@/components/Download-pdf";
 
 const sanitizeFileName = (str) =>
-  str?.toLowerCase().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-") || "untitled";
+  str
+    ?.toLowerCase()
+    .replace(/[\\/:*?"<>|]+/g, "")
+    .replace(/\s+/g, "-") || "untitled";
 
 export default async function EditCoverLetterPage({ params }) {
   const { id } = await params;

@@ -15,10 +15,7 @@ import {
   preparePromptForGeneration,
   buildSseErrorResponse,
 } from "@/lib/prompt-guard";
-import {
-  buildCorsDeniedResponse,
-  resolveCorsPolicy,
-} from "@/lib/cors";
+import { buildCorsDeniedResponse, resolveCorsPolicy } from "@/lib/cors";
 import {
   getCachedResponse,
   cacheResponse,
@@ -26,7 +23,11 @@ import {
   setPendingGenerationRequest,
   deletePendingGenerationRequest,
 } from "@/lib/cache/cache-service";
-import { respondError, respondSseError, ERROR_CODES } from "@/lib/api/error-handler";
+import {
+  respondError,
+  respondSseError,
+  ERROR_CODES,
+} from "@/lib/api/error-handler";
 import { validateInput, validateId } from "@/lib/validate";
 import { chatPromptSchema } from "@/lib/schemas/forms";
 import { getEnv } from "@/lib/env";
@@ -58,7 +59,9 @@ function buildSseHeaders(request) {
 
 const encodeSseEvent = (encoder, event, payload) => {
   const safePayload = payload ?? {};
-  return encoder.encode(`event: ${event}\ndata: ${JSON.stringify(safePayload)}\n\n`);
+  return encoder.encode(
+    `event: ${event}\ndata: ${JSON.stringify(safePayload)}\n\n`,
+  );
 };
 
 function createCachedSseResponse({
@@ -77,7 +80,7 @@ function createCachedSseResponse({
           text,
           cached: true,
           ...(deduped ? { deduped: true } : {}),
-        })
+        }),
       );
 
       controller.enqueue(
@@ -87,7 +90,7 @@ function createCachedSseResponse({
           cached: true,
           ...(deduped ? { deduped: true } : {}),
           ...(debug ? { debug } : {}),
-        })
+        }),
       );
 
       controller.close();
@@ -106,7 +109,8 @@ const extractChunkText = (chunk) => {
   if (!chunk) return "";
 
   try {
-    const rawText = typeof chunk.text === "function" ? chunk.text() : chunk?.text;
+    const rawText =
+      typeof chunk.text === "function" ? chunk.text() : chunk?.text;
 
     if (rawText == null) return "";
     if (typeof rawText === "string") return rawText;
@@ -170,8 +174,12 @@ export async function POST(request) {
     return respondSseError(request, ERROR_CODES.UNAUTHORIZED);
   }
 
- if (!isFeatureEnabled("chat")) {
-    return respondSseError(request, ERROR_CODES.AI_SERVICE_ERROR, "AI service is not configured. Please contact support.");
+  if (!isFeatureEnabled("chat")) {
+    return respondSseError(
+      request,
+      ERROR_CODES.AI_SERVICE_ERROR,
+      "AI service is not configured. Please contact support.",
+    );
   }
 
   let prompt;
@@ -180,17 +188,34 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    const promptValidation = validateInput(chatPromptSchema, { prompt: body.prompt });
+    const promptValidation = validateInput(chatPromptSchema, {
+      prompt: body.prompt,
+    });
     if (!promptValidation.success) {
-      return respondError(ERROR_CODES.VALIDATION_ERROR, "Invalid prompt", promptValidation.errors);
+      return respondError(
+        ERROR_CODES.VALIDATION_ERROR,
+        "Invalid prompt",
+        promptValidation.errors,
+      );
     }
 
     prompt = promptValidation.data.prompt;
 
-    if (body.conversationId !== undefined && body.conversationId !== null && body.conversationId !== "") {
-      const conversationIdValidation = validateId(body.conversationId, "conversationId");
+    if (
+      body.conversationId !== undefined &&
+      body.conversationId !== null &&
+      body.conversationId !== ""
+    ) {
+      const conversationIdValidation = validateId(
+        body.conversationId,
+        "conversationId",
+      );
       if (!conversationIdValidation.success) {
-        return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", conversationIdValidation.errors);
+        return respondError(
+          ERROR_CODES.VALIDATION_ERROR,
+          "Conversation ID is required",
+          conversationIdValidation.errors,
+        );
       }
       conversationId = conversationIdValidation.data;
     }
@@ -219,11 +244,12 @@ export async function POST(request) {
   if (!user) {
     return respondError(ERROR_CODES.USER_NOT_FOUND);
   }
-  let cacheUser = userId || extractTrustedClientIp(request.headers) || "anonymous";
+  let cacheUser =
+    userId || extractTrustedClientIp(request.headers) || "anonymous";
 
   const existingCachedResponse = await getCachedResponse(
     cacheUser,
-    promptCheck.prompt
+    promptCheck.prompt,
   );
 
   if (existingCachedResponse) {
@@ -237,7 +263,7 @@ export async function POST(request) {
   // Check for pending request (deduplication)
   const pendingRequest = await getPendingGenerationRequest(
     cacheUser,
-    promptCheck.prompt
+    promptCheck.prompt,
   );
 
   if (pendingRequest) {
@@ -245,22 +271,24 @@ export async function POST(request) {
       await pendingRequest;
     } catch (error) {
       // Pending request failed, we'll proceed with our own generation
-      console.warn("[dedup] Pending request failed, proceeding with new generation");
+      console.warn(
+        "[dedup] Pending request failed, proceeding with new generation",
+      );
     }
 
     const cachedAfterPending = await getCachedResponse(
       cacheUser,
-      promptCheck.prompt
+      promptCheck.prompt,
     );
 
     if (cachedAfterPending) {
-  return createCachedSseResponse({
-    text: cachedAfterPending,
-    headers: SSE_BASE_HEADERS,
-    cacheStatus: "DEDUP",
-    deduped: true,
-  });
-}
+      return createCachedSseResponse({
+        text: cachedAfterPending,
+        headers: SSE_BASE_HEADERS,
+        cacheStatus: "DEDUP",
+        deduped: true,
+      });
+    }
   }
 
   if (conversationId) {
@@ -288,15 +316,21 @@ export async function POST(request) {
             });
           }
         },
-        { timeout: 10_000 }
+        { timeout: 10_000 },
       );
     } catch (error) {
       if (error?.message === "Conversation not found") {
-        return respondError(ERROR_CODES.RESOURCE_NOT_FOUND, "Conversation not found");
+        return respondError(
+          ERROR_CODES.RESOURCE_NOT_FOUND,
+          "Conversation not found",
+        );
       }
 
       console.error("Pre-stream conversation transaction failed:", error);
-      return respondError(ERROR_CODES.DATABASE_ERROR, "Failed to prepare conversation");
+      return respondError(
+        ERROR_CODES.DATABASE_ERROR,
+        "Failed to prepare conversation",
+      );
     }
   }
 
@@ -353,10 +387,9 @@ Rules:
     ],
   });
 
-
   const restrictedCachedResponse = await getCachedResponse(
     cacheUser,
-    promptCheck.prompt
+    promptCheck.prompt,
   );
 
   if (restrictedCachedResponse) {
@@ -368,7 +401,7 @@ Rules:
               data: {
                 conversationId,
                 role: "assistant",
-                content: restrictedCachedResponse,  
+                content: restrictedCachedResponse,
               },
             });
 
@@ -381,7 +414,7 @@ Rules:
               },
             });
           },
-          { timeout: 10_000 }
+          { timeout: 10_000 },
         );
       } catch (error) {
         console.error("Cached response persistence failed:", error);
@@ -441,7 +474,7 @@ Rules:
         if (abortController.signal.aborted) {
           safeClose();
           return;
-        } 
+        }
 
         if (conversationId && fullResponse.trim()) {
           if (user?.saveChatHistory ?? true) {
@@ -465,22 +498,24 @@ Rules:
                     },
                   });
                 },
-                { timeout: 10_000 }
+                { timeout: 10_000 },
               );
             } catch (error) {
-              console.error("Post-stream conversation transaction failed:", error);
+              console.error(
+                "Post-stream conversation transaction failed:",
+                error,
+              );
               throw error;
             }
           }
         }
         if (fullResponse.trim()) {
-          await cacheResponse(
-            cacheUser,
-            restrictedPrompt,
-            fullResponse
-          );
+          await cacheResponse(cacheUser, restrictedPrompt, fullResponse);
         }
-        if (abortController.signal.aborted) { safeClose(); return; }
+        if (abortController.signal.aborted) {
+          safeClose();
+          return;
+        }
         safeEnqueue("done", {
           finalText: fullResponse,
           hasContent: Boolean(fullResponse.trim()),
@@ -514,7 +549,11 @@ Rules:
   });
 
   // Set this request as pending for deduplication
-  setPendingGenerationRequest(cacheUser, promptCheck.prompt, generationCompletionPromise);
+  setPendingGenerationRequest(
+    cacheUser,
+    promptCheck.prompt,
+    generationCompletionPromise,
+  );
   generationCompletionPromise.finally(() => {
     deletePendingGenerationRequest(cacheUser, promptCheck.prompt);
   });
@@ -523,4 +562,3 @@ Rules:
     headers,
   });
 }
-

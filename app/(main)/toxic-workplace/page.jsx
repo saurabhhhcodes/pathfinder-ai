@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldAlert, Send, FileText, Loader2, HeartPulse, Flag, ShieldCheck } from "lucide-react";
+import {
+  ShieldAlert,
+  Send,
+  FileText,
+  Loader2,
+  HeartPulse,
+  Flag,
+  ShieldCheck,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -63,13 +71,17 @@ export default function ToxicWorkplacePage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-500">
           <ShieldAlert className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Toxic Workplace Escape</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Toxic Workplace Escape
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Protect Your <span className="text-gradient-primary">Peace.</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Gaslighting? Micromanagement? Unrealistic demands? Let us validate your experience and generate a discreet, fast-track escape plan to preserve your mental health.
+          Gaslighting? Micromanagement? Unrealistic demands? Let us validate
+          your experience and generate a discreet, fast-track escape plan to
+          preserve your mental health.
         </p>
       </div>
 
@@ -80,7 +92,9 @@ export default function ToxicWorkplacePage() {
             <h3 className="text-lg font-bold mb-4">What's going on?</h3>
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">Your Role</label>
+                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">
+                  Your Role
+                </label>
                 <Input
                   placeholder="E.g., Senior Designer"
                   value={role}
@@ -89,7 +103,9 @@ export default function ToxicWorkplacePage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">Describe the Environment (Symptoms)</label>
+                <label className="text-xs font-bold uppercase text-muted-foreground ml-1">
+                  Describe the Environment (Symptoms)
+                </label>
                 <Textarea
                   placeholder="E.g., My manager constantly texts me on weekends, takes credit for my work, and belittles me in team meetings..."
                   value={symptoms}
@@ -97,7 +113,7 @@ export default function ToxicWorkplacePage() {
                   className="min-h-[120px] resize-none bg-background/50 border-border/50 rounded-2xl"
                 />
               </div>
-              <Button 
+              <Button
                 onClick={handleGenerate}
                 disabled={isGenerating || !symptoms.trim() || !role.trim()}
                 className="w-full h-12 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold"
@@ -119,23 +135,31 @@ export default function ToxicWorkplacePage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past Plans</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past Plans
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentPlan(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentPlan?.id === item.id 
-                        ? "bg-red-500/10 border border-red-500/30" 
+                      currentPlan?.id === item.id
+                        ? "bg-red-500/10 border border-red-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Flag className={`h-4 w-4 shrink-0 ${currentPlan?.id === item.id ? "text-red-500" : "text-muted-foreground"}`} />
+                      <Flag
+                        className={`h-4 w-4 shrink-0 ${currentPlan?.id === item.id ? "text-red-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">{item.role}</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          {item.role}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -173,12 +197,18 @@ export default function ToxicWorkplacePage() {
                     Immediate Boundaries to Set
                   </h3>
                   <ul className="space-y-3">
-                    {currentPlan.escapeData.immediateBoundaries.map((boundary, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-amber-500 mt-1 font-bold">•</span>
-                        <span className="text-sm text-foreground leading-relaxed">{boundary}</span>
-                      </li>
-                    ))}
+                    {currentPlan.escapeData.immediateBoundaries.map(
+                      (boundary, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="text-amber-500 mt-1 font-bold">
+                            •
+                          </span>
+                          <span className="text-sm text-foreground leading-relaxed">
+                            {boundary}
+                          </span>
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </div>
 
@@ -189,13 +219,22 @@ export default function ToxicWorkplacePage() {
                     Quiet Exit Strategy
                   </h3>
                   <div className="space-y-6">
-                    {currentPlan.escapeData.quietExitStrategy.map((step, idx) => (
-                      <div key={idx} className="relative pl-6 border-l-2 border-emerald-500/20">
-                        <div className="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[7px] top-1" />
-                        <h4 className="text-sm font-bold text-foreground mb-1">{step.phase}</h4>
-                        <p className="text-sm text-muted-foreground">{step.action}</p>
-                      </div>
-                    ))}
+                    {currentPlan.escapeData.quietExitStrategy.map(
+                      (step, idx) => (
+                        <div
+                          key={idx}
+                          className="relative pl-6 border-l-2 border-emerald-500/20"
+                        >
+                          <div className="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[7px] top-1" />
+                          <h4 className="text-sm font-bold text-foreground mb-1">
+                            {step.phase}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {step.action}
+                          </p>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
 
@@ -208,7 +247,14 @@ export default function ToxicWorkplacePage() {
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
                     {currentPlan.escapeData.resignationScript}
                   </p>
-                  <Button size="sm" variant="secondary" className="mt-4 rounded-xl" onClick={() => copyToClipboard(currentPlan.escapeData.resignationScript)}>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="mt-4 rounded-xl"
+                    onClick={() =>
+                      copyToClipboard(currentPlan.escapeData.resignationScript)
+                    }
+                  >
                     Copy Script
                   </Button>
                 </div>
@@ -216,8 +262,13 @@ export default function ToxicWorkplacePage() {
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-red-500/30">
                 <ShieldAlert className="h-12 w-12 text-red-500/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No escape plans yet.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Describe what is happening at work, and we will help you build a strategy to leave.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No escape plans yet.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Describe what is happening at work, and we will help you build
+                  a strategy to leave.
+                </p>
               </div>
             )}
           </AnimatePresence>

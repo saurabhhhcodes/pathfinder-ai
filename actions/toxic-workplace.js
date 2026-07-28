@@ -14,11 +14,15 @@ export async function generateEscapePlan(symptoms, role) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!symptoms || !role) {
-    return { success: false, errors: { _form: ["Symptoms and role are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Symptoms and role are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Expert Career Coach specializing in workplace psychology, boundary setting, and discrete career transitions.",
+    context:
+      "You are an Expert Career Coach specializing in workplace psychology, boundary setting, and discrete career transitions.",
     task: `Analyze the user's role and the symptoms they are experiencing at their current workplace.
     Validate if the environment is toxic based on their input. Then, generate a fast-track, discreet escape strategy to help them protect their mental health, set immediate boundaries, and execute a quiet job hunt.`,
     untrustedData: [
@@ -55,7 +59,10 @@ export async function generateEscapePlan(symptoms, role) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Toxic Workplace Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate escape plan"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate escape plan"] },
+    };
   }
 }
 

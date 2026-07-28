@@ -37,11 +37,16 @@ export async function compareOffers(offers) {
   const validatedOffers = validation.data;
 
   const prompt = buildSecurePrompt({
-    context: "You are an expert career strategist and executive compensation negotiator.",
+    context:
+      "You are an expert career strategist and executive compensation negotiator.",
     task: `Analyze the provided job offers. Calculate the true total compensation (ignoring complex tax implications but factoring in base, bonus, and equity).
     Provide a highly strategic recommendation on which offer the candidate should accept, taking into account the financial differences, remote work flexibility, and potential career trajectory.`,
     untrustedData: [
-      { label: "offersData", value: JSON.stringify(validatedOffers), maxLength: 5000 },
+      {
+        label: "offersData",
+        value: JSON.stringify(validatedOffers),
+        maxLength: 5000,
+      },
     ],
     outputRules: `Provide the output in the following JSON format ONLY:
 {
@@ -55,10 +60,10 @@ export async function compareOffers(offers) {
     const parsedData = parseAIJson(aiResult.response.text());
 
     // Use validated data for calculation
-    const processedOffers = validatedOffers.map(o => {
+    const processedOffers = validatedOffers.map((o) => {
       return {
         ...o,
-        totalCompensation: o.baseSalary + o.bonus + o.equity
+        totalCompensation: o.baseSalary + o.bonus + o.equity,
       };
     });
 
@@ -74,7 +79,10 @@ export async function compareOffers(offers) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Offer Comparison Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to compare offers"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to compare offers"] },
+    };
   }
 }
 

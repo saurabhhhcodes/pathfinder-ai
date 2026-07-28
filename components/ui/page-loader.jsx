@@ -21,7 +21,7 @@ export function PageLoader() {
         >
           <Sparkles className="h-8 w-8" />
         </motion.div>
-        
+
         {/* Orbiting Blobs */}
         <motion.div
           animate={{ rotate: 360 }}
@@ -45,8 +45,12 @@ export function PageLoader() {
         transition={{ delay: 0.5 }}
         className="mt-8 space-y-2 text-center"
       >
-        <p className="text-sm font-black uppercase tracking-[0.3em] text-foreground">Initializing</p>
-        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Neural Career Engine</p>
+        <p className="text-sm font-black uppercase tracking-[0.3em] text-foreground">
+          Initializing
+        </p>
+        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+          Neural Career Engine
+        </p>
       </motion.div>
     </div>
   );

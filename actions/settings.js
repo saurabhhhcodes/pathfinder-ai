@@ -75,13 +75,17 @@ export async function updateUserSettings(data) {
     revalidatePath("/settings");
     return { success: true, settings: normalizeSettings(settings) };
   } catch (error) {
-    console.error("[Settings Action] Error in updateUserSettings:", error.message);
+    console.error(
+      "[Settings Action] Error in updateUserSettings:",
+      error.message,
+    );
     if (process.env.NODE_ENV === "test") {
       throw error;
     }
     return {
       success: false,
-      error: "Failed to update settings. Please ensure database migrations are applied."
+      error:
+        "Failed to update settings. Please ensure database migrations are applied.",
     };
   }
 }

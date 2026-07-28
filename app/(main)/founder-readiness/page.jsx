@@ -2,11 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Rocket, Send, Loader2, Target, ShieldAlert, CheckCircle, Info, BrainCircuit, RocketIcon } from "lucide-react";
+import {
+  Rocket,
+  Send,
+  Loader2,
+  Target,
+  ShieldAlert,
+  CheckCircle,
+  Info,
+  BrainCircuit,
+  RocketIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { generateFounderReadiness, getFounderReadinesses } from "@/actions/founder-readiness";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  generateFounderReadiness,
+  getFounderReadinesses,
+} from "@/actions/founder-readiness";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
@@ -65,13 +84,17 @@ export default function FounderReadinessPage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500">
           <RocketIcon className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Startup Founder Readiness</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Startup Founder Readiness
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-          Are you ready to <span className="text-gradient-primary">Launch?</span>
+          Are you ready to{" "}
+          <span className="text-gradient-primary">Launch?</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Get brutal, VC-level feedback on your business idea, discover your founder blind spots, and receive a 90-day transition roadmap.
+          Get brutal, VC-level feedback on your business idea, discover your
+          founder blind spots, and receive a 90-day transition roadmap.
         </p>
       </div>
 
@@ -102,16 +125,23 @@ export default function FounderReadinessPage() {
                     <SelectValue placeholder="How much risk can you handle?" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Low (Need side-hustle first)">Low (Need side-hustle first)</SelectItem>
-                    <SelectItem value="Medium (Can bootstrap for 6 months)">Medium (Can bootstrap for 6 months)</SelectItem>
-                    <SelectItem value="High (Ready to quit and go all-in)">High (Ready to quit and go all-in)</SelectItem>
+                    <SelectItem value="Low (Need side-hustle first)">
+                      Low (Need side-hustle first)
+                    </SelectItem>
+                    <SelectItem value="Medium (Can bootstrap for 6 months)">
+                      Medium (Can bootstrap for 6 months)
+                    </SelectItem>
+                    <SelectItem value="High (Ready to quit and go all-in)">
+                      High (Ready to quit and go all-in)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase text-emerald-500 flex items-center gap-1.5">
-                  <BrainCircuit className="h-3 w-3" /> Core Skills & Unfair Advantage
+                  <BrainCircuit className="h-3 w-3" /> Core Skills & Unfair
+                  Advantage
                 </label>
                 <Textarea
                   placeholder="e.g., Ex-Stripe engineer, strong network in fin-tech, zero marketing skills..."
@@ -121,9 +151,14 @@ export default function FounderReadinessPage() {
                 />
               </div>
 
-              <Button 
+              <Button
                 onClick={handleGenerate}
-                disabled={isGenerating || !businessIdea.trim() || !riskTolerance || !skills.trim()}
+                disabled={
+                  isGenerating ||
+                  !businessIdea.trim() ||
+                  !riskTolerance ||
+                  !skills.trim()
+                }
                 className="w-full h-12 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 shadow-lg shadow-orange-500/20"
               >
                 {isGenerating ? (
@@ -143,23 +178,31 @@ export default function FounderReadinessPage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past Analyses</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past Analyses
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentReadiness(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentReadiness?.id === item.id 
-                        ? "bg-orange-500/10 border border-orange-500/30" 
+                      currentReadiness?.id === item.id
+                        ? "bg-orange-500/10 border border-orange-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <RocketIcon className={`h-4 w-4 shrink-0 ${currentReadiness?.id === item.id ? "text-orange-500" : "text-muted-foreground"}`} />
+                      <RocketIcon
+                        className={`h-4 w-4 shrink-0 ${currentReadiness?.id === item.id ? "text-orange-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">Readiness Analysis</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          Readiness Analysis
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -182,16 +225,21 @@ export default function FounderReadinessPage() {
                 {/* Score & Idea Feedback */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="col-span-1 p-6 glass rounded-3xl border border-orange-500/20 flex flex-col items-center justify-center text-center">
-                    <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">Founder Score</p>
+                    <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">
+                      Founder Score
+                    </p>
                     <div className="text-5xl font-black text-orange-500">
-                      {currentReadiness.readinessData.founderScore}<span className="text-2xl text-orange-500/50">/100</span>
+                      {currentReadiness.readinessData.founderScore}
+                      <span className="text-2xl text-orange-500/50">/100</span>
                     </div>
                   </div>
-                  
+
                   <div className="col-span-1 md:col-span-2 p-6 glass rounded-3xl border border-border">
                     <div className="flex items-center gap-2 mb-3">
                       <Target className="h-5 w-5 text-indigo-500" />
-                      <h4 className="font-bold text-foreground">Idea & Market Feedback</h4>
+                      <h4 className="font-bold text-foreground">
+                        Idea & Market Feedback
+                      </h4>
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {currentReadiness.readinessData.businessIdeaFeedback}
@@ -204,30 +252,44 @@ export default function FounderReadinessPage() {
                   <div className="p-6 glass rounded-3xl border border-emerald-500/20 bg-emerald-500/5">
                     <div className="flex items-center gap-2 mb-4">
                       <CheckCircle className="h-5 w-5 text-emerald-500" />
-                      <h4 className="font-bold text-foreground">Founder Strengths</h4>
+                      <h4 className="font-bold text-foreground">
+                        Founder Strengths
+                      </h4>
                     </div>
                     <ul className="space-y-3">
-                      {currentReadiness.readinessData.strengths.map((strength, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
-                          <span className="text-sm text-foreground">{strength}</span>
-                        </li>
-                      ))}
+                      {currentReadiness.readinessData.strengths.map(
+                        (strength, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
+                            <span className="text-sm text-foreground">
+                              {strength}
+                            </span>
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </div>
 
                   <div className="p-6 glass rounded-3xl border border-rose-500/20 bg-rose-500/5">
                     <div className="flex items-center gap-2 mb-4">
                       <ShieldAlert className="h-5 w-5 text-rose-500" />
-                      <h4 className="font-bold text-foreground">Critical Blind Spots</h4>
+                      <h4 className="font-bold text-foreground">
+                        Critical Blind Spots
+                      </h4>
                     </div>
                     <div className="space-y-4">
-                      {currentReadiness.readinessData.blindSpots.map((spot, i) => (
-                        <div key={i} className="space-y-1">
-                          <p className="text-sm font-bold text-foreground">{spot.issue}</p>
-                          <p className="text-xs text-rose-500/80 leading-relaxed">Fix: {spot.mitigation}</p>
-                        </div>
-                      ))}
+                      {currentReadiness.readinessData.blindSpots.map(
+                        (spot, i) => (
+                          <div key={i} className="space-y-1">
+                            <p className="text-sm font-bold text-foreground">
+                              {spot.issue}
+                            </p>
+                            <p className="text-xs text-rose-500/80 leading-relaxed">
+                              Fix: {spot.mitigation}
+                            </p>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </div>
                 </div>
@@ -235,36 +297,52 @@ export default function FounderReadinessPage() {
                 {/* 90-Day Roadmap */}
                 <div className="p-8 bg-card rounded-3xl border border-orange-500/30 shadow-xl shadow-orange-500/5">
                   <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-                    <RocketIcon className="h-5 w-5 text-orange-500" /> 90-Day Transition Roadmap
+                    <RocketIcon className="h-5 w-5 text-orange-500" /> 90-Day
+                    Transition Roadmap
                   </h3>
-                  
+
                   <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
-                    {currentReadiness.readinessData.ninetyDayRoadmap.map((phase, i) => (
-                      <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-orange-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
-                          {i + 1}
+                    {currentReadiness.readinessData.ninetyDayRoadmap.map(
+                      (phase, i) => (
+                        <div
+                          key={i}
+                          className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
+                        >
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-orange-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
+                            {i + 1}
+                          </div>
+                          <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl border border-border bg-background shadow-sm">
+                            <h4 className="font-bold text-foreground mb-2">
+                              {phase.phase}
+                            </h4>
+                            <ul className="space-y-2">
+                              {phase.actionItems.map((item, j) => (
+                                <li
+                                  key={j}
+                                  className="text-sm text-muted-foreground flex items-start gap-2"
+                                >
+                                  <span className="h-1 w-1 rounded-full bg-orange-500 mt-1.5 shrink-0" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
-                        <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl border border-border bg-background shadow-sm">
-                          <h4 className="font-bold text-foreground mb-2">{phase.phase}</h4>
-                          <ul className="space-y-2">
-                            {phase.actionItems.map((item, j) => (
-                              <li key={j} className="text-sm text-muted-foreground flex items-start gap-2">
-                                <span className="h-1 w-1 rounded-full bg-orange-500 mt-1.5 shrink-0" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    ))}
+                      ),
+                    )}
                   </div>
                 </div>
               </motion.div>
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-orange-500/30">
                 <RocketIcon className="h-12 w-12 text-orange-500/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No founder analysis generated.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Enter your startup idea and risk profile to see if you have what it takes to launch.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No founder analysis generated.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Enter your startup idea and risk profile to see if you have
+                  what it takes to launch.
+                </p>
               </div>
             )}
           </AnimatePresence>

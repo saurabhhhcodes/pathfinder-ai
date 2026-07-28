@@ -11,9 +11,9 @@ export default function ExploreCareersPage() {
     <div className="min-h-screen bg-background relative pb-32">
       {/* Background Decorative Blob */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
@@ -28,7 +28,8 @@ export default function ExploreCareersPage() {
               Explore <span className="text-gradient-primary">Careers</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base font-medium mt-2 max-w-2xl">
-              Discover careers tailored to your skills. Save careers to your shortlist and compare them to find your perfect fit.
+              Discover careers tailored to your skills. Save careers to your
+              shortlist and compare them to find your perfect fit.
             </p>
           </div>
         </motion.div>

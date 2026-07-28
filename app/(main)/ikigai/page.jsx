@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Compass, Send, Sparkles, Loader2, Target, Heart, Briefcase, Globe } from "lucide-react";
+import {
+  Compass,
+  Send,
+  Sparkles,
+  Loader2,
+  Target,
+  Heart,
+  Briefcase,
+  Globe,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { discoverIkigai, getIkigaiDiscoveries } from "@/actions/ikigai";
@@ -59,13 +68,18 @@ export default function IkigaiPage() {
       <div className="space-y-4 mb-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-500">
           <Compass className="h-4 w-4" />
-          <span className="text-sm font-bold uppercase tracking-widest">Ikigai Builder</span>
+          <span className="text-sm font-bold uppercase tracking-widest">
+            Ikigai Builder
+          </span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-          Find Your <span className="text-gradient-primary">Reason for Being.</span>
+          Find Your{" "}
+          <span className="text-gradient-primary">Reason for Being.</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Ikigai (生き甲斐) is the intersection of what you love, what you're good at, what the world needs, and what you can be paid for. Let's find yours.
+          Ikigai (生き甲斐) is the intersection of what you love, what you're
+          good at, what the world needs, and what you can be paid for. Let's
+          find yours.
         </p>
       </div>
 
@@ -78,7 +92,9 @@ export default function IkigaiPage() {
               <div className="space-y-2 relative">
                 <div className="flex items-center gap-2 text-rose-500 mb-1">
                   <Heart className="h-4 w-4" />
-                  <label className="text-xs font-bold uppercase">What do you love?</label>
+                  <label className="text-xs font-bold uppercase">
+                    What do you love?
+                  </label>
                 </div>
                 <Textarea
                   placeholder="I love teaching others, organizing chaos, and reading about psychology..."
@@ -91,7 +107,9 @@ export default function IkigaiPage() {
               <div className="space-y-2 relative">
                 <div className="flex items-center gap-2 text-indigo-500 mb-1">
                   <Briefcase className="h-4 w-4" />
-                  <label className="text-xs font-bold uppercase">What are you good at?</label>
+                  <label className="text-xs font-bold uppercase">
+                    What are you good at?
+                  </label>
                 </div>
                 <Textarea
                   placeholder="I'm great at data analysis, writing clear emails, and public speaking..."
@@ -104,7 +122,9 @@ export default function IkigaiPage() {
               <div className="space-y-2 relative">
                 <div className="flex items-center gap-2 text-emerald-500 mb-1">
                   <Globe className="h-4 w-4" />
-                  <label className="text-xs font-bold uppercase">What does the world need (and pay for)?</label>
+                  <label className="text-xs font-bold uppercase">
+                    What does the world need (and pay for)?
+                  </label>
                 </div>
                 <Textarea
                   placeholder="Companies need better onboarding processes, people need mental health resources..."
@@ -114,9 +134,14 @@ export default function IkigaiPage() {
                 />
               </div>
 
-              <Button 
+              <Button
                 onClick={handleGenerate}
-                disabled={isGenerating || !passions.trim() || !skills.trim() || !marketNeeds.trim()}
+                disabled={
+                  isGenerating ||
+                  !passions.trim() ||
+                  !skills.trim() ||
+                  !marketNeeds.trim()
+                }
                 className="w-full h-12 rounded-xl bg-violet-500 hover:bg-violet-600 text-white font-bold mt-2"
               >
                 {isGenerating ? (
@@ -136,23 +161,31 @@ export default function IkigaiPage() {
 
           {history.length > 0 && (
             <div className="p-6 glass rounded-3xl border border-border">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Past Discoveries</h3>
+              <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                Past Discoveries
+              </h3>
               <div className="space-y-2">
                 {history.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setCurrentDiscovery(item)}
                     className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
-                      currentDiscovery?.id === item.id 
-                        ? "bg-violet-500/10 border border-violet-500/30" 
+                      currentDiscovery?.id === item.id
+                        ? "bg-violet-500/10 border border-violet-500/30"
                         : "bg-background/40 border border-transparent hover:border-border"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Target className={`h-4 w-4 shrink-0 ${currentDiscovery?.id === item.id ? "text-violet-500" : "text-muted-foreground"}`} />
+                      <Target
+                        className={`h-4 w-4 shrink-0 ${currentDiscovery?.id === item.id ? "text-violet-500" : "text-muted-foreground"}`}
+                      />
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">Discovery</p>
-                        <p className="text-xs text-muted-foreground">{format(new Date(item.createdAt), "MMM d, yyyy")}</p>
+                        <p className="text-sm font-bold text-foreground truncate">
+                          Discovery
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                        </p>
                       </div>
                     </div>
                   </button>
@@ -192,31 +225,47 @@ export default function IkigaiPage() {
                     Potential Paths Forward
                   </h3>
                   <div className="grid grid-cols-1 gap-4">
-                    {currentDiscovery.ikigaiData.ikigaiPaths.map((path, idx) => (
-                      <div key={idx} className="p-6 glass rounded-3xl border border-border hover:border-indigo-500/30 transition-colors">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="h-8 w-8 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold">
-                            {idx + 1}
+                    {currentDiscovery.ikigaiData.ikigaiPaths.map(
+                      (path, idx) => (
+                        <div
+                          key={idx}
+                          className="p-6 glass rounded-3xl border border-border hover:border-indigo-500/30 transition-colors"
+                        >
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="h-8 w-8 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold">
+                              {idx + 1}
+                            </div>
+                            <h4 className="text-base font-bold text-foreground">
+                              {path.title}
+                            </h4>
                           </div>
-                          <h4 className="text-base font-bold text-foreground">{path.title}</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                            {path.description}
+                          </p>
+                          <div className="pt-4 border-t border-border">
+                            <p className="text-xs font-bold uppercase text-emerald-500 mb-1">
+                              First Step:
+                            </p>
+                            <p className="text-sm text-foreground">
+                              {path.firstStep}
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                          {path.description}
-                        </p>
-                        <div className="pt-4 border-t border-border">
-                          <p className="text-xs font-bold uppercase text-emerald-500 mb-1">First Step:</p>
-                          <p className="text-sm text-foreground">{path.firstStep}</p>
-                        </div>
-                      </div>
-                    ))}
+                      ),
+                    )}
                   </div>
                 </div>
               </motion.div>
             ) : (
               <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 glass rounded-3xl border border-dashed border-border">
                 <Compass className="h-12 w-12 text-muted-foreground/30 mb-4" />
-                <p className="text-lg font-medium text-muted-foreground">No paths discovered.</p>
-                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">Fill out the four pillars to find the intersection of your passion, mission, vocation, and profession.</p>
+                <p className="text-lg font-medium text-muted-foreground">
+                  No paths discovered.
+                </p>
+                <p className="text-sm text-muted-foreground/60 max-w-sm mt-2">
+                  Fill out the four pillars to find the intersection of your
+                  passion, mission, vocation, and profession.
+                </p>
               </div>
             )}
           </AnimatePresence>

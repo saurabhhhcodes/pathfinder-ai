@@ -7,8 +7,16 @@ export function CursorGlow() {
   const [mounted, setMounted] = useState(false);
   const [mouse, setMouse] = useState({ x: -100, y: -100 });
 
-  const springX = useSpring(mouse.x, { stiffness: 100, damping: 30, mass: 0.5 });
-  const springY = useSpring(mouse.y, { stiffness: 100, damping: 30, mass: 0.5 });
+  const springX = useSpring(mouse.x, {
+    stiffness: 100,
+    damping: 30,
+    mass: 0.5,
+  });
+  const springY = useSpring(mouse.y, {
+    stiffness: 100,
+    damping: 30,
+    mass: 0.5,
+  });
 
   useEffect(() => {
     setMounted(true);

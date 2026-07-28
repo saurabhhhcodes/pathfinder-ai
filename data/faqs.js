@@ -10,7 +10,8 @@ export const faqs = [
       "PathFinder AI learns about your industry, experience, and skills during onboarding. It then uses this information to generate customized resumes, cover letters, and interview questions. The content is specifically aligned with your professional background and industry standards, making it highly relevant and effective.",
   },
   {
-    question: "How accurate and up-to-date are PathFinder AI's industry insights?",
+    question:
+      "How accurate and up-to-date are PathFinder AI's industry insights?",
     answer:
       "We refresh our industry insights daily and ground salary data in current web search results when available. Each salary point includes source citations, and if search is unavailable we clearly label the result as an AI estimate.",
   },

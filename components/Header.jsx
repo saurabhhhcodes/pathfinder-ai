@@ -10,12 +10,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
-import {
-  LayoutDashboard,
-  ChevronRight,
-  Menu,
-  X,
-} from "lucide-react";
+import { LayoutDashboard, ChevronRight, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ui/Modetoggle";
 import { useTheme } from "next-themes";
@@ -122,9 +117,7 @@ export default function Header() {
         alignItems: "center",
       }}
     >
-      <h1 style={{ fontSize: "28px", fontWeight: "bold" }}>
-        Pathfinder AI
-      </h1>
+      <h1 style={{ fontSize: "28px", fontWeight: "bold" }}>Pathfinder AI</h1>
 
       <nav style={{ display: "flex", gap: "20px" }}>
         <Link href="/">Home</Link>
@@ -133,4 +126,3 @@ export default function Header() {
     </header>
   );
 }
-

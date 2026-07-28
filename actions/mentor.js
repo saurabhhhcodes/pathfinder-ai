@@ -15,11 +15,15 @@ export async function generateMentorPlan(goals, targetIndustry) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!goals || !targetIndustry) {
-    return { success: false, errors: { _form: ["Goals and target industry are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Goals and target industry are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Executive Career Coach specializing in networking and mentorship.",
+    context:
+      "You are an Executive Career Coach specializing in networking and mentorship.",
     task: `Analyze the user's goals and target industry.
     Define the exact archetype of the mentor they should look for, draft a compelling initial cold-outreach message (email/LinkedIn), and create a structured 6-month agenda for their 1-on-1 meetings once they secure the mentor.`,
     untrustedData: [
@@ -59,7 +63,10 @@ export async function generateMentorPlan(goals, targetIndustry) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Mentor Plan Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate mentor plan"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate mentor plan"] },
+    };
   }
 }
 

@@ -51,7 +51,7 @@ export default function Navbar() {
       }
       setMobileOpen(false);
     },
-    [pathname, router]
+    [pathname, router],
   );
 
   return (
@@ -60,7 +60,7 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
           ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-soft"
-          : "bg-transparent"
+          : "bg-transparent",
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

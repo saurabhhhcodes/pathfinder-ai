@@ -40,10 +40,26 @@ const certifications = [
 ];
 
 const learningRoadmap = [
-  { phase: "Foundation", skills: "Core concepts & tooling", duration: "1-2 months" },
-  { phase: "Intermediate", skills: "Build real projects", duration: "2-3 months" },
-  { phase: "Advanced", skills: "System design & architecture", duration: "3-4 months" },
-  { phase: "Mastery", skills: "Specialization & leadership", duration: "Ongoing" },
+  {
+    phase: "Foundation",
+    skills: "Core concepts & tooling",
+    duration: "1-2 months",
+  },
+  {
+    phase: "Intermediate",
+    skills: "Build real projects",
+    duration: "2-3 months",
+  },
+  {
+    phase: "Advanced",
+    skills: "System design & architecture",
+    duration: "3-4 months",
+  },
+  {
+    phase: "Mastery",
+    skills: "Specialization & leadership",
+    duration: "Ongoing",
+  },
 ];
 
 const suggestedProjects = [
@@ -75,9 +91,24 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
     const industry = insight?.industry || "";
     if (industry.toLowerCase().includes("tech")) return certifications;
     return [
-      { name: "Project Management Professional (PMP)", provider: "PMI", url: "https://www.pmi.org/certifications/project-management-pmp", difficulty: "Advanced" },
-      { name: "Certified ScrumMaster", provider: "Scrum Alliance", url: "https://www.scrumalliance.org/get-certified", difficulty: "Intermediate" },
-      { name: "Industry-specific certification", provider: "Varies", url: "#", difficulty: "Varies" },
+      {
+        name: "Project Management Professional (PMP)",
+        provider: "PMI",
+        url: "https://www.pmi.org/certifications/project-management-pmp",
+        difficulty: "Advanced",
+      },
+      {
+        name: "Certified ScrumMaster",
+        provider: "Scrum Alliance",
+        url: "https://www.scrumalliance.org/get-certified",
+        difficulty: "Intermediate",
+      },
+      {
+        name: "Industry-specific certification",
+        provider: "Varies",
+        url: "#",
+        difficulty: "Varies",
+      },
     ];
   }, [insight]);
 
@@ -87,8 +118,12 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
         <div className="h-8 w-1 rounded-full bg-gradient-to-b from-primary via-purple-500 to-pink-500" />
         <div className="flex items-center gap-2">
           <div>
-            <h2 className="text-xl font-bold text-foreground tracking-tight">AI Career Compass</h2>
-            <p className="text-sm text-muted-foreground">Personalized growth recommendations</p>
+            <h2 className="text-xl font-bold text-foreground tracking-tight">
+              AI Career Compass
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Personalized growth recommendations
+            </p>
           </div>
           <Sparkles className="h-4 w-4 text-primary/60 -mt-4" />
         </div>
@@ -108,8 +143,12 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                 <Award className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-foreground">Certifications</h3>
-                <p className="text-xs text-muted-foreground">Boost your credentials</p>
+                <h3 className="text-sm font-bold text-foreground">
+                  Certifications
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Boost your credentials
+                </p>
               </div>
             </div>
 
@@ -130,13 +169,16 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                       <p className="text-sm font-bold text-foreground group-hover/cert:text-primary transition-colors">
                         {cert.name}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{cert.provider}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {cert.provider}
+                      </p>
                     </div>
                     <Badge
                       variant="outline"
                       className={cn(
                         "rounded-full text-[10px] font-bold shrink-0 border",
-                        difficultyColors[cert.difficulty] || "border-border/30 text-muted-foreground"
+                        difficultyColors[cert.difficulty] ||
+                          "border-border/30 text-muted-foreground",
                       )}
                     >
                       {cert.difficulty}
@@ -162,8 +204,12 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                 <BookOpen className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-foreground">Learning Roadmap</h3>
-                <p className="text-xs text-muted-foreground">Structured path to mastery</p>
+                <h3 className="text-sm font-bold text-foreground">
+                  Learning Roadmap
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Structured path to mastery
+                </p>
               </div>
             </div>
 
@@ -176,12 +222,19 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                   <div className="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 border-primary bg-background group-hover:bg-primary/20 transition-colors duration-300" />
                   <div className="ml-8">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold text-primary">{phase.phase}</span>
-                      <Badge variant="outline" className="rounded-full text-[9px] font-medium px-2 py-0 h-4 border-border/30 bg-muted/20">
+                      <span className="text-xs font-bold text-primary">
+                        {phase.phase}
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className="rounded-full text-[9px] font-medium px-2 py-0 h-4 border-border/30 bg-muted/20"
+                      >
                         {phase.duration}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{phase.skills}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {phase.skills}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -204,7 +257,9 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
               </div>
               <div>
                 <h3 className="text-sm font-bold text-foreground">Projects</h3>
-                <p className="text-xs text-muted-foreground">Build your portfolio</p>
+                <p className="text-xs text-muted-foreground">
+                  Build your portfolio
+                </p>
               </div>
             </div>
 
@@ -223,8 +278,12 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                       <Icon className="h-4 w-4" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-foreground">{project.title}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{project.desc}</p>
+                      <p className="text-sm font-bold text-foreground">
+                        {project.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {project.desc}
+                      </p>
                     </div>
                   </motion.div>
                 );
@@ -255,8 +314,12 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                 <Map className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-foreground">Career Progression</h3>
-                <p className="text-xs text-muted-foreground">Your growth trajectory</p>
+                <h3 className="text-sm font-bold text-foreground">
+                  Career Progression
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Your growth trajectory
+                </p>
               </div>
             </div>
 
@@ -291,13 +354,22 @@ export function AiRecommendations({ insight, currentRole, targetRole }) {
                 </p>
                 <div className="space-y-2">
                   {[
-                    { text: "Build expertise in core skills", icon: CheckCircle2 },
-                    { text: "Take on leadership opportunities", icon: CheckCircle2 },
+                    {
+                      text: "Build expertise in core skills",
+                      icon: CheckCircle2,
+                    },
+                    {
+                      text: "Take on leadership opportunities",
+                      icon: CheckCircle2,
+                    },
                     { text: "Expand network & influence", icon: CheckCircle2 },
                   ].map((step, i) => {
                     const Icon = step.icon;
                     return (
-                      <div key={step.text} className="flex items-center gap-2.5 text-xs text-muted-foreground group/step">
+                      <div
+                        key={step.text}
+                        className="flex items-center gap-2.5 text-xs text-muted-foreground group/step"
+                      >
                         <div className="h-2 w-2 rounded-full bg-primary/30 group-hover/step:bg-primary/60 transition-colors" />
                         {step.text}
                       </div>

@@ -15,7 +15,10 @@ export async function generatePivotStrategy(currentRole, targetRole) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!currentRole || !targetRole) {
-    return { success: false, errors: { _form: ["Both current and target roles are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Both current and target roles are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
@@ -61,7 +64,10 @@ export async function generatePivotStrategy(currentRole, targetRole) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Career Pivot Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate pivot strategy"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate pivot strategy"] },
+    };
   }
 }
 

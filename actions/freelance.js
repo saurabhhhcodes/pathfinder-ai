@@ -12,7 +12,10 @@ export async function generateProposal(projectDetails, rate) {
   if (!userId) return { success: false, errors: { _form: ["Unauthorized"] } };
 
   if (!projectDetails || !rate) {
-    return { success: false, errors: { _form: ["Project Details and Rate are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Project Details and Rate are required."] },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -21,7 +24,9 @@ export async function generateProposal(projectDetails, rate) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   const prompt = buildSecurePrompt({
-    context: buildUserProfileContext(user) + "\nYou are an expert freelance consultant and sales copywriter.",
+    context:
+      buildUserProfileContext(user) +
+      "\nYou are an expert freelance consultant and sales copywriter.",
     task: `Draft a highly professional, persuasive freelance proposal based on the project details.
     Include sections for Executive Summary, Proposed Solution, Timeline, and Investment (where you state the rate: ${rate}).
     The tone should be confident, value-driven, and designed to win the contract.`,
@@ -48,7 +53,10 @@ export async function generateProposal(projectDetails, rate) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Freelance Proposal Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate proposal"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate proposal"] },
+    };
   }
 }
 

@@ -14,11 +14,17 @@ export async function generateLayoffStrategy(details) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!details || details.trim().length === 0) {
-    return { success: false, errors: { _form: ["Please provide some details about the layoff/severance."] } };
+    return {
+      success: false,
+      errors: {
+        _form: ["Please provide some details about the layoff/severance."],
+      },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an empathetic, expert HR and career transition coach specializing in layoffs and severance packages.",
+    context:
+      "You are an empathetic, expert HR and career transition coach specializing in layoffs and severance packages.",
     task: `Analyze the following layoff scenario/severance details provided by the user.
     Provide a supportive analysis, decode the severance package (if any details are given), suggest 2-3 things they should negotiate or ask HR about before signing, and create a concrete 30-day bounce-back plan.`,
     untrustedData: [
@@ -55,7 +61,10 @@ export async function generateLayoffStrategy(details) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Layoff Strategy Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate strategy"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate strategy"] },
+    };
   }
 }
 
