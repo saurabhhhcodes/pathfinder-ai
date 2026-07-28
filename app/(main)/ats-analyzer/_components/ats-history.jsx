@@ -31,10 +31,22 @@ import { normalizeAtsSuggestions } from "@/lib/ats";
 
 function ScoreBadge({ score }) {
   if (score >= 75)
-    return <Badge className="bg-green-500/15 text-green-700 dark:text-green-400 border border-green-500/30">{Math.round(score)} — Strong</Badge>;
+    return (
+      <Badge className="bg-green-500/15 text-green-700 dark:text-green-400 border border-green-500/30">
+        {Math.round(score)} — Strong
+      </Badge>
+    );
   if (score >= 50)
-    return <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">{Math.round(score)} — Fair</Badge>;
-  return <Badge className="bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/30">{Math.round(score)} — Needs Work</Badge>;
+    return (
+      <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+        {Math.round(score)} — Fair
+      </Badge>
+    );
+  return (
+    <Badge className="bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/30">
+      {Math.round(score)} — Needs Work
+    </Badge>
+  );
 }
 
 function HistoryCard({ item, onDelete }) {
@@ -51,7 +63,10 @@ function HistoryCard({ item, onDelete }) {
           toast.success("Analysis deleted.");
           onDelete(item.id);
         } else {
-          const msg = result?.errors?._form?.[0] || result?.errors?.message || "Failed to delete.";
+          const msg =
+            result?.errors?._form?.[0] ||
+            result?.errors?.message ||
+            "Failed to delete.";
           toast.error(msg);
         }
       } catch (err) {
@@ -91,9 +106,13 @@ function HistoryCard({ item, onDelete }) {
                 onClick={() => setExpanded((v) => !v)}
               >
                 {expanded ? (
-                  <>Hide <ChevronUp className="h-3.5 w-3.5 ml-1" /></>
+                  <>
+                    Hide <ChevronUp className="h-3.5 w-3.5 ml-1" />
+                  </>
                 ) : (
-                  <>Details <ChevronDown className="h-3.5 w-3.5 ml-1" /></>
+                  <>
+                    Details <ChevronDown className="h-3.5 w-3.5 ml-1" />
+                  </>
                 )}
               </Button>
               <Button
@@ -103,7 +122,11 @@ function HistoryCard({ item, onDelete }) {
                 onClick={() => setShowConfirm(true)}
                 disabled={isPending}
               >
-                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                {isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash2 className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
@@ -113,8 +136,12 @@ function HistoryCard({ item, onDelete }) {
           <CardContent className="pt-0 space-y-4 border-t">
             {item.overallFeedback && (
               <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 mb-1">Overall Feedback</p>
-                <p className="text-sm leading-relaxed">{item.overallFeedback}</p>
+                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 mb-1">
+                  Overall Feedback
+                </p>
+                <p className="text-sm leading-relaxed">
+                  {item.overallFeedback}
+                </p>
               </div>
             )}
 
@@ -127,12 +154,17 @@ function HistoryCard({ item, onDelete }) {
                 </p>
                 <div className="flex flex-wrap gap-1">
                   {(item.matchedKeywords || []).slice(0, 8).map((kw) => (
-                    <span key={kw} className="text-xs bg-green-500/20 text-green-800 dark:text-green-300 px-2 py-0.5 rounded-full">
+                    <span
+                      key={kw}
+                      className="text-xs bg-green-500/20 text-green-800 dark:text-green-300 px-2 py-0.5 rounded-full"
+                    >
                       {kw}
                     </span>
                   ))}
                   {(item.matchedKeywords || []).length > 8 && (
-                    <span className="text-xs text-muted-foreground">+{item.matchedKeywords.length - 8} more</span>
+                    <span className="text-xs text-muted-foreground">
+                      +{item.matchedKeywords.length - 8} more
+                    </span>
                   )}
                 </div>
               </div>
@@ -143,12 +175,17 @@ function HistoryCard({ item, onDelete }) {
                 </p>
                 <div className="flex flex-wrap gap-1">
                   {(item.missingKeywords || []).slice(0, 8).map((kw) => (
-                    <span key={kw} className="text-xs bg-red-500/20 text-red-800 dark:text-red-300 px-2 py-0.5 rounded-full">
+                    <span
+                      key={kw}
+                      className="text-xs bg-red-500/20 text-red-800 dark:text-red-300 px-2 py-0.5 rounded-full"
+                    >
                       {kw}
                     </span>
                   ))}
                   {(item.missingKeywords || []).length > 8 && (
-                    <span className="text-xs text-muted-foreground">+{item.missingKeywords.length - 8} more</span>
+                    <span className="text-xs text-muted-foreground">
+                      +{item.missingKeywords.length - 8} more
+                    </span>
                   )}
                 </div>
               </div>
@@ -157,15 +194,24 @@ function HistoryCard({ item, onDelete }) {
             {/* top suggestions */}
             {suggestions.length > 0 && (
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Top Suggestions</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  Top Suggestions
+                </p>
                 {suggestions.slice(0, 3).map((s, i) => (
-                  <div key={i} className="flex gap-2 text-sm p-2 rounded-md bg-muted/40">
-                    <span className="text-violet-500 font-semibold flex-shrink-0">{s.category}:</span>
+                  <div
+                    key={i}
+                    className="flex gap-2 text-sm p-2 rounded-md bg-muted/40"
+                  >
+                    <span className="text-violet-500 font-semibold flex-shrink-0">
+                      {s.category}:
+                    </span>
                     <span className="text-muted-foreground">{s.tip}</span>
                   </div>
                 ))}
                 {suggestions.length > 3 && (
-                  <p className="text-xs text-muted-foreground pl-1">+{suggestions.length - 3} more suggestions</p>
+                  <p className="text-xs text-muted-foreground pl-1">
+                    +{suggestions.length - 3} more suggestions
+                  </p>
                 )}
               </div>
             )}
@@ -178,7 +224,8 @@ function HistoryCard({ item, onDelete }) {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this analysis?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove the ATS analysis record. This action cannot be undone.
+              This will permanently remove the ATS analysis record. This action
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -207,7 +254,8 @@ export default function ATSHistory({ history, onDelete }) {
         </div>
         <h3 className="text-xl font-semibold mb-2">No analyses yet</h3>
         <p className="text-muted-foreground max-w-sm">
-          Run your first ATS analysis to see your history here. Track your improvement over time!
+          Run your first ATS analysis to see your history here. Track your
+          improvement over time!
         </p>
       </div>
     );
@@ -216,7 +264,9 @@ export default function ATSHistory({ history, onDelete }) {
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        {safeHistory.length} {safeHistory.length === 1 ? "analysis" : "analyses"} · Sorted newest first
+        {safeHistory.length}{" "}
+        {safeHistory.length === 1 ? "analysis" : "analyses"} · Sorted newest
+        first
       </p>
       {safeHistory.map((item) => (
         <HistoryCard key={item.id} item={item} onDelete={onDelete} />

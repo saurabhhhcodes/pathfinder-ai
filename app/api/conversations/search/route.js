@@ -12,13 +12,15 @@ export async function GET(request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const validation = conversationSearchSchema.safeParse({ q: searchParams.get("q") });
+    const validation = conversationSearchSchema.safeParse({
+      q: searchParams.get("q"),
+    });
 
     if (!validation.success) {
       return respondError(
         ERROR_CODES.VALIDATION_ERROR,
         "Invalid search query",
-        validation.error.flatten().fieldErrors
+        validation.error.flatten().fieldErrors,
       );
     }
 
@@ -74,6 +76,9 @@ export async function GET(request) {
     });
   } catch (error) {
     console.error("Error searching conversations:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Internal Server Error");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Internal Server Error",
+    );
   }
 }

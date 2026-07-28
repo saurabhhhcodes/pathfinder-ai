@@ -3,24 +3,39 @@ import { USER_NOT_FOUND_MESSAGE } from "@/lib/errors";
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { cachedGenerateGeminiContent, RESUME_IMPROVEMENT_CACHE_TTL_MS, generateCacheKey } from "@/lib/cache";
+import {
+  cachedGenerateGeminiContent,
+  RESUME_IMPROVEMENT_CACHE_TTL_MS,
+  generateCacheKey,
+} from "@/lib/cache";
 import { generateGeminiContent } from "@/lib/gemini";
-import { buildSecurePrompt, generateWithStructuredOutput } from "@/lib/prompt-safety";
+import {
+  buildSecurePrompt,
+  generateWithStructuredOutput,
+} from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
 import { validateInput, validateOutput } from "@/lib/validate";
 import { resumeSaveSchema, resumeImprovementSchema } from "@/lib/schemas/forms";
-import { resumeImprovementOutputSchema, SCHEMA_DESCRIPTIONS } from "@/lib/schemas/outputs";
+import {
+  resumeImprovementOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "@/lib/schemas/outputs";
 import { checkRateLimit, formatResetTime } from "@/lib/rate-limit-actions";
 
 export async function saveResume(rawContent) {
   const { userId } = await auth();
-  if (!userId) return { success: false, errors: { _form: ["Sign-in required to update resume files."] } };
+  if (!userId)
+    return {
+      success: false,
+      errors: { _form: ["Sign-in required to update resume files."] },
+    };
 
   const validation = validateInput(resumeSaveSchema, { content: rawContent });
   if (!validation.success) return { success: false, errors: validation.errors };
 
   const user = await db.user.findUnique({ where: { clerkUserId: userId } });
-  if (!user) return { success: false, errors: { _form: [USER_NOT_FOUND_MESSAGE] } };
+  if (!user)
+    return { success: false, errors: { _form: [USER_NOT_FOUND_MESSAGE] } };
 
   try {
     const resume = await db.resume.upsert({
@@ -40,7 +55,12 @@ export async function saveResume(rawContent) {
     return { success: true, data: resume };
   } catch (error) {
     console.error("Error saving resume content:", error);
-    return { success: false, errors: { _form: ["Failed to update resume storage transaction record."] } };
+    return {
+      success: false,
+      errors: {
+        _form: ["Failed to update resume storage transaction record."],
+      },
+    };
   }
 }
 
@@ -67,14 +87,20 @@ export async function getResume() {
 
 export async function improveWithAI(rawParams) {
   const { userId } = await auth();
-  if (!userId) return { success: false, errors: { _form: ["Sign-in expired. Please authenticate again."] } };
+  if (!userId)
+    return {
+      success: false,
+      errors: { _form: ["Sign-in expired. Please authenticate again."] },
+    };
 
   const limit = await checkRateLimit(userId, "resume");
   if (!limit.allowed) {
     return {
       success: false,
       errors: {
-        _form: [`Resume improvement limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+        _form: [
+          `Resume improvement limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+        ],
       },
     };
   }
@@ -90,7 +116,11 @@ export async function improveWithAI(rawParams) {
       industryInsight: true,
     },
   });
-  if (!user) return { success: false, errors: { _form: ["User account match could not be checked."] } };
+  if (!user)
+    return {
+      success: false,
+      errors: { _form: ["User account match could not be checked."] },
+    };
 
   const prompt = buildSecurePrompt({
     context: buildUserProfileContext(user),
@@ -124,12 +154,23 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
       schemaDescription,
       schema: resumeImprovementOutputSchema,
       generateFn: async (p) => {
-        const raw = p === prompt
-          ? await cachedGenerateGeminiContent(p, {}, {
-              key: generateCacheKey("improve", user.id, buildUserProfileContext(user), current, type),
-              ttl: RESUME_IMPROVEMENT_CACHE_TTL_MS,
-            })
-          : await generateGeminiContent(p);
+        const raw =
+          p === prompt
+            ? await cachedGenerateGeminiContent(
+                p,
+                {},
+                {
+                  key: generateCacheKey(
+                    "improve",
+                    user.id,
+                    buildUserProfileContext(user),
+                    current,
+                    type,
+                  ),
+                  ttl: RESUME_IMPROVEMENT_CACHE_TTL_MS,
+                },
+              )
+            : await generateGeminiContent(p);
         return raw.response.text().trim();
       },
       validateFn: validateOutput,
@@ -137,18 +178,30 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
 
     if (!result.success) {
       console.error("Output validation failed:", result.errors);
-      return { success: false, errors: { _form: ["AI returned an unexpected format. Please try again."] } };
+      return {
+        success: false,
+        errors: {
+          _form: ["AI returned an unexpected format. Please try again."],
+        },
+      };
     }
 
     // Reassemble into plain string for backward compatibility with existing DB/UI
-    const highlightsText = result.data.highlights && result.data.highlights.length > 0
-      ? "\n\n" + result.data.highlights.map((h) => `- ${h}`).join("\n")
-      : "";
+    const highlightsText =
+      result.data.highlights && result.data.highlights.length > 0
+        ? "\n\n" + result.data.highlights.map((h) => `- ${h}`).join("\n")
+        : "";
     const improvedText = `${result.data.improvedContent}${highlightsText}`;
     return { success: true, data: improvedText };
   } catch (error) {
     console.error("Error optimizing structural field elements:", error);
-    return { success: false, errors: { _form: [error?.message || "AI pipeline configuration encountered an error."] } };
+    return {
+      success: false,
+      errors: {
+        _form: [
+          error?.message || "AI pipeline configuration encountered an error.",
+        ],
+      },
+    };
   }
 }
-

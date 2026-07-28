@@ -2,7 +2,14 @@
 
 import { motion } from "framer-motion";
 
-export function StaggerContainer({ children, className, staggerDelay = 0.1, delay = 0, once = true, ...props }) {
+export function StaggerContainer({
+  children,
+  className,
+  staggerDelay = 0.1,
+  delay = 0,
+  once = true,
+  ...props
+}) {
   return (
     <motion.div
       initial="hidden"

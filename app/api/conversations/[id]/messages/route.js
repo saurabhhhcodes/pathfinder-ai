@@ -9,7 +9,11 @@ export async function POST(request, context) {
   const idValidation = validateId(params.id);
 
   if (!idValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", idValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Conversation ID is required",
+      idValidation.errors,
+    );
   }
 
   try {
@@ -37,7 +41,10 @@ export async function POST(request, context) {
     });
 
     if (!conversation) {
-      return respondError(ERROR_CODES.RESOURCE_NOT_FOUND, "Conversation not found");
+      return respondError(
+        ERROR_CODES.RESOURCE_NOT_FOUND,
+        "Conversation not found",
+      );
     }
 
     let body;
@@ -53,7 +60,7 @@ export async function POST(request, context) {
       return respondError(
         ERROR_CODES.VALIDATION_ERROR,
         "Invalid message payload",
-        validation.error.flatten().fieldErrors
+        validation.error.flatten().fieldErrors,
       );
     }
 
@@ -80,7 +87,10 @@ export async function POST(request, context) {
     return Response.json(message);
   } catch (error) {
     console.error("POST message error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to save message");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to save message",
+    );
   }
 }
 
@@ -89,14 +99,22 @@ export async function PATCH(request, context) {
   const idValidation = validateId(params.id);
 
   if (!idValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", idValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Conversation ID is required",
+      idValidation.errors,
+    );
   }
 
   const messageId = request.nextUrl.searchParams.get("messageId");
   const messageIdValidation = validateId(messageId, "messageId");
 
   if (!messageIdValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Message ID is required", messageIdValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Message ID is required",
+      messageIdValidation.errors,
+    );
   }
 
   try {
@@ -119,11 +137,17 @@ export async function PATCH(request, context) {
     });
 
     if (!conversation) {
-      return respondError(ERROR_CODES.RESOURCE_NOT_FOUND, "Conversation not found");
+      return respondError(
+        ERROR_CODES.RESOURCE_NOT_FOUND,
+        "Conversation not found",
+      );
     }
 
     const message = await db.message.findFirst({
-      where: { id: messageIdValidation.data, conversationId: idValidation.data },
+      where: {
+        id: messageIdValidation.data,
+        conversationId: idValidation.data,
+      },
     });
 
     if (!message) {
@@ -143,7 +167,7 @@ export async function PATCH(request, context) {
       return respondError(
         ERROR_CODES.VALIDATION_ERROR,
         "Invalid message payload",
-        validation.error.flatten().fieldErrors
+        validation.error.flatten().fieldErrors,
       );
     }
 
@@ -162,7 +186,10 @@ export async function PATCH(request, context) {
     return Response.json(updatedMessage);
   } catch (error) {
     console.error("PATCH message error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to update message");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to update message",
+    );
   }
 }
 
@@ -171,14 +198,22 @@ export async function DELETE(request, context) {
   const idValidation = validateId(params.id);
 
   if (!idValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Conversation ID is required", idValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Conversation ID is required",
+      idValidation.errors,
+    );
   }
 
   const messageId = request.nextUrl.searchParams.get("messageId");
   const messageIdValidation = validateId(messageId, "messageId");
 
   if (!messageIdValidation.success) {
-    return respondError(ERROR_CODES.VALIDATION_ERROR, "Message ID is required", messageIdValidation.errors);
+    return respondError(
+      ERROR_CODES.VALIDATION_ERROR,
+      "Message ID is required",
+      messageIdValidation.errors,
+    );
   }
 
   try {
@@ -222,6 +257,9 @@ export async function DELETE(request, context) {
     return new Response(null, { status: 204 });
   } catch (error) {
     console.error("DELETE message error:", error);
-    return respondError(ERROR_CODES.INTERNAL_SERVER_ERROR, "Failed to delete message");
+    return respondError(
+      ERROR_CODES.INTERNAL_SERVER_ERROR,
+      "Failed to delete message",
+    );
   }
 }

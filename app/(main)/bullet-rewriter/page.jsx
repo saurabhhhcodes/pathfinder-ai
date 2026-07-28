@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -20,7 +26,7 @@ export default function BulletRewriterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (bulletText.trim().length < 10) return;
-    
+
     setLoading(true);
     setRewriteData(null);
     try {
@@ -33,7 +39,8 @@ export default function BulletRewriterPage() {
         setRewriteData(response.data.rewrites);
         toast.success("Bullet point rewritten successfully!");
       } else {
-        const errorMsg = response.errors?._form?.[0] || "Failed to rewrite bullet.";
+        const errorMsg =
+          response.errors?._form?.[0] || "Failed to rewrite bullet.";
         toast.error(errorMsg);
       }
     } catch (error) {
@@ -58,7 +65,8 @@ export default function BulletRewriterPage() {
           Resume Bullet Rewriter
         </h1>
         <p className="text-muted-foreground text-lg">
-          Transform your weak resume bullets into strong, ATS-friendly accomplishments using the Action-Task-Result framework.
+          Transform your weak resume bullets into strong, ATS-friendly
+          accomplishments using the Action-Task-Result framework.
         </p>
       </div>
 
@@ -69,7 +77,8 @@ export default function BulletRewriterPage() {
             <CardHeader>
               <CardTitle>Your Bullet Point</CardTitle>
               <CardDescription>
-                Paste a bullet point from your resume. We&apos;ll make it quantifiable and impactful.
+                Paste a bullet point from your resume. We&apos;ll make it
+                quantifiable and impactful.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -134,14 +143,18 @@ export default function BulletRewriterPage() {
                 Awaiting Input
               </h3>
               <p className="text-sm text-muted-foreground max-w-sm">
-                Enter your bullet point and target role on the left, then click rewrite to see AI-powered suggestions here.
+                Enter your bullet point and target role on the left, then click
+                rewrite to see AI-powered suggestions here.
               </p>
             </Card>
           ) : (
             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h2 className="text-xl font-semibold mb-4">Suggested Rewrites</h2>
               {rewriteData.map((item, index) => (
-                <Card key={index} className="overflow-hidden border-l-4 border-l-amber-500 transition-all hover:shadow-md">
+                <Card
+                  key={index}
+                  className="overflow-hidden border-l-4 border-l-amber-500 transition-all hover:shadow-md"
+                >
                   <CardContent className="p-5">
                     <div className="flex justify-between items-start gap-4 mb-3">
                       <p className="text-base font-medium leading-relaxed">
@@ -164,7 +177,9 @@ export default function BulletRewriterPage() {
                     </div>
                     <div className="bg-muted/50 p-3 rounded-md border border-border/50">
                       <p className="text-sm text-muted-foreground">
-                        <span className="font-semibold text-foreground/80 mr-1">Why it works:</span>
+                        <span className="font-semibold text-foreground/80 mr-1">
+                          Why it works:
+                        </span>
                         {item.explanation}
                       </p>
                     </div>

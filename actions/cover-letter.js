@@ -4,11 +4,17 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { USER_NOT_FOUND_MESSAGE } from "@/lib/user-errors";
 import { generateGeminiContent } from "@/lib/gemini";
-import { buildSecurePrompt, generateWithStructuredOutput } from "@/lib/prompt-safety";
+import {
+  buildSecurePrompt,
+  generateWithStructuredOutput,
+} from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
 import { validateInput, validateOutput } from "@/lib/validate";
 import { coverLetterInputSchema } from "@/lib/schemas/forms";
-import { coverLetterOutputSchema, SCHEMA_DESCRIPTIONS } from "@/lib/schemas/outputs";
+import {
+  coverLetterOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "@/lib/schemas/outputs";
 import { checkRateLimit, formatResetTime } from "@/lib/rate-limit-actions";
 import { JOB_DESCRIPTION_MAX_LENGTH } from "@/lib/input-limits";
 
@@ -34,11 +40,14 @@ export async function generateCoverLetter(data) {
 
     const limit = await checkRateLimit(userId, "coverLetter");
     if (!limit.allowed) {
-      throw new Error(`Cover letter limit reached. Resets in ${formatResetTime(limit.resetAt)}.`);
+      throw new Error(
+        `Cover letter limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+      );
     }
 
     const validation = validateInput(coverLetterInputSchema, data);
-    if (!validation.success) return { success: false, errors: validation.errors };
+    if (!validation.success)
+      return { success: false, errors: validation.errors };
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
@@ -61,19 +70,35 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
   "body": "<2-3 paragraphs, professional tone, max 300 words>",
   "closing": "Sincerely,\\n<candidate name>"
 }`,
-    untrustedData: [
-      { label: "jobTitle", value: jobTitle, maxLength: 200 },
-      { label: "companyName", value: companyName, maxLength: 200 },
-      { label: "jobDescription", value: jobDescription, maxLength: 8000 },
-      { label: "candidateName", value: user.name || "Candidate", maxLength: 200 },
-      { label: "industry", value: user.industry || "Technology", maxLength: 200 },
-      { label: "experience", value: String(user.experience || "0") + " years", maxLength: 100 },
-      { label: "skills", value: user.skills?.join(", ") || "Not specified", maxLength: 1000 },
-      { label: "bio", value: user.bio || "Not specified", maxLength: 2000 },
-    ],
-  });
+      untrustedData: [
+        { label: "jobTitle", value: jobTitle, maxLength: 200 },
+        { label: "companyName", value: companyName, maxLength: 200 },
+        { label: "jobDescription", value: jobDescription, maxLength: 8000 },
+        {
+          label: "candidateName",
+          value: user.name || "Candidate",
+          maxLength: 200,
+        },
+        {
+          label: "industry",
+          value: user.industry || "Technology",
+          maxLength: 200,
+        },
+        {
+          label: "experience",
+          value: String(user.experience || "0") + " years",
+          maxLength: 100,
+        },
+        {
+          label: "skills",
+          value: user.skills?.join(", ") || "Not specified",
+          maxLength: 1000,
+        },
+        { label: "bio", value: user.bio || "Not specified", maxLength: 2000 },
+      ],
+    });
 
-  const schemaDescription = SCHEMA_DESCRIPTIONS.coverLetter;
+    const schemaDescription = SCHEMA_DESCRIPTIONS.coverLetter;
 
     const result = await generateWithStructuredOutput({
       prompt,
@@ -112,7 +137,7 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
     if (process.env.NODE_ENV === "test") {
       throw error;
     }
-    
+
     // We do not save fallback cover letters to the DB
     return {
       content: FALLBACK_COVER_LETTER,
@@ -121,7 +146,7 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no code
       jobDescription,
       status: "fallback",
       userId: user.id,
-      isFallback: true
+      isFallback: true,
     };
   }
 }
@@ -180,7 +205,10 @@ export async function getCoverLetter(id) {
 export async function deleteCoverLetter(id) {
   try {
     if (!id || typeof id !== "string" || id.trim().length === 0) {
-      return { success: false, errors: { _form: ["Invalid cover letter identifier."] } };
+      return {
+        success: false,
+        errors: { _form: ["Invalid cover letter identifier."] },
+      };
     }
 
     const { userId } = await auth();
@@ -199,12 +227,18 @@ export async function deleteCoverLetter(id) {
     });
 
     if (count === 0) {
-      return { success: false, errors: { _form: ["Cover letter not found or already deleted."] } };
+      return {
+        success: false,
+        errors: { _form: ["Cover letter not found or already deleted."] },
+      };
     }
 
     return { success: true };
   } catch (error) {
     console.error("Failed to delete cover letter:", error);
-    return { success: false, errors: { _form: [error.message || String(error)] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || String(error)] },
+    };
   }
 }

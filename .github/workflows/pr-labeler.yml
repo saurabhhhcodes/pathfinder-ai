@@ -21,7 +21,7 @@ jobs:
           script: |
             const title = context.payload.pull_request.title.toLowerCase();
             const labelsToAdd = [];
-            
+
             const keywordMap = {
               'bug': ['type:bug', 'bug', 'fix'],
               'type:feature': ['feature', 'feat', 'add'],

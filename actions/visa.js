@@ -14,11 +14,15 @@ export async function generateVisaStrategy(visaType, targetRole, concerns) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!visaType || !targetRole) {
-    return { success: false, errors: { _form: ["Visa type and target role are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Visa type and target role are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Expert Career Coach specializing in international workers and visa sponsorship strategies (H-1B, F-1 OPT/CPT, O-1, TN, etc.).",
+    context:
+      "You are an Expert Career Coach specializing in international workers and visa sponsorship strategies (H-1B, F-1 OPT/CPT, O-1, TN, etc.).",
     task: `Analyze the user's visa situation, target role, and concerns.
     Generate a strategic timeline for their application process, a highly professional cover letter clause to explain their visa status, and an email script to ask HR about sponsorship without being disqualified early.`,
     untrustedData: [
@@ -53,7 +57,10 @@ export async function generateVisaStrategy(visaType, targetRole, concerns) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Visa Strategy Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate strategy"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate strategy"] },
+    };
   }
 }
 

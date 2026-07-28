@@ -51,9 +51,13 @@ function CustomTooltip({ active, payload, label }) {
           <Briefcase className="h-3.5 w-3.5 text-cyan-400" />
         </div>
         <div>
-          <p className="font-bold text-foreground text-sm leading-tight">{entry.role}</p>
+          <p className="font-bold text-foreground text-sm leading-tight">
+            {entry.role}
+          </p>
           {entry.location && (
-            <p className="text-[10px] text-muted-foreground font-medium">{entry.location}</p>
+            <p className="text-[10px] text-muted-foreground font-medium">
+              {entry.location}
+            </p>
           )}
         </div>
       </div>
@@ -62,7 +66,9 @@ function CustomTooltip({ active, payload, label }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="h-2.5 w-2.5 rounded-full bg-cyan-500 shadow-[0_0_6px_oklch(0.6_0.15_200)]" />
-            <span className="text-[11px] font-semibold text-muted-foreground">Median</span>
+            <span className="text-[11px] font-semibold text-muted-foreground">
+              Median
+            </span>
           </div>
           <span className="text-sm font-black text-foreground tabular-nums">
             {formatCurrency(entry.median)}
@@ -72,7 +78,9 @@ function CustomTooltip({ active, payload, label }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            <span className="text-[11px] font-semibold text-muted-foreground">Maximum</span>
+            <span className="text-[11px] font-semibold text-muted-foreground">
+              Maximum
+            </span>
           </div>
           <span className="text-sm font-bold text-emerald-500 tabular-nums">
             {formatCurrency(entry.max)}
@@ -82,7 +90,9 @@ function CustomTooltip({ active, payload, label }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-slate-500" />
-            <span className="text-[11px] font-semibold text-muted-foreground">Minimum</span>
+            <span className="text-[11px] font-semibold text-muted-foreground">
+              Minimum
+            </span>
           </div>
           <span className="text-sm font-bold text-slate-400 tabular-nums">
             {formatCurrency(entry.min)}
@@ -91,7 +101,9 @@ function CustomTooltip({ active, payload, label }) {
 
         <div className="pt-2.5 mt-1 border-t border-border/20">
           <div className="flex items-center justify-between text-[10px]">
-            <span className="font-medium text-muted-foreground">Range Spread</span>
+            <span className="font-medium text-muted-foreground">
+              Range Spread
+            </span>
             <span className="font-bold text-foreground/70 tabular-nums">
               {formatCompact(entry.max - entry.min)}
             </span>
@@ -121,7 +133,12 @@ function ChartLegend({ payload }) {
     <div className="flex items-center justify-center gap-6 pt-2">
       {payload.map((entry, i) => (
         <div key={i} className="flex items-center gap-1.5">
-          <span className={cn("h-2 w-2 rounded-full", icons[entry.dataKey] || "bg-primary")} />
+          <span
+            className={cn(
+              "h-2 w-2 rounded-full",
+              icons[entry.dataKey] || "bg-primary",
+            )}
+          />
           <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
             {labels[entry.dataKey] || entry.dataKey}
           </span>
@@ -140,7 +157,7 @@ export function SalaryAnalytics({ insight }) {
   const globalMax = Math.max(...salaryRanges.map((r) => r.max));
   const globalMin = Math.min(...salaryRanges.map((r) => r.min));
   const avgMedian = Math.round(
-    salaryRanges.reduce((a, r) => a + r.median, 0) / salaryRanges.length
+    salaryRanges.reduce((a, r) => a + r.median, 0) / salaryRanges.length,
   );
   const topRole = salaryRanges.reduce((a, b) => (a.median > b.median ? a : b));
 
@@ -153,7 +170,8 @@ export function SalaryAnalytics({ insight }) {
   const yMax = Math.ceil(globalMax / 50000) * 50000;
 
   const handleMouseMove = (e) => {
-    if (e?.activeTooltipIndex !== undefined) setHoveredIndex(e.activeTooltipIndex);
+    if (e?.activeTooltipIndex !== undefined)
+      setHoveredIndex(e.activeTooltipIndex);
   };
 
   return (
@@ -161,8 +179,12 @@ export function SalaryAnalytics({ insight }) {
       <div className="flex items-center gap-4">
         <div className="h-8 w-1 rounded-full bg-gradient-to-b from-cyan-500 to-blue-600" />
         <div>
-          <h2 className="text-xl font-bold text-foreground tracking-tight">Salary Intelligence</h2>
-          <p className="text-sm text-muted-foreground">Benchmark compensation across roles</p>
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
+            Salary Intelligence
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Benchmark compensation across roles
+          </p>
         </div>
         <div className="ml-auto hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-bold uppercase tracking-wider text-cyan-500">
           <Sparkles className="h-3 w-3" />
@@ -197,7 +219,10 @@ export function SalaryAnalytics({ insight }) {
             },
             {
               label: "Highest Paying",
-              value: topRole.role.length > 14 ? topRole.role.slice(0, 14) + "…" : topRole.role,
+              value:
+                topRole.role.length > 14
+                  ? topRole.role.slice(0, 14) + "…"
+                  : topRole.role,
               icon: Sparkles,
               color: "text-purple-500",
               bgColor: "bg-purple-500/10 border-purple-500/20",
@@ -209,13 +234,17 @@ export function SalaryAnalytics({ insight }) {
                 key={stat.label}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * i, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  delay: 0.05 * i,
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className="p-4 md:p-5 flex items-center gap-3"
               >
                 <div
                   className={cn(
                     "h-9 w-9 rounded-xl flex items-center justify-center border shrink-0",
-                    stat.bgColor
+                    stat.bgColor,
                   )}
                 >
                   <Icon className={cn("h-4 w-4", stat.color)} />
@@ -224,7 +253,9 @@ export function SalaryAnalytics({ insight }) {
                   <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                     {stat.label}
                   </p>
-                  <p className="text-sm font-black text-foreground truncate">{stat.value}</p>
+                  <p className="text-sm font-black text-foreground truncate">
+                    {stat.value}
+                  </p>
                 </div>
               </motion.div>
             );
@@ -246,12 +277,30 @@ export function SalaryAnalytics({ insight }) {
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <defs>
-                    <linearGradient id="medianAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="medianAreaGrad"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="0%" stopColor="oklch(0.6 0.15 200 / 0.3)" />
-                      <stop offset="40%" stopColor="oklch(0.6 0.15 200 / 0.12)" />
-                      <stop offset="100%" stopColor="oklch(0.6 0.15 200 / 0.02)" />
+                      <stop
+                        offset="40%"
+                        stopColor="oklch(0.6 0.15 200 / 0.12)"
+                      />
+                      <stop
+                        offset="100%"
+                        stopColor="oklch(0.6 0.15 200 / 0.02)"
+                      />
                     </linearGradient>
-                    <linearGradient id="medianLineGrad" x1="0" y1="0" x2="1" y2="0">
+                    <linearGradient
+                      id="medianLineGrad"
+                      x1="0"
+                      y1="0"
+                      x2="1"
+                      y2="0"
+                    >
                       <stop offset="0%" stopColor="oklch(0.65 0.18 220)" />
                       <stop offset="50%" stopColor="oklch(0.6 0.15 200)" />
                       <stop offset="100%" stopColor="oklch(0.55 0.2 250)" />
@@ -435,28 +484,34 @@ export function SalaryAnalytics({ insight }) {
                 key={data.role}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.04, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  delay: i * 0.04,
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={cn(
                   "group relative p-4 rounded-2xl border transition-all duration-300 cursor-default overflow-hidden",
                   hoveredIndex === i
                     ? "border-cyan-500/30 bg-gradient-to-br from-cyan-500/[0.03] via-card to-blue-500/[0.03] shadow-lg shadow-cyan-500/5"
-                    : "border-border/40 bg-muted/10 hover:bg-muted/20 hover:border-border/60"
+                    : "border-border/40 bg-muted/10 hover:bg-muted/20 hover:border-border/60",
                 )}
               >
                 {/* Hover gradient overlay */}
                 <div
                   className={cn(
                     "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none",
-                    "bg-gradient-to-br from-cyan-500/[0.02] via-transparent to-blue-500/[0.02]"
+                    "bg-gradient-to-br from-cyan-500/[0.02] via-transparent to-blue-500/[0.02]",
                   )}
                 />
 
                 <div className="relative">
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold text-foreground truncate">{data.role}</p>
+                      <p className="text-sm font-bold text-foreground truncate">
+                        {data.role}
+                      </p>
                       {data.location && (
                         <p className="text-[10px] text-muted-foreground font-medium mt-0.5">
                           {data.location}

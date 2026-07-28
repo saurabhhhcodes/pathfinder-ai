@@ -2,12 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   CheckCircle2,
@@ -59,10 +54,7 @@ function ScoreRing({ score }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="relative w-44 h-44">
-        <svg
-          className="w-full h-full -rotate-90"
-          viewBox="0 0 160 160"
-        >
+        <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
           <circle
             cx="80"
             cy="80"
@@ -100,9 +92,7 @@ function ScoreRing({ score }) {
         </div>
       </div>
 
-      <span className={`text-lg font-bold ${text}`}>
-        {label}
-      </span>
+      <span className={`text-lg font-bold ${text}`}>{label}</span>
     </div>
   );
 }
@@ -132,7 +122,7 @@ function getHighlightedSegments(text, highlights, matchedKeywords) {
   if (Array.isArray(highlights)) {
     highlights.forEach((h, index) => {
       if (!h.text || h.text.trim().length === 0) return;
-      
+
       let pos = text.indexOf(h.text);
       while (pos !== -1) {
         segments.push({
@@ -141,7 +131,7 @@ function getHighlightedSegments(text, highlights, matchedKeywords) {
           type: h.type || "weak_impact",
           suggestion: h.tip || h.suggestion || "",
           text: h.text,
-          key: `ai-hl-${index}-${pos}`
+          key: `ai-hl-${index}-${pos}`,
         });
         pos = text.indexOf(h.text, pos + 1);
       }
@@ -152,7 +142,7 @@ function getHighlightedSegments(text, highlights, matchedKeywords) {
   if (Array.isArray(matchedKeywords)) {
     matchedKeywords.forEach((word, index) => {
       if (!word || word.length < 2) return;
-      
+
       // Escape word for regex safety
       const escapedWord = word.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
       const regex = new RegExp(`\\b${escapedWord}\\b`, "gi");
@@ -163,7 +153,7 @@ function getHighlightedSegments(text, highlights, matchedKeywords) {
           end: match.index + match[0].length,
           type: "matched_keyword",
           text: match[0],
-          key: `kw-${index}-${match.index}`
+          key: `kw-${index}-${match.index}`,
         });
       }
     });
@@ -174,7 +164,7 @@ function getHighlightedSegments(text, highlights, matchedKeywords) {
     if (a.start !== b.start) {
       return a.start - b.start;
     }
-    return (b.end - b.start) - (a.end - a.start);
+    return b.end - b.start - (a.end - a.start);
   });
 
   // 4. Filter out overlapping segments (longest wins, or first wins)
@@ -191,10 +181,18 @@ function getHighlightedSegments(text, highlights, matchedKeywords) {
 }
 
 function RenderedResume({ resumeText, highlights, matchedKeywords }) {
-  const segments = getHighlightedSegments(resumeText, highlights, matchedKeywords);
-  
+  const segments = getHighlightedSegments(
+    resumeText,
+    highlights,
+    matchedKeywords,
+  );
+
   if (segments.length === 0) {
-    return <div className="whitespace-pre-wrap font-mono text-sm leading-relaxed">{resumeText}</div>;
+    return (
+      <div className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
+        {resumeText}
+      </div>
+    );
   }
 
   const elements = [];
@@ -206,7 +204,7 @@ function RenderedResume({ resumeText, highlights, matchedKeywords }) {
       elements.push(
         <span key={`text-${currentIndex}`}>
           {resumeText.slice(currentIndex, seg.start)}
-        </span>
+        </span>,
       );
     }
 
@@ -227,7 +225,7 @@ function RenderedResume({ resumeText, highlights, matchedKeywords }) {
             </span>
             <span className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1 bg-popover border-b border-r rotate-45" />
           </span>
-        </span>
+        </span>,
       );
     } else if (seg.type === "keyword_insertion") {
       elements.push(
@@ -245,7 +243,7 @@ function RenderedResume({ resumeText, highlights, matchedKeywords }) {
             </span>
             <span className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1 bg-popover border-b border-r rotate-45" />
           </span>
-        </span>
+        </span>,
       );
     } else if (seg.type === "matched_keyword") {
       elements.push(
@@ -254,7 +252,7 @@ function RenderedResume({ resumeText, highlights, matchedKeywords }) {
           className="bg-green-500/15 text-green-700 dark:text-green-400 border border-green-500/20 px-1 py-0.5 rounded font-semibold text-xs inline-block"
         >
           {seg.text}
-        </span>
+        </span>,
       );
     }
 
@@ -264,9 +262,7 @@ function RenderedResume({ resumeText, highlights, matchedKeywords }) {
   // Add any remaining text
   if (currentIndex < resumeText.length) {
     elements.push(
-      <span key={`text-end`}>
-        {resumeText.slice(currentIndex)}
-      </span>
+      <span key={`text-end`}>{resumeText.slice(currentIndex)}</span>,
     );
   }
 
@@ -294,11 +290,19 @@ async function downloadReport(result) {
   } = result || {};
 
   const normalizedSuggestions = normalizeAtsSuggestions(suggestions);
-  const generalSuggestions = normalizedSuggestions.filter(s => s.category !== "highlight" && !s.isHighlight);
+  const generalSuggestions = normalizedSuggestions.filter(
+    (s) => s.category !== "highlight" && !s.isHighlight,
+  );
 
-  const safeScore = Number.isFinite(Number(atsScore)) ? Math.min(100, Math.max(0, Number(atsScore))) : 0;
-  const safeMatchedKeywords = Array.isArray(matchedKeywords) ? matchedKeywords : [];
-  const safeMissingKeywords = Array.isArray(missingKeywords) ? missingKeywords : [];
+  const safeScore = Number.isFinite(Number(atsScore))
+    ? Math.min(100, Math.max(0, Number(atsScore)))
+    : 0;
+  const safeMatchedKeywords = Array.isArray(matchedKeywords)
+    ? matchedKeywords
+    : [];
+  const safeMissingKeywords = Array.isArray(missingKeywords)
+    ? missingKeywords
+    : [];
   const { label } = getScoreColor(safeScore);
 
   const html = `
@@ -309,9 +313,7 @@ async function downloadReport(result) {
       </h1>
 
       <p style="color: #64748b; margin: 0 0 24px;">
-        Generated by PathFinder AI · ${new Date(
-          createdAt
-        ).toLocaleDateString()}
+        Generated by PathFinder AI · ${new Date(createdAt).toLocaleDateString()}
       </p>
 
       ${
@@ -328,11 +330,7 @@ async function downloadReport(result) {
 
       <div style="background:#f8fafc; border-radius:12px; padding:24px; text-align:center; margin-bottom:24px;">
         <div style="font-size:64px; font-weight:900; color:${
-          safeScore >= 75
-            ? "#22c55e"
-            : safeScore >= 50
-            ? "#f59e0b"
-            : "#ef4444"
+          safeScore >= 75 ? "#22c55e" : safeScore >= 50 ? "#f59e0b" : "#ef4444"
         };">
           ${Math.round(safeScore)}
         </div>
@@ -375,7 +373,9 @@ async function downloadReport(result) {
         Improvement Suggestions
       </h2>
 
-      ${generalSuggestions.map((s) => `
+      ${generalSuggestions
+        .map(
+          (s) => `
         <div style="border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:10px;">
           <strong style="color:#6d28d9;">
             ${s.category}
@@ -385,7 +385,7 @@ async function downloadReport(result) {
             ${s.tip}
           </p>
         </div>
-      `
+      `,
         )
         .join("")}
 
@@ -404,9 +404,7 @@ async function downloadReport(result) {
   await html2pdf()
     .set({
       margin: 0,
-      filename: `ATS-Report-${
-        jobTitle || "resume"
-      }-${new Date()
+      filename: `ATS-Report-${jobTitle || "resume"}-${new Date()
         .toISOString()
         .slice(0, 10)}.pdf`,
       image: {
@@ -441,22 +439,30 @@ export default function ATSResult({ result, onAnalyzeAgain }) {
     resumeContent,
   } = result || {};
 
-  const safeScore = Number.isFinite(Number(atsScore)) ? Math.min(100, Math.max(0, Number(atsScore))) : 0;
-  const safeMatchedKeywords = Array.isArray(matchedKeywords) ? matchedKeywords : [];
-  const safeMissingKeywords = Array.isArray(missingKeywords) ? missingKeywords : [];
+  const safeScore = Number.isFinite(Number(atsScore))
+    ? Math.min(100, Math.max(0, Number(atsScore)))
+    : 0;
+  const safeMatchedKeywords = Array.isArray(matchedKeywords)
+    ? matchedKeywords
+    : [];
+  const safeMissingKeywords = Array.isArray(missingKeywords)
+    ? missingKeywords
+    : [];
   const normalizedSuggestions = normalizeAtsSuggestions(suggestions);
 
   // Separate visual highlights from general suggestions
-  const highlights = normalizedSuggestions.filter(s => s.category === "highlight" || s.isHighlight);
-  const generalSuggestions = normalizedSuggestions.filter(s => s.category !== "highlight" && !s.isHighlight);
+  const highlights = normalizedSuggestions.filter(
+    (s) => s.category === "highlight" || s.isHighlight,
+  );
+  const generalSuggestions = normalizedSuggestions.filter(
+    (s) => s.category !== "highlight" && !s.isHighlight,
+  );
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold">
-            Analysis Results
-          </h2>
+          <h2 className="text-2xl font-bold">Analysis Results</h2>
 
           {(jobTitle || companyName) && (
             <p className="text-muted-foreground text-sm mt-0.5">
@@ -468,19 +474,12 @@ export default function ATSResult({ result, onAnalyzeAgain }) {
         </div>
 
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onAnalyzeAgain}
-          >
+          <Button variant="outline" size="sm" onClick={onAnalyzeAgain}>
             <RotateCcw className="h-4 w-4 mr-2" />
             Analyze Again
           </Button>
 
-          <Button
-            size="sm"
-            onClick={() => downloadReport(result)}
-          >
+          <Button size="sm" onClick={() => downloadReport(result)}>
             <Download className="h-4 w-4 mr-2" />
             Download Report
           </Button>
@@ -500,10 +499,10 @@ export default function ATSResult({ result, onAnalyzeAgain }) {
             </span>
           </CardHeader>
           <CardContent className="flex-1 overflow-y-auto p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap select-text scrollbar-thin scrollbar-thumb-muted">
-            <RenderedResume 
-              resumeText={resumeContent || ""} 
-              highlights={highlights} 
-              matchedKeywords={safeMatchedKeywords} 
+            <RenderedResume
+              resumeText={resumeContent || ""}
+              highlights={highlights}
+              matchedKeywords={safeMatchedKeywords}
             />
           </CardContent>
         </Card>
@@ -549,7 +548,9 @@ export default function ATSResult({ result, onAnalyzeAgain }) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-xs text-muted-foreground">No matched keywords found.</p>
+                  <p className="text-xs text-muted-foreground">
+                    No matched keywords found.
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -570,7 +571,9 @@ export default function ATSResult({ result, onAnalyzeAgain }) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-xs text-muted-foreground">No missing keywords found.</p>
+                  <p className="text-xs text-muted-foreground">
+                    No missing keywords found.
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -601,9 +604,7 @@ export default function ATSResult({ result, onAnalyzeAgain }) {
                         <p className="text-xs font-semibold text-violet-600 uppercase mb-1">
                           {s.category}
                         </p>
-                        <p className="text-sm">
-                          {s.tip}
-                        </p>
+                        <p className="text-sm">{s.tip}</p>
                       </div>
                     </div>
                   ))}

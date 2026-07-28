@@ -1,8 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { chatSalaryNegotiation, evaluateNegotiation } from "@/actions/negotiation";
-import { DollarSign, Send, User, Bot, Sparkles, CheckCircle2 } from "lucide-react";
+import {
+  chatSalaryNegotiation,
+  evaluateNegotiation,
+} from "@/actions/negotiation";
+import {
+  DollarSign,
+  Send,
+  User,
+  Bot,
+  Sparkles,
+  CheckCircle2,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,13 +20,17 @@ import { toast } from "sonner";
 
 export default function SalaryNegotiationPage() {
   const [messages, setMessages] = useState([
-    { role: "model", content: "Hi there. Thanks for taking the time to chat. We're very excited to offer you the position. We've put together an initial offer of $90,000 base salary with a standard benefits package. How does that sound?" }
+    {
+      role: "model",
+      content:
+        "Hi there. Thanks for taking the time to chat. We're very excited to offer you the position. We've put together an initial offer of $90,000 base salary with a standard benefits package. How does that sound?",
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [evaluating, setEvaluating] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
-  
+
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -33,7 +47,7 @@ export default function SalaryNegotiationPage() {
 
     const userMessage = input.trim();
     setInput("");
-    
+
     const newHistory = [...messages, { role: "user", content: userMessage }];
     setMessages(newHistory);
     setLoading(true);
@@ -54,7 +68,7 @@ export default function SalaryNegotiationPage() {
       toast.error("You need to negotiate a bit more before evaluating!");
       return;
     }
-    
+
     setEvaluating(true);
     const res = await evaluateNegotiation(messages);
     if (res.success) {
@@ -68,7 +82,11 @@ export default function SalaryNegotiationPage() {
 
   const handleRestart = () => {
     setMessages([
-      { role: "model", content: "Hi there. Thanks for taking the time to chat. We're very excited to offer you the position. We've put together an initial offer of $90,000 base salary with a standard benefits package. How does that sound?" }
+      {
+        role: "model",
+        content:
+          "Hi there. Thanks for taking the time to chat. We're very excited to offer you the position. We've put together an initial offer of $90,000 base salary with a standard benefits package. How does that sound?",
+      },
     ]);
     setEvaluation(null);
   };
@@ -76,9 +94,9 @@ export default function SalaryNegotiationPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden flex flex-col">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-4xl mx-auto w-full px-4 md:px-8 py-10 flex flex-col h-[calc(100vh-2rem)]">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-between gap-6 mb-6 shrink-0"
@@ -94,8 +112,8 @@ export default function SalaryNegotiationPage() {
           </div>
 
           {!evaluation && (
-            <Button 
-              onClick={handleEndNegotiation} 
+            <Button
+              onClick={handleEndNegotiation}
               disabled={loading || evaluating || messages.length < 3}
               variant="outline"
               className="rounded-xl border-primary text-primary hover:bg-primary/10"
@@ -106,7 +124,7 @@ export default function SalaryNegotiationPage() {
         </motion.div>
 
         {evaluation ? (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="flex-1 bg-card border border-border p-8 rounded-3xl shadow-xl overflow-y-auto custom-scrollbar"
@@ -121,7 +139,9 @@ export default function SalaryNegotiationPage() {
             <div className="space-y-8">
               <div className="bg-muted/30 p-6 rounded-2xl border border-border">
                 <h3 className="text-lg font-bold mb-2">Overall Feedback</h3>
-                <p className="text-muted-foreground">{evaluation.overallFeedback}</p>
+                <p className="text-muted-foreground">
+                  {evaluation.overallFeedback}
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -131,7 +151,10 @@ export default function SalaryNegotiationPage() {
                   </h3>
                   <div className="space-y-3">
                     {evaluation.strengths?.map((str, idx) => (
-                      <div key={idx} className="bg-green-500/10 p-4 rounded-xl border border-green-500/20 text-sm font-medium">
+                      <div
+                        key={idx}
+                        className="bg-green-500/10 p-4 rounded-xl border border-green-500/20 text-sm font-medium"
+                      >
                         {str}
                       </div>
                     ))}
@@ -144,7 +167,10 @@ export default function SalaryNegotiationPage() {
                   </h3>
                   <div className="space-y-3">
                     {evaluation.weaknesses?.map((weak, idx) => (
-                      <div key={idx} className="bg-red-500/10 p-4 rounded-xl border border-red-500/20 text-sm font-medium">
+                      <div
+                        key={idx}
+                        className="bg-red-500/10 p-4 rounded-xl border border-red-500/20 text-sm font-medium"
+                      >
                         {weak}
                       </div>
                     ))}
@@ -153,7 +179,10 @@ export default function SalaryNegotiationPage() {
               </div>
 
               <div className="pt-6 border-t border-border/50 flex justify-center">
-                <Button onClick={handleRestart} className="h-12 px-8 rounded-xl font-bold">
+                <Button
+                  onClick={handleRestart}
+                  className="h-12 px-8 rounded-xl font-bold"
+                >
                   Practice Again
                 </Button>
               </div>
@@ -168,18 +197,28 @@ export default function SalaryNegotiationPage() {
                     key={idx}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`flex items-start gap-4 max-w-[80%] ${msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}
+                    className={`flex items-start gap-4 max-w-[80%] ${msg.role === "user" ? "ml-auto flex-row-reverse" : ""}`}
                   >
-                    <div className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center ${
-                      msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground border border-border'
-                    }`}>
-                      {msg.role === 'user' ? <User className="h-5 w-5" /> : <Bot className="h-5 w-5" />}
+                    <div
+                      className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center ${
+                        msg.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-foreground border border-border"
+                      }`}
+                    >
+                      {msg.role === "user" ? (
+                        <User className="h-5 w-5" />
+                      ) : (
+                        <Bot className="h-5 w-5" />
+                      )}
                     </div>
-                    <div className={`p-4 rounded-2xl text-sm leading-relaxed ${
-                      msg.role === 'user' 
-                        ? 'bg-primary text-primary-foreground rounded-tr-sm' 
-                        : 'bg-muted/50 border border-border rounded-tl-sm'
-                    }`}>
+                    <div
+                      className={`p-4 rounded-2xl text-sm leading-relaxed ${
+                        msg.role === "user"
+                          ? "bg-primary text-primary-foreground rounded-tr-sm"
+                          : "bg-muted/50 border border-border rounded-tl-sm"
+                      }`}
+                    >
                       {msg.content}
                     </div>
                   </motion.div>
@@ -195,8 +234,14 @@ export default function SalaryNegotiationPage() {
                     </div>
                     <div className="p-4 rounded-2xl text-sm bg-muted/50 border border-border rounded-tl-sm flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-primary/50 animate-bounce" />
-                      <div className="w-2 h-2 rounded-full bg-primary/50 animate-bounce" style={{ animationDelay: '0.1s' }} />
-                      <div className="w-2 h-2 rounded-full bg-primary/50 animate-bounce" style={{ animationDelay: '0.2s' }} />
+                      <div
+                        className="w-2 h-2 rounded-full bg-primary/50 animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      />
+                      <div
+                        className="w-2 h-2 rounded-full bg-primary/50 animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      />
                     </div>
                   </motion.div>
                 )}
@@ -205,7 +250,10 @@ export default function SalaryNegotiationPage() {
             </div>
 
             <div className="p-4 border-t border-border bg-muted/20">
-              <form onSubmit={handleSend} className="relative flex items-center">
+              <form
+                onSubmit={handleSend}
+                className="relative flex items-center"
+              >
                 <Input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}

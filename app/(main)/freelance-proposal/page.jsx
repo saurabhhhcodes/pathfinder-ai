@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { generateProposal, getFreelanceProposals } from "@/actions/freelance";
-import { FileSignature, Sparkles, Copy, Briefcase, DollarSign } from "lucide-react";
+import {
+  FileSignature,
+  Sparkles,
+  Copy,
+  Briefcase,
+  DollarSign,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,10 +20,10 @@ export default function FreelanceProposalPage() {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [activeProposal, setActiveProposal] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     projectDetails: "",
-    rate: ""
+    rate: "",
   });
 
   useEffect(() => {
@@ -56,9 +62,9 @@ export default function FreelanceProposalPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
@@ -72,7 +78,8 @@ export default function FreelanceProposalPage() {
               Freelance <span className="text-teal-500">Proposals</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base font-medium">
-              Draft persuasive, professional project proposals that win high-paying contracts.
+              Draft persuasive, professional project proposals that win
+              high-paying contracts.
             </p>
           </div>
         </motion.div>
@@ -81,7 +88,7 @@ export default function FreelanceProposalPage() {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-card border border-border p-6 rounded-3xl shadow-sm">
               <h3 className="font-bold text-lg mb-6">Project Parameters</h3>
-              
+
               <form onSubmit={handleGenerate} className="space-y-5">
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider ml-1 flex items-center gap-1.5">
@@ -91,7 +98,12 @@ export default function FreelanceProposalPage() {
                     placeholder="e.g. They need a 5-page marketing website built in Next.js. They want dark mode, a contact form connected to SendGrid, and it needs to be done in 3 weeks."
                     className="min-h-[250px] rounded-xl resize-none bg-background focus-visible:ring-teal-500 text-sm leading-relaxed"
                     value={formData.projectDetails}
-                    onChange={(e) => setFormData({ ...formData, projectDetails: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        projectDetails: e.target.value,
+                      })
+                    }
                     required
                   />
                 </div>
@@ -104,17 +116,22 @@ export default function FreelanceProposalPage() {
                     placeholder="e.g. $4,500 total or $100/hr"
                     className="h-12 rounded-xl bg-background focus-visible:ring-teal-500"
                     value={formData.rate}
-                    onChange={(e) => setFormData({ ...formData, rate: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, rate: e.target.value })
+                    }
                     required
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  disabled={loading || !formData.projectDetails || !formData.rate}
+                  disabled={
+                    loading || !formData.projectDetails || !formData.rate
+                  }
                   className="w-full h-12 rounded-xl font-bold bg-teal-500 hover:bg-teal-600 text-white shadow-lg shadow-teal-500/20 mt-4"
                 >
-                  {loading ? "Drafting..." : "Generate Proposal"} <Sparkles className="ml-2 h-4 w-4" />
+                  {loading ? "Drafting..." : "Generate Proposal"}{" "}
+                  <Sparkles className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </div>
@@ -122,7 +139,7 @@ export default function FreelanceProposalPage() {
 
           <div className="lg:col-span-7">
             {activeProposal ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-card border border-border rounded-3xl shadow-xl overflow-hidden flex flex-col h-full"
@@ -133,7 +150,12 @@ export default function FreelanceProposalPage() {
                     <div className="h-3 w-3 rounded-full bg-yellow-500" />
                     <div className="h-3 w-3 rounded-full bg-green-500" />
                   </div>
-                  <Button onClick={copyToClipboard} variant="ghost" size="sm" className="h-8 font-bold">
+                  <Button
+                    onClick={copyToClipboard}
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 font-bold"
+                  >
                     <Copy className="h-4 w-4 mr-2" /> Copy Markdown
                   </Button>
                 </div>
@@ -151,7 +173,9 @@ export default function FreelanceProposalPage() {
                   </div>
                   <h3 className="text-2xl font-bold">Land the Client</h3>
                   <p className="text-muted-foreground text-sm">
-                    Enter what the client needs and what you want to charge. The AI will output a stunning, value-driven proposal that justifies your rate.
+                    Enter what the client needs and what you want to charge. The
+                    AI will output a stunning, value-driven proposal that
+                    justifies your rate.
                   </p>
                 </div>
               </div>

@@ -11,9 +11,15 @@ it("hashString is deterministic and truncated to a compact length", () => {
 });
 
 it("generateCacheKey is stable for nested inputs", () => {
-  const keyA = generateCacheKey("quiz", "technology", ["React", "Node.js"], { category: "Technical" });
-  const keyB = generateCacheKey("quiz", "technology", ["React", "Node.js"], { category: "Technical" });
-  const keyC = generateCacheKey("quiz", "technology", ["Node.js", "React"], { category: "Technical" });
+  const keyA = generateCacheKey("quiz", "technology", ["React", "Node.js"], {
+    category: "Technical",
+  });
+  const keyB = generateCacheKey("quiz", "technology", ["React", "Node.js"], {
+    category: "Technical",
+  });
+  const keyC = generateCacheKey("quiz", "technology", ["Node.js", "React"], {
+    category: "Technical",
+  });
 
   expect(keyA).toBe(keyB);
   expect(keyA).not.toBe(keyC);

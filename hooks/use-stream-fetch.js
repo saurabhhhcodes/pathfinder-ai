@@ -64,288 +64,303 @@ export default function useStreamFetch() {
 
       return { status: "error", error: message, finalText: currentText };
     },
-    [isDev]
+    [isDev],
   );
 
-  const startStream = useCallback(async (prompt, conversationId = null) => {
-    // Cancel any existing stream
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
+  const startStream = useCallback(
+    async (prompt, conversationId = null) => {
+      // Cancel any existing stream
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
 
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
 
-    const timeoutId = setTimeout(() => {
-      controller.abort();
-    }, 60000);
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 60000);
 
-    setStreamedText("");
-    setFinalText("");
-    setError(null);
-    setIsLoading(true);
+      setStreamedText("");
+      setFinalText("");
+      setError(null);
+      setIsLoading(true);
 
-    try {
-      const origin =
-        process.env.NODE_ENV === "test"
-          ? "http://localhost"
-          : typeof window !== "undefined" && window?.location?.origin
-          ? window.location.origin
-          : "http://localhost";
-      const url = `${origin}/api/generate`;
+      try {
+        const origin =
+          process.env.NODE_ENV === "test"
+            ? "http://localhost"
+            : typeof window !== "undefined" && window?.location?.origin
+              ? window.location.origin
+              : "http://localhost";
+        const url = `${origin}/api/generate`;
 
-      // jsdom/happy-dom test environments can produce AbortSignal instances from a
-      // different realm, which Node.js 24+'s undici rejects with a TypeError.
-      // Skip the signal in test mode — the 60s timeout still aborts.
-      const isTestEnv =
-        process.env.NODE_ENV === "test" ||
-        (typeof window !== "undefined" &&
-          (Boolean(window.happyDOM) ||
-            window.navigator?.userAgent?.includes("HappyDOM")));
-      const signalToUse = isTestEnv ? undefined : controller.signal;
+        // jsdom/happy-dom test environments can produce AbortSignal instances from a
+        // different realm, which Node.js 24+'s undici rejects with a TypeError.
+        // Skip the signal in test mode — the 60s timeout still aborts.
+        const isTestEnv =
+          process.env.NODE_ENV === "test" ||
+          (typeof window !== "undefined" &&
+            (Boolean(window.happyDOM) ||
+              window.navigator?.userAgent?.includes("HappyDOM")));
+        const signalToUse = isTestEnv ? undefined : controller.signal;
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt,
-          conversationId,
-        }),
-        signal: signalToUse,
-      });
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+            conversationId,
+          }),
+          signal: signalToUse,
+        });
 
-      if (!response.ok) {
-        const contentType = (response.headers.get("Content-Type") || "").toLowerCase();
-        let parsed = {};
+        if (!response.ok) {
+          const contentType = (
+            response.headers.get("Content-Type") || ""
+          ).toLowerCase();
+          let parsed = {};
 
-        if (contentType.includes("text/event-stream")) {
-          const rawText = await response.text();
-          const { data } = parseSseEventBlock(rawText);
+          if (contentType.includes("text/event-stream")) {
+            const rawText = await response.text();
+            const { data } = parseSseEventBlock(rawText);
 
-          if (data) {
-            try {
-              parsed = JSON.parse(data);
-            } catch (parseError) {
-              if (isDev) {
-                console.warn("[useStreamFetch] Failed to parse SSE error payload", parseError, data);
+            if (data) {
+              try {
+                parsed = JSON.parse(data);
+              } catch (parseError) {
+                if (isDev) {
+                  console.warn(
+                    "[useStreamFetch] Failed to parse SSE error payload",
+                    parseError,
+                    data,
+                  );
+                }
               }
             }
-          }
-        } else {
-          parsed = await response.json().catch(() => ({}));
-        }
-
-        const errorMessage =
-          (typeof parsed.error === "string" && parsed.error) ||
-          (parsed.error &&
-            typeof parsed.error.message === "string" &&
-            parsed.error.message) ||
-          (typeof parsed.message === "string" && parsed.message) ||
-          `Request failed (${response.status})`;
-
-        throw new Error(errorMessage);
-      }
-
-      if (!response.body) {
-        throw new Error("Readable stream not supported");
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let accumulatedText = "";
-      let currentEvent = {
-        event: "message",
-        dataLines: [],
-      };
-
-      const resetCurrentEvent = () => {
-        currentEvent = {
-          event: "message",
-          dataLines: [],
-        };
-      };
-
-      const finalizeCurrentEvent = () => {
-        const event = currentEvent.event;
-        const data = currentEvent.dataLines.join("\n");
-
-        resetCurrentEvent();
-
-        if (event === "message" && !data) {
-          return null;
-        }
-
-        return { event, data };
-      };
-
-      const handleParsedEvent = async ({ event, data }) => {
-        let parsed = {};
-
-        if (data) {
-          try {
-            parsed = JSON.parse(data);
-          } catch (parseError) {
-            return failStream(
-              reader,
-              `Malformed SSE ${event} payload`,
-              { event, data, parseError },
-              accumulatedText
-            );
-          }
-        }
-
-        if (event === "delta") {
-          if (typeof parsed.text !== "string") {
-            return failStream(
-              reader,
-              "Malformed SSE delta payload",
-              { event, parsed },
-              accumulatedText
-            );
+          } else {
+            parsed = await response.json().catch(() => ({}));
           }
 
-          accumulatedText += parsed.text;
-          setStreamedText(accumulatedText);
-          return null;
-        }
-
-        if (event === "error") {
-          const message =
+          const errorMessage =
             (typeof parsed.error === "string" && parsed.error) ||
             (parsed.error &&
               typeof parsed.error.message === "string" &&
               parsed.error.message) ||
             (typeof parsed.message === "string" && parsed.message) ||
-            "Stream failed";
+            `Request failed (${response.status})`;
 
-          setError(message);
-          setIsLoading(false);
-          await reader.cancel();
-          return { status: "error", error: message, finalText: accumulatedText };
+          throw new Error(errorMessage);
         }
 
-        if (event === "done") {
-          const completeText =
-            typeof parsed.finalText === "string" ? parsed.finalText : accumulatedText;
-
-          accumulatedText = completeText;
-          setFinalText(completeText);
-          setStreamedText(completeText);
-          setIsLoading(false);
-          await reader.cancel();
-          return { status: "done", finalText: completeText, meta: parsed };
+        if (!response.body) {
+          throw new Error("Readable stream not supported");
         }
 
-        return null;
-      };
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let accumulatedText = "";
+        let currentEvent = {
+          event: "message",
+          dataLines: [],
+        };
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          if (buffer.trim()) {
+        const resetCurrentEvent = () => {
+          currentEvent = {
+            event: "message",
+            dataLines: [],
+          };
+        };
+
+        const finalizeCurrentEvent = () => {
+          const event = currentEvent.event;
+          const data = currentEvent.dataLines.join("\n");
+
+          resetCurrentEvent();
+
+          if (event === "message" && !data) {
+            return null;
+          }
+
+          return { event, data };
+        };
+
+        const handleParsedEvent = async ({ event, data }) => {
+          let parsed = {};
+
+          if (data) {
             try {
-              const completeEvent = parseSseEventBlock(buffer);
-              const result = await handleParsedEvent(completeEvent);
-
-              if (result) {
-                return result;
-              }
-            } catch (error) {
+              parsed = JSON.parse(data);
+            } catch (parseError) {
               return failStream(
                 reader,
-                "Malformed SSE stream: incomplete event at end",
-                { buffer, error },
-                accumulatedText
+                `Malformed SSE ${event} payload`,
+                { event, data, parseError },
+                accumulatedText,
               );
             }
           }
 
-          const fallbackFinal = accumulatedText;
-          setFinalText(fallbackFinal);
-          setStreamedText(fallbackFinal);
-          setIsLoading(false);
-          return { status: "done", finalText: fallbackFinal };
-        }
+          if (event === "delta") {
+            if (typeof parsed.text !== "string") {
+              return failStream(
+                reader,
+                "Malformed SSE delta payload",
+                { event, parsed },
+                accumulatedText,
+              );
+            }
 
-        buffer += decoder.decode(value, { stream: true });
+            accumulatedText += parsed.text;
+            setStreamedText(accumulatedText);
+            return null;
+          }
 
-        if (buffer.length > MAX_SSE_BUFFER_SIZE) {
-          return failStream(
-            reader,
-            "SSE buffer exceeded maximum size",
-            { bufferLength: buffer.length },
-            accumulatedText
-          );
-        }
+          if (event === "error") {
+            const message =
+              (typeof parsed.error === "string" && parsed.error) ||
+              (parsed.error &&
+                typeof parsed.error.message === "string" &&
+                parsed.error.message) ||
+              (typeof parsed.message === "string" && parsed.message) ||
+              "Stream failed";
+
+            setError(message);
+            setIsLoading(false);
+            await reader.cancel();
+            return {
+              status: "error",
+              error: message,
+              finalText: accumulatedText,
+            };
+          }
+
+          if (event === "done") {
+            const completeText =
+              typeof parsed.finalText === "string"
+                ? parsed.finalText
+                : accumulatedText;
+
+            accumulatedText = completeText;
+            setFinalText(completeText);
+            setStreamedText(completeText);
+            setIsLoading(false);
+            await reader.cancel();
+            return { status: "done", finalText: completeText, meta: parsed };
+          }
+
+          return null;
+        };
 
         while (true) {
-          const newlineIndex = buffer.indexOf("\n");
-          if (newlineIndex === -1) {
-            break;
+          const { done, value } = await reader.read();
+          if (done) {
+            if (buffer.trim()) {
+              try {
+                const completeEvent = parseSseEventBlock(buffer);
+                const result = await handleParsedEvent(completeEvent);
+
+                if (result) {
+                  return result;
+                }
+              } catch (error) {
+                return failStream(
+                  reader,
+                  "Malformed SSE stream: incomplete event at end",
+                  { buffer, error },
+                  accumulatedText,
+                );
+              }
+            }
+
+            const fallbackFinal = accumulatedText;
+            setFinalText(fallbackFinal);
+            setStreamedText(fallbackFinal);
+            setIsLoading(false);
+            return { status: "done", finalText: fallbackFinal };
           }
 
-          let line = buffer.slice(0, newlineIndex);
-          buffer = buffer.slice(newlineIndex + 1);
+          buffer += decoder.decode(value, { stream: true });
 
-          if (line.endsWith("\r")) {
-            line = line.slice(0, -1);
+          if (buffer.length > MAX_SSE_BUFFER_SIZE) {
+            return failStream(
+              reader,
+              "SSE buffer exceeded maximum size",
+              { bufferLength: buffer.length },
+              accumulatedText,
+            );
           }
 
-          if (!line) {
-            const completeEvent = finalizeCurrentEvent();
-            if (!completeEvent) {
+          while (true) {
+            const newlineIndex = buffer.indexOf("\n");
+            if (newlineIndex === -1) {
+              break;
+            }
+
+            let line = buffer.slice(0, newlineIndex);
+            buffer = buffer.slice(newlineIndex + 1);
+
+            if (line.endsWith("\r")) {
+              line = line.slice(0, -1);
+            }
+
+            if (!line) {
+              const completeEvent = finalizeCurrentEvent();
+              if (!completeEvent) {
+                continue;
+              }
+
+              const result = await handleParsedEvent(completeEvent);
+              if (result) {
+                return result;
+              }
+
               continue;
             }
 
-            const result = await handleParsedEvent(completeEvent);
-            if (result) {
-              return result;
+            if (line.startsWith(":")) {
+              continue;
             }
 
-            continue;
-          }
+            const colonIndex = line.indexOf(":");
+            const field = colonIndex === -1 ? line : line.slice(0, colonIndex);
+            let value = colonIndex === -1 ? "" : line.slice(colonIndex + 1);
 
-          if (line.startsWith(":")) {
-            continue;
-          }
+            if (value.startsWith(" ")) {
+              value = value.slice(1);
+            }
 
-          const colonIndex = line.indexOf(":");
-          const field = colonIndex === -1 ? line : line.slice(0, colonIndex);
-          let value = colonIndex === -1 ? "" : line.slice(colonIndex + 1);
+            if (field === "event") {
+              currentEvent.event = value || "message";
+              continue;
+            }
 
-          if (value.startsWith(" ")) {
-            value = value.slice(1);
-          }
-
-          if (field === "event") {
-            currentEvent.event = value || "message";
-            continue;
-          }
-
-          if (field === "data") {
-            currentEvent.dataLines.push(value);
+            if (field === "data") {
+              currentEvent.dataLines.push(value);
+            }
           }
         }
-      }
-    } catch (err) {
-      if (err.name === "AbortError") {
-        setIsLoading(false);
-        return { status: "aborted", finalText: "" };
-      }
+      } catch (err) {
+        if (err.name === "AbortError") {
+          setIsLoading(false);
+          return { status: "aborted", finalText: "" };
+        }
 
-      const message = err.message || "Stream failed";
-      setError(message);
-      setIsLoading(false);
-      if (isDev) {
-        console.warn("[useStreamFetch] Stream failed", err);
+        const message = err.message || "Stream failed";
+        setError(message);
+        setIsLoading(false);
+        if (isDev) {
+          console.warn("[useStreamFetch] Stream failed", err);
+        }
+        return { status: "error", error: message, finalText: "" };
+      } finally {
+        clearTimeout(timeoutId);
+        abortControllerRef.current = null;
       }
-      return { status: "error", error: message, finalText: "" };
-    } finally {
-      clearTimeout(timeoutId);
-      abortControllerRef.current = null;
-    }
-  }, [failStream, isDev, parseSseEventBlock]);
+    },
+    [failStream, isDev, parseSseEventBlock],
+  );
 
   const reset = useCallback(() => {
     if (abortControllerRef.current) {
@@ -356,7 +371,7 @@ export default function useStreamFetch() {
     setError(null);
     setIsLoading(false);
   }, []);
-  
+
   useEffect(() => {
     return () => {
       if (abortControllerRef.current) {

@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { generatePivotStrategy, getCareerPivots } from "@/actions/career-pivot";
-import { ArrowRightLeft, Sparkles, Map, Target, Briefcase, ChevronRight, Zap } from "lucide-react";
+import {
+  ArrowRightLeft,
+  Sparkles,
+  Map,
+  Target,
+  Briefcase,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,13 +37,18 @@ export default function CareerPivotPage() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await generatePivotStrategy(formData.currentRole, formData.targetRole);
+    const res = await generatePivotStrategy(
+      formData.currentRole,
+      formData.targetRole,
+    );
     if (res.success) {
       toast.success("Pivot strategy generated!");
       setHistory([res.data, ...history]);
       setActiveStrategy(res.data);
     } else {
-      toast.error(res.errors?._form?.[0] || "Failed to generate pivot strategy");
+      toast.error(
+        res.errors?._form?.[0] || "Failed to generate pivot strategy",
+      );
     }
     setLoading(false);
   };
@@ -43,9 +56,9 @@ export default function CareerPivotPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
@@ -68,7 +81,7 @@ export default function CareerPivotPage() {
           <div className="lg:col-span-4 space-y-6">
             <div className="bg-card border border-border p-6 rounded-3xl shadow-sm">
               <h3 className="font-bold text-lg mb-6">Define Your Pivot</h3>
-              
+
               <form onSubmit={handleGenerate} className="space-y-5">
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider ml-1 flex items-center gap-1.5">
@@ -78,11 +91,13 @@ export default function CareerPivotPage() {
                     placeholder="e.g. High School Teacher"
                     className="h-12 rounded-xl bg-background"
                     value={formData.currentRole}
-                    onChange={(e) => setFormData({ ...formData, currentRole: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, currentRole: e.target.value })
+                    }
                     required
                   />
                 </div>
-                
+
                 <div className="flex justify-center my-2">
                   <div className="bg-orange-500/10 p-2 rounded-full">
                     <ChevronRight className="h-4 w-4 text-orange-500 rotate-90 md:rotate-0" />
@@ -97,17 +112,22 @@ export default function CareerPivotPage() {
                     placeholder="e.g. UX Designer"
                     className="h-12 rounded-xl bg-background border-orange-500/30 focus-visible:ring-orange-500"
                     value={formData.targetRole}
-                    onChange={(e) => setFormData({ ...formData, targetRole: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, targetRole: e.target.value })
+                    }
                     required
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  disabled={loading || !formData.currentRole || !formData.targetRole}
+                  disabled={
+                    loading || !formData.currentRole || !formData.targetRole
+                  }
                   className="w-full h-12 rounded-xl font-bold mt-4 bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20"
                 >
-                  {loading ? "Analyzing..." : "Analyze Pivot"} <Sparkles className="ml-2 h-4 w-4" />
+                  {loading ? "Analyzing..." : "Analyze Pivot"}{" "}
+                  <Sparkles className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </div>
@@ -115,7 +135,7 @@ export default function CareerPivotPage() {
 
           <div className="lg:col-span-8">
             {activeStrategy ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="space-y-6"
@@ -127,11 +147,16 @@ export default function CareerPivotPage() {
                       <Zap className="h-4 w-4" /> Transferable Skills
                     </h3>
                     <ul className="space-y-3">
-                      {activeStrategy.analysis.transferableSkills?.map((skill, idx) => (
-                        <li key={idx} className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-xl text-sm font-medium leading-relaxed">
-                          {skill}
-                        </li>
-                      ))}
+                      {activeStrategy.analysis.transferableSkills?.map(
+                        (skill, idx) => (
+                          <li
+                            key={idx}
+                            className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-xl text-sm font-medium leading-relaxed"
+                          >
+                            {skill}
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </div>
 
@@ -142,7 +167,10 @@ export default function CareerPivotPage() {
                     </h3>
                     <ul className="space-y-3">
                       {activeStrategy.analysis.skillGaps?.map((gap, idx) => (
-                        <li key={idx} className="bg-red-500/5 border border-red-500/10 p-3 rounded-xl text-sm font-medium leading-relaxed">
+                        <li
+                          key={idx}
+                          className="bg-red-500/5 border border-red-500/10 p-3 rounded-xl text-sm font-medium leading-relaxed"
+                        >
                           {gap}
                         </li>
                       ))}
@@ -153,25 +181,31 @@ export default function CareerPivotPage() {
                 {/* Roadmap */}
                 <div className="bg-card border border-border p-6 md:p-8 rounded-3xl shadow-xl">
                   <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-                    <Map className="h-5 w-5 text-orange-500" /> 
+                    <Map className="h-5 w-5 text-orange-500" />
                     Step-by-Step Transition Roadmap
                   </h3>
-                  
+
                   <div className="space-y-0 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
                     {activeStrategy.analysis.roadmap?.map((phase, idx) => (
-                      <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active py-4">
+                      <div
+                        key={idx}
+                        className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active py-4"
+                      >
                         <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-orange-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 text-white font-black text-sm">
                           {idx + 1}
                         </div>
                         <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-muted/30 p-5 rounded-2xl border border-border">
-                          <h4 className="font-bold text-orange-500 mb-1">{phase.step}</h4>
-                          <p className="text-sm text-foreground font-medium">{phase.action}</p>
+                          <h4 className="font-bold text-orange-500 mb-1">
+                            {phase.step}
+                          </h4>
+                          <p className="text-sm text-foreground font-medium">
+                            {phase.action}
+                          </p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-
               </motion.div>
             ) : (
               <div className="h-full flex items-center justify-center p-12 border-2 border-dashed border-border rounded-3xl text-center">
@@ -181,7 +215,9 @@ export default function CareerPivotPage() {
                   </div>
                   <h3 className="text-2xl font-bold">Ready to Pivot?</h3>
                   <p className="text-muted-foreground text-sm">
-                    Enter your current role and your dream role. The AI will find your hidden transferable skills and map out exactly how to make the jump.
+                    Enter your current role and your dream role. The AI will
+                    find your hidden transferable skills and map out exactly how
+                    to make the jump.
                   </p>
                 </div>
               </div>

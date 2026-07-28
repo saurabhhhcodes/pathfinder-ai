@@ -3,10 +3,16 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { generateGeminiContent } from "@/lib/gemini";
-import { buildSecurePrompt, generateWithStructuredOutput } from "@/lib/prompt-safety";
+import {
+  buildSecurePrompt,
+  generateWithStructuredOutput,
+} from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
 import { validateOutput } from "@/lib/validate";
-import { founderReadinessOutputSchema, SCHEMA_DESCRIPTIONS } from "@/lib/schemas/outputs";
+import {
+  founderReadinessOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "@/lib/schemas/outputs";
 import { checkRateLimit, formatResetTime } from "@/lib/rate-limit-actions";
 
 const FOUNDER_SYSTEM_CONTEXT = `You are a top-tier venture capital partner and startup advisor. Your expertise is evaluating early-stage founders and giving blunt, actionable, and highly constructive feedback on their readiness to launch a startup. You identify blind spots, score their founder-market fit, and provide a 90-day transition roadmap.`;
@@ -18,7 +24,9 @@ export async function generateFounderReadiness(formData) {
 
     const limit = await checkRateLimit(userId, "founder_readiness");
     if (!limit.allowed) {
-      throw new Error(`Founder readiness generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`);
+      throw new Error(
+        `Founder readiness generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+      );
     }
 
     const user = await db.user.findUnique({
@@ -78,7 +86,10 @@ Respond ONLY with a valid JSON object in this exact format:
     });
 
     if (!result.success) {
-      console.error("Founder readiness output validation failed:", result.errors);
+      console.error(
+        "Founder readiness output validation failed:",
+        result.errors,
+      );
       throw new Error("AI returned an unexpected format.");
     }
 
@@ -100,7 +111,7 @@ Respond ONLY with a valid JSON object in this exact format:
     }
     return {
       success: false,
-      error: error?.message || "Failed to generate founder readiness analysis."
+      error: error?.message || "Failed to generate founder readiness analysis.",
     };
   }
 }
@@ -119,13 +130,13 @@ export async function getFounderReadinesses() {
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
     });
-    
+
     return { readinesses, error: null };
   } catch (error) {
     console.error("Error fetching founder readinesses:", error);
-    return { 
-      readinesses: [], 
-      error: error.message || "Failed to load founder readiness history." 
+    return {
+      readinesses: [],
+      error: error.message || "Failed to load founder readiness history.",
     };
   }
 }

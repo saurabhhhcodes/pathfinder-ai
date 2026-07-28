@@ -24,22 +24,37 @@ export function CompareFloatingBar() {
             <div className="h-8 w-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">
               {shortlist.length}
             </div>
-            <span className="text-sm font-semibold hidden md:inline-block">Careers Selected</span>
-            
+            <span className="text-sm font-semibold hidden md:inline-block">
+              Careers Selected
+            </span>
+
             <div className="hidden sm:flex items-center gap-2 ml-4 border-l pl-4 border-border/50">
-              {shortlist.map(c => (
-                <div key={c.id} className="flex items-center gap-1 bg-muted px-2 py-1 rounded-full text-xs">
-                  <span className="max-w-[80px] truncate font-medium">{c.title}</span>
-                  <button onClick={() => toggleShortlist(c)} className="text-muted-foreground hover:text-destructive">
+              {shortlist.map((c) => (
+                <div
+                  key={c.id}
+                  className="flex items-center gap-1 bg-muted px-2 py-1 rounded-full text-xs"
+                >
+                  <span className="max-w-[80px] truncate font-medium">
+                    {c.title}
+                  </span>
+                  <button
+                    onClick={() => toggleShortlist(c)}
+                    className="text-muted-foreground hover:text-destructive"
+                  >
                     <X className="h-3 w-3" />
                   </button>
                 </div>
               ))}
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={clearShortlist} className="hidden sm:flex rounded-full text-xs">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearShortlist}
+              className="hidden sm:flex rounded-full text-xs"
+            >
               Clear
             </Button>
             {shortlist.length < 2 ? (

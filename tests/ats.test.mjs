@@ -3,7 +3,10 @@ import { expect, it } from "vitest";
 import { normalizeAtsSuggestion, normalizeAtsSuggestions } from "../lib/ats.js";
 
 it("normalizeAtsSuggestion preserves structured suggestion objects", () => {
-  const result = normalizeAtsSuggestion({ category: "Keywords", tip: "Add missing terms" });
+  const result = normalizeAtsSuggestion({
+    category: "Keywords",
+    tip: "Add missing terms",
+  });
 
   expect(result).toEqual({ category: "Keywords", tip: "Add missing terms" });
 });
@@ -11,7 +14,10 @@ it("normalizeAtsSuggestion preserves structured suggestion objects", () => {
 it("normalizeAtsSuggestion converts legacy strings into displayable suggestions", () => {
   const result = normalizeAtsSuggestion("Use more action verbs");
 
-  expect(result).toEqual({ category: "Suggestion", tip: "Use more action verbs" });
+  expect(result).toEqual({
+    category: "Suggestion",
+    tip: "Use more action verbs",
+  });
 });
 
 it("normalizeAtsSuggestions filters empty entries and normalizes mixed input", () => {

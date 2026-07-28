@@ -14,7 +14,10 @@ export async function generateSideHustles(skills, interests) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!skills || !interests) {
-    return { success: false, errors: { _form: ["Both skills and interests are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Both skills and interests are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
@@ -70,7 +73,10 @@ export async function generateSideHustles(skills, interests) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Side Hustle Generator Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate ideas"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate ideas"] },
+    };
   }
 }
 

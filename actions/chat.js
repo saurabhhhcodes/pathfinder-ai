@@ -33,7 +33,11 @@ export async function chatWithGemini(prompt) {
     if (!rateLimit.allowed) {
       return {
         success: false,
-        errors: { _form: [`Rate limit exceeded. Try again in ${rateLimit.retryAfterSeconds}s.`] },
+        errors: {
+          _form: [
+            `Rate limit exceeded. Try again in ${rateLimit.retryAfterSeconds}s.`,
+          ],
+        },
       };
     }
 
@@ -43,7 +47,9 @@ export async function chatWithGemini(prompt) {
         return {
           success: false,
           errors: {
-            _form: [`Chat limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+            _form: [
+              `Chat limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+            ],
           },
         };
       }
@@ -71,7 +77,9 @@ export async function chatWithGemini(prompt) {
       console.error("Gemini API error:", message);
       return {
         success: false,
-        errors: { _form: ["Failed to get response from Gemini AI. Please try again."] },
+        errors: {
+          _form: ["Failed to get response from Gemini AI. Please try again."],
+        },
       };
     }
   } catch (error) {

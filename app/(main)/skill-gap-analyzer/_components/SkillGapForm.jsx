@@ -33,10 +33,22 @@ import {
 } from "@/components/ui/card";
 
 const formSchema = z.object({
-  currentSkills: z.string().min(2, "Please enter your current skills.").max(1000, "Current skills must be less than 1000 characters."),
-  targetRole: z.string().min(2, "Please enter your target role.").max(200, "Target role must be less than 200 characters."),
-  jobDescription: z.string().max(3000, "Job description must be less than 3000 characters.").optional(),
-  learningDuration: z.string().min(1, "Please select a learning duration.").max(100, "Learning duration must be less than 100 characters."),
+  currentSkills: z
+    .string()
+    .min(2, "Please enter your current skills.")
+    .max(1000, "Current skills must be less than 1000 characters."),
+  targetRole: z
+    .string()
+    .min(2, "Please enter your target role.")
+    .max(200, "Target role must be less than 200 characters."),
+  jobDescription: z
+    .string()
+    .max(3000, "Job description must be less than 3000 characters.")
+    .optional(),
+  learningDuration: z
+    .string()
+    .min(1, "Please select a learning duration.")
+    .max(100, "Learning duration must be less than 100 characters."),
 });
 
 export default function SkillGapForm({ onSubmit, isGenerating }) {
@@ -53,9 +65,12 @@ export default function SkillGapForm({ onSubmit, isGenerating }) {
   return (
     <Card className="max-w-2xl mx-auto shadow-lg border-primary/10">
       <CardHeader className="bg-gradient-to-b from-primary/5 to-transparent pb-8">
-        <CardTitle className="text-2xl font-bold">New Skill Gap Analysis</CardTitle>
+        <CardTitle className="text-2xl font-bold">
+          New Skill Gap Analysis
+        </CardTitle>
         <CardDescription>
-          Enter your current skills and target role to generate a personalized learning roadmap.
+          Enter your current skills and target role to generate a personalized
+          learning roadmap.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -97,7 +112,10 @@ export default function SkillGapForm({ onSubmit, isGenerating }) {
                       Target Role
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Senior Full Stack Developer" {...field} />
+                      <Input
+                        placeholder="e.g. Senior Full Stack Developer"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -113,7 +131,10 @@ export default function SkillGapForm({ onSubmit, isGenerating }) {
                       <Clock className="w-4 h-4 text-primary" />
                       Learning Duration
                     </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select duration" />
@@ -151,7 +172,8 @@ export default function SkillGapForm({ onSubmit, isGenerating }) {
                     />
                   </FormControl>
                   <FormDescription>
-                    If you have a specific job in mind, paste the requirements here.
+                    If you have a specific job in mind, paste the requirements
+                    here.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

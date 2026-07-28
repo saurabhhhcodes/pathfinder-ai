@@ -19,7 +19,9 @@ export async function generateProjectIdeas(data) {
     return {
       success: false,
       errors: {
-        _form: [`Project idea generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+        _form: [
+          `Project idea generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+        ],
       },
     };
   }
@@ -36,7 +38,11 @@ export async function generateProjectIdeas(data) {
     context: buildUserProfileContext(user),
     task: "You are an expert technical mentor. Generate 3 unique side-project ideas that will help the user learn their 'Skill Gap' and look impressive on a resume for their 'Target Role'. Each project must include a step-by-step roadmap.",
     untrustedData: [
-      { label: "targetRole", value: validation.data.targetRole, maxLength: 100 },
+      {
+        label: "targetRole",
+        value: validation.data.targetRole,
+        maxLength: 100,
+      },
       { label: "skillGap", value: validation.data.skillGap, maxLength: 100 },
     ],
     outputRules: `Provide your analysis in the following JSON format ONLY:
@@ -69,7 +75,10 @@ export async function generateProjectIdeas(data) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Project Idea Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate project ideas"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate project ideas"] },
+    };
   }
 }
 

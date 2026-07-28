@@ -29,13 +29,14 @@ const eslintConfig = [
                 "**/lib/rate-limit**",
                 "**/lib/checkUser",
               ],
-              message: "Server-only modules cannot be imported in client components/hooks. Use Server Actions or API routes instead."
-            }
-          ]
-        }
-      ]
-    }
-  }
+              message:
+                "Server-only modules cannot be imported in client components/hooks. Use Server Actions or API routes instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;

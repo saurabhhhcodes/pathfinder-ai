@@ -12,13 +12,13 @@ CREATE INDEX "Conversation_userId_updatedAt_idx" ON "Conversation"("userId", "up
 
 ## Post-migration index state
 
-| Table | Index | Notes |
-|---|---|---|
+| Table           | Index                                   | Notes                                            |
+| --------------- | --------------------------------------- | ------------------------------------------------ |
 | IndustryInsight | `IndustryInsight_industry_key` (unique) | Redundant `IndustryInsight_industry_idx` removed |
-| Message | `Message_conversationId_idx` | Single-column — kept |
-| Message | `Message_conversationId_createdAt_idx` | **New** composite |
-| Conversation | `Conversation_userId_idx` | Single-column — kept |
-| Conversation | `Conversation_userId_updatedAt_idx` | **New** composite |
+| Message         | `Message_conversationId_idx`            | Single-column — kept                             |
+| Message         | `Message_conversationId_createdAt_idx`  | **New** composite                                |
+| Conversation    | `Conversation_userId_idx`               | Single-column — kept                             |
+| Conversation    | `Conversation_userId_updatedAt_idx`     | **New** composite                                |
 
 ## EXPLAIN ANALYZE (after migration)
 

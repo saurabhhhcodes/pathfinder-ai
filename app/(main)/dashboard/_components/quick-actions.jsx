@@ -62,8 +62,12 @@ export function QuickActions() {
       <div className="flex items-center gap-4">
         <div className="h-8 w-1 rounded-full bg-gradient-to-b from-primary via-amber-500 to-orange-500" />
         <div>
-          <h2 className="text-xl font-bold text-foreground tracking-tight">Quick Actions</h2>
-          <p className="text-sm text-muted-foreground">Your career toolkit at a glance</p>
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
+            Quick Actions
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Your career toolkit at a glance
+          </p>
         </div>
       </div>
 
@@ -75,21 +79,29 @@ export function QuickActions() {
               key={action.label}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                delay: i * 0.05,
+                duration: 0.4,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
-              <Link
-                href={action.href}
-                className="group block h-full"
-              >
+              <Link href={action.href} className="group block h-full">
                 <div className="relative h-full p-5 md:p-6 rounded-2xl border border-border/50 bg-card shadow-soft hover:shadow-card-hover hover:border-primary/40 transition-all duration-500 overflow-hidden">
-                  <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500", action.gradient)} />
+                  <div
+                    className={cn(
+                      "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                      action.gradient,
+                    )}
+                  />
                   <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-24 h-24 bg-foreground/[0.02] rounded-full blur-3xl group-hover:bg-primary/10 transition-all duration-500" />
 
                   <div className="relative z-10 space-y-4">
-                    <div className={cn(
-                      "w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg",
-                      action.color
-                    )}>
+                    <div
+                      className={cn(
+                        "w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg",
+                        action.color,
+                      )}
+                    >
                       <Icon className="w-5 h-5" />
                     </div>
 
@@ -98,7 +110,9 @@ export function QuickActions() {
                         {action.label}
                         <ChevronRight className="h-3.5 w-3.5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                       </p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{action.desc}</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {action.desc}
+                      </p>
                     </div>
                   </div>
                 </div>

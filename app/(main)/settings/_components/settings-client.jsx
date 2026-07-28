@@ -40,7 +40,7 @@ export default function SettingsClient({ userId, user, settings }) {
       notifications: settings?.notifications ?? DEFAULT_SETTINGS.notifications,
       emailAlerts: settings?.emailAlerts ?? DEFAULT_SETTINGS.emailAlerts,
     }),
-    [settings]
+    [settings],
   );
 
   const initialProfile = useMemo(
@@ -51,9 +51,11 @@ export default function SettingsClient({ userId, user, settings }) {
       industry: user?.industry ?? DEFAULT_PROFILE.industry,
       experience: user?.experience?.toString() ?? DEFAULT_PROFILE.experience,
       bio: user?.bio ?? DEFAULT_PROFILE.bio,
-      skills: Array.isArray(user?.skills) ? user.skills.join(", ") : DEFAULT_PROFILE.skills,
+      skills: Array.isArray(user?.skills)
+        ? user.skills.join(", ")
+        : DEFAULT_PROFILE.skills,
     }),
-    [user]
+    [user],
   );
 
   const [form, setForm] = useState(initialSettings);
@@ -128,7 +130,9 @@ export default function SettingsClient({ userId, user, settings }) {
           currentRole: nextProfile.currentRole || null,
           targetRole: nextProfile.targetRole || null,
           careerGoals: nextProfile.careerGoals || null,
-          experience: nextProfile.experience ? Number(nextProfile.experience) : null,
+          experience: nextProfile.experience
+            ? Number(nextProfile.experience)
+            : null,
           bio: nextProfile.bio || null,
           skills: parseSkills(nextProfile.skills),
         });
@@ -146,7 +150,9 @@ export default function SettingsClient({ userId, user, settings }) {
           industry: updatedUser.industry ?? "",
           experience: updatedUser.experience?.toString() ?? "",
           bio: updatedUser.bio ?? "",
-          skills: Array.isArray(updatedUser.skills) ? updatedUser.skills.join(", ") : "",
+          skills: Array.isArray(updatedUser.skills)
+            ? updatedUser.skills.join(", ")
+            : "",
         };
 
         setProfileForm(normalizedProfile);
@@ -175,7 +181,8 @@ export default function SettingsClient({ userId, user, settings }) {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="text-sm text-muted-foreground">
-          Edit the profile that powers every AI prompt and keep the chat behavior tuned to your goals.
+          Edit the profile that powers every AI prompt and keep the chat
+          behavior tuned to your goals.
         </p>
       </div>
 
@@ -192,7 +199,9 @@ export default function SettingsClient({ userId, user, settings }) {
                   id="currentRole"
                   value={profileForm.currentRole}
                   disabled={isProfilePending}
-                  onChange={(event) => handleProfileChange("currentRole", event.target.value)}
+                  onChange={(event) =>
+                    handleProfileChange("currentRole", event.target.value)
+                  }
                   placeholder="e.g. Product Designer"
                 />
               </div>
@@ -203,7 +212,9 @@ export default function SettingsClient({ userId, user, settings }) {
                   id="targetRole"
                   value={profileForm.targetRole}
                   disabled={isProfilePending}
-                  onChange={(event) => handleProfileChange("targetRole", event.target.value)}
+                  onChange={(event) =>
+                    handleProfileChange("targetRole", event.target.value)
+                  }
                   placeholder="e.g. Staff Product Designer"
                 />
               </div>
@@ -214,7 +225,9 @@ export default function SettingsClient({ userId, user, settings }) {
                   id="industry"
                   value={profileForm.industry}
                   disabled={isProfilePending}
-                  onChange={(event) => handleProfileChange("industry", event.target.value)}
+                  onChange={(event) =>
+                    handleProfileChange("industry", event.target.value)
+                  }
                   placeholder="e.g. Healthcare"
                 />
               </div>
@@ -228,7 +241,9 @@ export default function SettingsClient({ userId, user, settings }) {
                   max="50"
                   value={profileForm.experience}
                   disabled={isProfilePending}
-                  onChange={(event) => handleProfileChange("experience", event.target.value)}
+                  onChange={(event) =>
+                    handleProfileChange("experience", event.target.value)
+                  }
                   placeholder="e.g. 5"
                 />
               </div>
@@ -240,7 +255,9 @@ export default function SettingsClient({ userId, user, settings }) {
                 id="skills"
                 value={profileForm.skills}
                 disabled={isProfilePending}
-                onChange={(event) => handleProfileChange("skills", event.target.value)}
+                onChange={(event) =>
+                  handleProfileChange("skills", event.target.value)
+                }
                 placeholder="React, TypeScript, Product Strategy"
                 className="min-h-[110px]"
               />
@@ -252,7 +269,9 @@ export default function SettingsClient({ userId, user, settings }) {
                 id="careerGoals"
                 value={profileForm.careerGoals}
                 disabled={isProfilePending}
-                onChange={(event) => handleProfileChange("careerGoals", event.target.value)}
+                onChange={(event) =>
+                  handleProfileChange("careerGoals", event.target.value)
+                }
                 placeholder="Describe the direction you want your AI coach to optimize for"
                 className="min-h-[110px]"
               />
@@ -264,14 +283,19 @@ export default function SettingsClient({ userId, user, settings }) {
                 id="bio"
                 value={profileForm.bio}
                 disabled={isProfilePending}
-                onChange={(event) => handleProfileChange("bio", event.target.value)}
+                onChange={(event) =>
+                  handleProfileChange("bio", event.target.value)
+                }
                 placeholder="A short professional summary"
                 className="min-h-[110px]"
               />
             </div>
 
             <div className="flex justify-end">
-              <Button onClick={handleProfileSave} disabled={isProfilePending || !hasProfileChanges}>
+              <Button
+                onClick={handleProfileSave}
+                disabled={isProfilePending || !hasProfileChanges}
+              >
                 {isProfilePending ? "Saving profile..." : "Save Profile"}
               </Button>
             </div>
@@ -320,7 +344,10 @@ export default function SettingsClient({ userId, user, settings }) {
               </div>
 
               <div className="flex justify-end">
-                <Button onClick={handleSave} disabled={isPending || !hasChanges}>
+                <Button
+                  onClick={handleSave}
+                  disabled={isPending || !hasChanges}
+                >
                   {isPending ? "Saving..." : "Save Preferences"}
                 </Button>
               </div>

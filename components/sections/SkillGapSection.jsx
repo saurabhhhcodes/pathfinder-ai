@@ -34,11 +34,11 @@ function pointsToPath(points) {
 
 export default function SkillGapSection() {
   const currentPoints = skills.map((skill, index) =>
-    polarToCart(index * angleStep, (skill.current / 100) * maxRadius)
+    polarToCart(index * angleStep, (skill.current / 100) * maxRadius),
   );
 
   const targetPoints = skills.map((skill, index) =>
-    polarToCart(index * angleStep, (skill.target / 100) * maxRadius)
+    polarToCart(index * angleStep, (skill.target / 100) * maxRadius),
   );
 
   const currentPath = pointsToPath(currentPoints);
@@ -56,7 +56,8 @@ export default function SkillGapSection() {
               See exactly what stands between you and your next role.
             </h2>
             <p className="text-lg text-muted-foreground">
-              Pathfinder maps your current strengths against target-role expectations and turns gaps into a focused action plan.
+              Pathfinder maps your current strengths against target-role
+              expectations and turns gaps into a focused action plan.
             </p>
           </div>
         </FadeUp>
@@ -66,9 +67,18 @@ export default function SkillGapSection() {
             <div className="absolute inset-0 bg-primary/5 rounded-full blur-3xl" />
 
             <div className="relative w-full h-full flex items-center justify-center glass rounded-full border border-border/50 shadow-2xl p-8">
-              <svg viewBox="0 0 200 200" className="w-full h-full overflow-visible">
+              <svg
+                viewBox="0 0 200 200"
+                className="w-full h-full overflow-visible"
+              >
                 <defs>
-                  <linearGradient id="currentGradient" x1="0" y1="0" x2="1" y2="1">
+                  <linearGradient
+                    id="currentGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                  >
                     <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
                     <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.6" />
                     <stop offset="100%" stopColor="#ec4899" stopOpacity="0.2" />
@@ -94,7 +104,11 @@ export default function SkillGapSection() {
                     strokeDasharray="3 3"
                     initial={{ scale: 0, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: index * 0.15, ease: "easeOut" }}
+                    transition={{
+                      duration: 0.8,
+                      delay: index * 0.15,
+                      ease: "easeOut",
+                    }}
                     viewport={{ once: true }}
                     style={{ transformOrigin: "100px 100px" }}
                   />
@@ -199,11 +213,19 @@ export default function SkillGapSection() {
                   <StaggerItem key={skill.name}>
                     <div className="glass rounded-xl p-5 border border-border/30 space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm font-bold text-foreground">{skill.name}</span>
+                        <span className="text-sm font-bold text-foreground">
+                          {skill.name}
+                        </span>
                         <div className="flex items-center gap-3 text-xs">
-                          <span className="text-muted-foreground">Current: {skill.current}%</span>
-                          <span className="text-primary">Target: {skill.target}%</span>
-                          <span className={`font-bold ${gap > 0 ? "text-orange-500" : "text-emerald-500"}`}>
+                          <span className="text-muted-foreground">
+                            Current: {skill.current}%
+                          </span>
+                          <span className="text-primary">
+                            Target: {skill.target}%
+                          </span>
+                          <span
+                            className={`font-bold ${gap > 0 ? "text-orange-500" : "text-emerald-500"}`}
+                          >
                             Gap: {gap > 0 ? `+${gap}` : gap}%
                           </span>
                         </div>
@@ -221,7 +243,11 @@ export default function SkillGapSection() {
                           initial={{ width: "0%" }}
                           whileInView={{ width: `${skill.current}%` }}
                           viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{
+                            duration: 1,
+                            delay: 0.3,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
                         />
                       </div>
                     </div>

@@ -4,10 +4,16 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { USER_NOT_FOUND_MESSAGE } from "@/lib/user-errors";
 import { generateGeminiContent } from "@/lib/gemini";
-import { buildSecurePrompt, generateWithStructuredOutput } from "@/lib/prompt-safety";
+import {
+  buildSecurePrompt,
+  generateWithStructuredOutput,
+} from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
 import { validateOutput } from "@/lib/validate";
-import { executivePresenceOutputSchema, SCHEMA_DESCRIPTIONS } from "@/lib/schemas/outputs";
+import {
+  executivePresenceOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "@/lib/schemas/outputs";
 import { checkRateLimit, formatResetTime } from "@/lib/rate-limit-actions";
 
 const EXECUTIVE_SYSTEM_CONTEXT = `You are a C-level executive coach specializing in leadership communication, gravitas, and executive presence. Your goal is to help professionals transition from functional experts to influential leaders. You focus on removing hedging language, increasing clarity, and commanding the room in high-stakes scenarios.`;
@@ -19,7 +25,9 @@ export async function generateExecutivePresence(formData) {
 
     const limit = await checkRateLimit(userId, "executive_presence");
     if (!limit.allowed) {
-      throw new Error(`Executive presence generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`);
+      throw new Error(
+        `Executive presence generation limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+      );
     }
 
     const user = await db.user.findUnique({
@@ -71,7 +79,10 @@ Respond ONLY with a valid JSON object in this exact format:
     });
 
     if (!result.success) {
-      console.error("Executive presence output validation failed:", result.errors);
+      console.error(
+        "Executive presence output validation failed:",
+        result.errors,
+      );
       throw new Error("AI returned an unexpected format.");
     }
 
@@ -92,7 +103,7 @@ Respond ONLY with a valid JSON object in this exact format:
     }
     return {
       success: false,
-      error: error?.message || "Failed to generate executive presence plan."
+      error: error?.message || "Failed to generate executive presence plan.",
     };
   }
 }
@@ -111,13 +122,13 @@ export async function getExecutivePresences() {
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
     });
-    
+
     return { presences, error: null };
   } catch (error) {
     console.error("Error fetching executive presences:", error);
-    return { 
-      presences: [], 
-      error: error.message || "Failed to load executive presence history." 
+    return {
+      presences: [],
+      error: error.message || "Failed to load executive presence history.",
     };
   }
 }

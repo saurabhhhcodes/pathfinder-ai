@@ -12,7 +12,10 @@ export async function generateEmailReply(originalEmail, goal) {
   if (!userId) return { success: false, errors: { _form: ["Unauthorized"] } };
 
   if (!originalEmail || !goal) {
-    return { success: false, errors: { _form: ["Email and goal are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Email and goal are required."] },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -48,7 +51,10 @@ export async function generateEmailReply(originalEmail, goal) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Email Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate email reply"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate email reply"] },
+    };
   }
 }
 

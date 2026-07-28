@@ -16,7 +16,12 @@ export function TopContributors({ contributors }) {
         <StaggerItem key={c.login}>
           <motion.div
             whileHover={{ y: -6, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 120, damping: 25, mass: 0.8 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 25,
+              mass: 0.8,
+            }}
             className="group relative h-full"
           >
             <Link
@@ -41,7 +46,8 @@ export function TopContributors({ contributors }) {
                     {c.login}
                   </span>
                   <span className="text-xs text-muted-foreground font-medium">
-                    {c.contributions} contribution{c.contributions !== 1 ? "s" : ""}
+                    {c.contributions} contribution
+                    {c.contributions !== 1 ? "s" : ""}
                   </span>
                 </div>
                 <ExternalLink className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary transition-colors shrink-0" />

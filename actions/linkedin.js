@@ -19,7 +19,9 @@ export async function optimizeLinkedInProfile(data) {
     return {
       success: false,
       errors: {
-        _form: [`LinkedIn optimization limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+        _form: [
+          `LinkedIn optimization limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+        ],
       },
     };
   }
@@ -36,7 +38,11 @@ export async function optimizeLinkedInProfile(data) {
     context: buildUserProfileContext(user),
     task: "You are an expert LinkedIn profile optimizer and technical recruiter. Analyze the provided LinkedIn profile content and suggest improvements to maximize search visibility and recruiter engagement.",
     untrustedData: [
-      { label: "profileContent", value: validation.data.profileContent, maxLength: 50000 },
+      {
+        label: "profileContent",
+        value: validation.data.profileContent,
+        maxLength: 50000,
+      },
     ],
     outputRules: `Provide your analysis in the following JSON format ONLY:
 {
@@ -69,7 +75,10 @@ export async function optimizeLinkedInProfile(data) {
     return { success: true, data: record };
   } catch (error) {
     console.error("LinkedIn Optimization Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate optimization"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate optimization"] },
+    };
   }
 }
 

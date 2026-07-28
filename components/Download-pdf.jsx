@@ -5,7 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Download, FileLoader } from "lucide-react";
 import { toast } from "sonner";
 
-export default function DownloadPdf({ contentRefId, fileName, label = "Download PDF" }) {
+export default function DownloadPdf({
+  contentRefId,
+  fileName,
+  label = "Download PDF",
+}) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleDownload = async () => {
@@ -18,14 +22,14 @@ export default function DownloadPdf({ contentRefId, fileName, label = "Download 
     setIsGenerating(true);
     try {
       const { default: html2pdf } = await import("html2pdf.js");
-      
+
       const opt = {
         margin: [15, 15],
         filename: fileName || "document.pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true, letterRendering: true },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+        pagebreak: { mode: ["avoid-all", "css", "legacy"] },
       };
 
       await html2pdf().set(opt).from(element).save();
@@ -39,9 +43,9 @@ export default function DownloadPdf({ contentRefId, fileName, label = "Download 
   };
 
   return (
-    <Button 
-      variant="outline" 
-      onClick={handleDownload} 
+    <Button
+      variant="outline"
+      onClick={handleDownload}
       disabled={isGenerating}
       className="gap-2"
     >

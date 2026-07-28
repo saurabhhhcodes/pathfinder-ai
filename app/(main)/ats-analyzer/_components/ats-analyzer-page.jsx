@@ -7,11 +7,14 @@ import ATSForm from "./ats-form";
 import ATSResult from "./ats-result";
 import ATSHistory from "./ats-history";
 
-export default function ATSAnalyzerPage({ initialHistory, savedResumeContent }) {
+export default function ATSAnalyzerPage({
+  initialHistory,
+  savedResumeContent,
+}) {
   const [currentResult, setCurrentResult] = useState(null);
   const [activeTab, setActiveTab] = useState("analyze");
   const [history, setHistory] = useState(
-    Array.isArray(initialHistory) ? initialHistory : []
+    Array.isArray(initialHistory) ? initialHistory : [],
   );
 
   const handleAnalysisComplete = (result) => {
@@ -26,7 +29,7 @@ export default function ATSAnalyzerPage({ initialHistory, savedResumeContent }) 
 
   const handleDeleteFromHistory = (deletedId) => {
     setHistory((prev) =>
-      (Array.isArray(prev) ? prev : []).filter((item) => item.id !== deletedId)
+      (Array.isArray(prev) ? prev : []).filter((item) => item.id !== deletedId),
     );
   };
 
@@ -50,7 +53,10 @@ export default function ATSAnalyzerPage({ initialHistory, savedResumeContent }) 
 
       <TabsContent value="analyze">
         {currentResult ? (
-          <ATSResult result={currentResult} onAnalyzeAgain={handleAnalyzeAgain} />
+          <ATSResult
+            result={currentResult}
+            onAnalyzeAgain={handleAnalyzeAgain}
+          />
         ) : (
           <ATSForm
             savedResumeContent={savedResumeContent}

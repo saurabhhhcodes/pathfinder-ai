@@ -35,13 +35,25 @@ const sectionVariants = {
 };
 
 function computeScores(insight) {
-  const marketScore = insight?.marketOutlook === "Positive" ? 85 : insight?.marketOutlook === "Neutral" ? 60 : 35;
-  const demandScore = insight?.demandLevel === "High" ? 90 : insight?.demandLevel === "Medium" ? 60 : 30;
+  const marketScore =
+    insight?.marketOutlook === "Positive"
+      ? 85
+      : insight?.marketOutlook === "Neutral"
+        ? 60
+        : 35;
+  const demandScore =
+    insight?.demandLevel === "High"
+      ? 90
+      : insight?.demandLevel === "Medium"
+        ? 60
+        : 30;
   const growthRaw = insight?.growthRate ?? 0;
   const growthScore = Math.min(Math.round((growthRaw / 25) * 100), 100);
   const salaryCount = insight?.salaryRanges?.length ?? 0;
   const salaryScore = salaryCount >= 5 ? 85 : salaryCount >= 3 ? 65 : 40;
-  const careerScore = Math.round((marketScore + demandScore + growthScore + salaryScore) / 4);
+  const careerScore = Math.round(
+    (marketScore + demandScore + growthScore + salaryScore) / 4,
+  );
 
   return { careerScore, marketScore, demandScore, growthScore, salaryScore };
 }
@@ -58,7 +70,7 @@ function NavIndicator({ sections }) {
           }
         }
       },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
     );
 
     for (const { id } of sections) {
@@ -75,7 +87,13 @@ function NavIndicator({ sections }) {
   };
 
   return (
-    <nav className="sticky top-20 z-40 -mx-4 px-4 py-3 mb-2 overflow-x-auto scrollbar-hide" style={{ WebkitMaskImage: "linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent)" }}>
+    <nav
+      className="sticky top-20 z-40 -mx-4 px-4 py-3 mb-2 overflow-x-auto scrollbar-hide"
+      style={{
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent)",
+      }}
+    >
       <div className="flex items-center gap-1.5 w-fit mx-auto">
         {sections.map(({ id, label }) => (
           <button
@@ -85,7 +103,7 @@ function NavIndicator({ sections }) {
               "relative px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap",
               activeSection === id
                 ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                : "text-muted-foreground/70 hover:text-foreground hover:bg-muted/50"
+                : "text-muted-foreground/70 hover:text-foreground hover:bg-muted/50",
             )}
           >
             {label}
@@ -116,20 +134,43 @@ export function DashboardContent({
 
   const medianSalary = useMemo(() => {
     if (!insight?.salaryRanges?.length) return null;
-    const mids = insight.salaryRanges.map((r) => r.median).sort((a, b) => a - b);
+    const mids = insight.salaryRanges
+      .map((r) => r.median)
+      .sort((a, b) => a - b);
     return mids[Math.floor(mids.length / 2)];
   }, [insight]);
 
-  const demandTrend = insight?.demandLevel === "High" ? "Growing" : insight?.demandLevel === "Medium" ? "Stable" : "Cooling";
+  const demandTrend =
+    insight?.demandLevel === "High"
+      ? "Growing"
+      : insight?.demandLevel === "Medium"
+        ? "Stable"
+        : "Cooling";
 
   const sections = [
-    { id: "overview", Component: WelcomeHero, props: { userName, currentRole, targetRole, insight, ...scores } },
+    {
+      id: "overview",
+      Component: WelcomeHero,
+      props: { userName, currentRole, targetRole, insight, ...scores },
+    },
     { id: "intelligence", Component: IndustryIntelligence, props: { insight } },
-    { id: "snapshot", Component: AnalyticsSnapshot, props: { insight, topRole, medianSalary, demandTrend } },
+    {
+      id: "snapshot",
+      Component: AnalyticsSnapshot,
+      props: { insight, topRole, medianSalary, demandTrend },
+    },
     { id: "salary", Component: SalaryAnalytics, props: { insight } },
     { id: "trends", Component: IndustryTrends, props: { insight } },
-    { id: "skillgap", Component: SkillGap, props: { insight, userSkills: skills } },
-    { id: "recommendations", Component: AiRecommendations, props: { insight, currentRole, targetRole } },
+    {
+      id: "skillgap",
+      Component: SkillGap,
+      props: { insight, userSkills: skills },
+    },
+    {
+      id: "recommendations",
+      Component: AiRecommendations,
+      props: { insight, currentRole, targetRole },
+    },
     { id: "actions", Component: QuickActions, props: {} },
   ];
 
@@ -154,10 +195,13 @@ export function DashboardContent({
               </div>
               <div>
                 <h4 className="font-bold text-foreground text-base">
-                  Upcoming Interview{upcomingInterviews.length > 1 ? "s" : ""} Scheduled!
+                  Upcoming Interview{upcomingInterviews.length > 1 ? "s" : ""}{" "}
+                  Scheduled!
                 </h4>
                 <p className="text-muted-foreground text-sm font-medium mt-0.5">
-                  You have {upcomingInterviews.length} interview{upcomingInterviews.length > 1 ? "s" : ""} coming up in the next 3 days:
+                  You have {upcomingInterviews.length} interview
+                  {upcomingInterviews.length > 1 ? "s" : ""} coming up in the
+                  next 3 days:
                 </p>
                 <ul className="list-disc pl-5 mt-2 space-y-1.5 text-sm text-foreground/90 font-semibold">
                   {upcomingInterviews.map((interview) => (

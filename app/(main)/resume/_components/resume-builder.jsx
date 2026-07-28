@@ -35,8 +35,8 @@ function stripOklchStyles(html) {
       let newStyle = (before + after)
         .replace(/;?\s*color\s*:\s*oklch\([^)]+?\)\s*;?/gi, "")
         .replace(/;?\s*background(-color)?\s*:\s*oklch\([^)]+?\)\s*;?/gi, "");
-      return newStyle.trim() ? `style="${newStyle.trim()}"` : '';
-    }
+      return newStyle.trim() ? `style="${newStyle.trim()}"` : "";
+    },
   );
   // Remove oklch() usage from any "color: oklch(...)" or "background(-color): oklch(...)" that may not be in style attributes
   html = html.replace(/color\s*:\s*oklch\([^)]+?\)\s*;?/gi, "");
@@ -140,46 +140,46 @@ export default function ResumeBuilder({ initialContent }) {
 
   const [isGenerating, setIsGenerating] = useState(false);
 
-const generatePDF = async () => {
-  setIsGenerating(true);
+  const generatePDF = async () => {
+    setIsGenerating(true);
 
-  try {
-    const { default: html2pdf } = await import("html2pdf.js");
-    const element = document.getElementById("resume-pdf");
+    try {
+      const { default: html2pdf } = await import("html2pdf.js");
+      const element = document.getElementById("resume-pdf");
 
-    if (!element) {
-      toast.error("Resume content not found for PDF generation.");
-      return;
+      if (!element) {
+        toast.error("Resume content not found for PDF generation.");
+        return;
+      }
+
+      const opt = {
+        margin: [15, 15],
+        filename: user?.fullName
+          ? `${user.fullName.replace(/\s+/g, "_")}_Resume.pdf`
+          : "resume.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+      };
+
+      await html2pdf().set(opt).from(element).save();
+      toast.success("PDF generated successfully!");
+    } catch (error) {
+      console.error("FULL PDF ERROR:", error);
+      toast.error("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGenerating(false);
     }
-
-    const opt = {
-      margin: [15, 15],
-      filename: user?.fullName
-        ? `${user.fullName.replace(/\s+/g, "_")}_Resume.pdf`
-        : "resume.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["avoid-all", "css", "legacy"] }
-    };
-
-    await html2pdf().set(opt).from(element).save();
-    toast.success("PDF generated successfully!");
-  } catch (error) {
-    console.error("FULL PDF ERROR:", error);
-    toast.error("Failed to generate PDF. Please try again.");
-  } finally {
-    setIsGenerating(false);
-  }
-};
+  };
 
   const onSubmit = async (data) => {
     try {
-     const formattedContent = previewContent
-  .replace(/\n\s*\n/g, "\n\n")
-  .trim();
+      const formattedContent = previewContent
+        .replace(/\n\s*\n/g, "\n\n")
+        .trim();
 
-await saveResumeFn(formattedContent);
+      await saveResumeFn(formattedContent);
     } catch (error) {
       console.error("Save error:", error);
     }
@@ -452,8 +452,19 @@ await saveResumeFn(formattedContent);
               )}
             </div>
           </div>
-          <div style={{ position: "absolute", left: "-9999px", top: "-9999px", width: "794px" }}>
-            <div id="resume-pdf" className="p-8 bg-white text-black prose prose-sm max-w-none" style={{ fontFamily: "Arial, sans-serif" }}>
+          <div
+            style={{
+              position: "absolute",
+              left: "-9999px",
+              top: "-9999px",
+              width: "794px",
+            }}
+          >
+            <div
+              id="resume-pdf"
+              className="p-8 bg-white text-black prose prose-sm max-w-none"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeSanitize]}

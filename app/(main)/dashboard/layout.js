@@ -7,9 +7,7 @@ export default function Layout({ children }) {
   return (
     <>
       <DashboardNavbar />
-      <Suspense fallback={<PageLoader />}>
-        {children}
-      </Suspense>
+      <Suspense fallback={<PageLoader />}>{children}</Suspense>
       <DashboardFooter />
     </>
   );

@@ -28,10 +28,10 @@ A clear and concise description of what the bug is and where it occurs.
 
 ## Expected vs. Actual Behavior
 
-| | Description |
-|---|---|
-| **Expected** | What did you expect to happen? |
-| **Actual** | What actually happened instead? |
+|              | Description                     |
+| ------------ | ------------------------------- |
+| **Expected** | What did you expect to happen?  |
+| **Actual**   | What actually happened instead? |
 
 ---
 

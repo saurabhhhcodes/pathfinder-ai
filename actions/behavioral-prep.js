@@ -14,7 +14,10 @@ export async function generateAssessmentStrategy(company, assessmentType) {
   if (!userId) return UNAUTHORIZED_RESPONSE;
 
   if (!company || !assessmentType) {
-    return { success: false, errors: { _form: ["Company and Assessment Type are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Company and Assessment Type are required."] },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -26,7 +29,8 @@ export async function generateAssessmentStrategy(company, assessmentType) {
   }
 
   const prompt = createAiPrompt({
-    context: "You are an expert organizational psychologist and executive recruiter.",
+    context:
+      "You are an expert organizational psychologist and executive recruiter.",
     task: `Analyze the '${assessmentType}' personality/behavioral test often used by '${company}'.
     Explain what traits the company is screening for and provide specific strategies on how the candidate should approach the test.`,
     untrustedData: [
@@ -59,7 +63,12 @@ export async function generateAssessmentStrategy(company, assessmentType) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Behavioral Prep Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate assessment strategy"] } };
+    return {
+      success: false,
+      errors: {
+        _form: [error.message || "Failed to generate assessment strategy"],
+      },
+    };
   }
 }
 

@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-} from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export default function InteractiveBackground() {
   const [hasMounted, setHasMounted] = useState(false);
@@ -18,17 +13,9 @@ export default function InteractiveBackground() {
   const rotateLeft = useTransform(scrollYProgress, [0, 1], [0, 35]);
   const rotateRight = useTransform(scrollYProgress, [0, 1], [0, -45]);
 
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    [0.45, 0.15]
-  );
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0.45, 0.15]);
 
-  const yFloat = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, -120]
-  );
+  const yFloat = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   const smoothY = useSpring(yFloat, {
     stiffness: 80,
@@ -127,13 +114,7 @@ export default function InteractiveBackground() {
         />
 
         <defs>
-          <linearGradient
-            id="careerGradient"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="0%"
-          >
+          <linearGradient id="careerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#06b6d4" stopOpacity="0" />
             <stop offset="50%" stopColor="#8b5cf6" stopOpacity="1" />
             <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />

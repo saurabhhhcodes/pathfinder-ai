@@ -9,7 +9,7 @@
 
 # 🧭 PathFinder AI
 
-### *Your AI-Powered Career Coach — Resumes · Cover Letters · Interview Prep · Industry Insights*
+### _Your AI-Powered Career Coach — Resumes · Cover Letters · Interview Prep · Industry Insights_
 
 <br/>
 
@@ -102,12 +102,12 @@
 
 ### Who is it for?
 
-| Audience | Use Case |
-|---|---|
-| 🎓 **Students & Graduates** | Build first resumes, nail campus placements |
-| 💻 **Developers** | Craft ATS-optimized tech resumes, crush system design rounds |
-| 🔄 **Career Switchers** | Reframe experience for new industries with AI guidance |
-| 📈 **Professionals** | Track market trends, benchmark salaries, stay ahead of in-demand skills |
+| Audience                    | Use Case                                                                |
+| --------------------------- | ----------------------------------------------------------------------- |
+| 🎓 **Students & Graduates** | Build first resumes, nail campus placements                             |
+| 💻 **Developers**           | Craft ATS-optimized tech resumes, crush system design rounds            |
+| 🔄 **Career Switchers**     | Reframe experience for new industries with AI guidance                  |
+| 📈 **Professionals**        | Track market trends, benchmark salaries, stay ahead of in-demand skills |
 
 ---
 
@@ -130,7 +130,7 @@ Analyze your resume against a target job description and receive ATS-focused ins
 <details>
 <summary><b>✉️ Cover Letter Generator</b></summary>
 
-Stop staring at a blank page. PathFinder AI writes tone-matched, personalized cover letters for each application — sounding like *you*, not a generic template. Every letter is crafted around the specific role and company.
+Stop staring at a blank page. PathFinder AI writes tone-matched, personalized cover letters for each application — sounding like _you_, not a generic template. Every letter is crafted around the specific role and company.
 
 </details>
 
@@ -180,14 +180,14 @@ Upload or paste your resume and get brutally honest AI-powered feedback. PathFin
 
 ## 📸 Screenshots
 
-| Page | Preview |
-|---|---|
-| 🏠 Landing Page | ![Landing](public/screenshots/landing.png) |
-| 🧭 Dashboard | ![Dashboard](public/screenshots/dashboard.png) |
-| 🤖 AI Assistant | ![AI Chat](public/screenshots/ai-assistant.png) |
-| 🗺️ Roadmap | ![Roadmap](public/screenshots/roadmap.png) |
-| 🔄 Onboarding | ![Onboarding](public/screenshots/onboarding.png) |
-| 📊 Analytics | ![Analytics](public/screenshots/analytics.png) |
+| Page            | Preview                                          |
+| --------------- | ------------------------------------------------ |
+| 🏠 Landing Page | ![Landing](public/screenshots/landing.png)       |
+| 🧭 Dashboard    | ![Dashboard](public/screenshots/dashboard.png)   |
+| 🤖 AI Assistant | ![AI Chat](public/screenshots/ai-assistant.png)  |
+| 🗺️ Roadmap      | ![Roadmap](public/screenshots/roadmap.png)       |
+| 🔄 Onboarding   | ![Onboarding](public/screenshots/onboarding.png) |
+| 📊 Analytics    | ![Analytics](public/screenshots/analytics.png)   |
 
 > 💡 Screenshots live in `/public/screenshots/`. Replace placeholders with actual captures after deployment.
 
@@ -203,15 +203,15 @@ Perfect for exploring AI-powered career tools.
 
 **Includes:**
 
-* 1 AI Resume Roast
-* AI Resume Builder (Basic)
-* 1 Cover Letter per month
-* 5 Mock Interview Questions
-* Basic ATS Score
-* Community Support
-* Email Support
-* Basic Career Roadmap
-* Limited AI Interview Practice
+- 1 AI Resume Roast
+- AI Resume Builder (Basic)
+- 1 Cover Letter per month
+- 5 Mock Interview Questions
+- Basic ATS Score
+- Community Support
+- Email Support
+- Basic Career Roadmap
+- Limited AI Interview Practice
 
 ### 🚀 Pro — $29/month
 
@@ -219,15 +219,15 @@ Everything needed to accelerate your career growth.
 
 **Includes:**
 
-* Unlimited Resumes & Cover Letters
-* Unlimited Mock Interviews
-* Advanced ATS Analysis
-* Industry Insights & Salary Data
-* Interview Performance Analytics
-* Priority Support
-* Unlimited Resume Roasts
-* Advanced Career Roadmaps
-* Priority Email Support
+- Unlimited Resumes & Cover Letters
+- Unlimited Mock Interviews
+- Advanced ATS Analysis
+- Industry Insights & Salary Data
+- Interview Performance Analytics
+- Priority Support
+- Unlimited Resume Roasts
+- Advanced Career Roadmaps
+- Priority Email Support
 
 ### 🏢 Enterprise — $49/month
 
@@ -235,15 +235,15 @@ Designed for teams and organizations.
 
 **Includes:**
 
-* Everything in Pro
-* Team Dashboard
-* Custom Templates
-* API Access
-* Dedicated Account Manager
-* Custom Integrations
-* Custom Career Frameworks
-* Team Analytics Dashboard
-* Dedicated Success Manager
+- Everything in Pro
+- Team Dashboard
+- Custom Templates
+- API Access
+- Dedicated Account Manager
+- Custom Integrations
+- Custom Career Frameworks
+- Team Analytics Dashboard
+- Dedicated Success Manager
 
 ---
 
@@ -266,17 +266,17 @@ Designed for teams and organizations.
 
 <br/>
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| **Framework** | Next.js 15 (App Router) | Full-stack React framework with RSC support |
-| **Language** | TypeScript | End-to-end type safety across the entire codebase |
-| **Styling** | TailwindCSS + ShadCN UI | Utility-first styling with accessible component primitives |
-| **Animations** | Framer Motion | Page transitions, scroll effects, micro-interactions |
-| **AI Engine** | Gemini API (Google AI) | Resume generation, cover letters, interview questions |
-| **Authentication** | Clerk.dev | Session management, OAuth, user profiles |
-| **ORM** | Prisma | Type-safe database access and schema migrations |
-| **Database** | PostgreSQL | Persistent storage for user data and generated content |
-| **Deployment** | Vercel | Edge-optimized hosting with CI/CD pipelines |
+| Layer              | Technology              | Purpose                                                    |
+| ------------------ | ----------------------- | ---------------------------------------------------------- |
+| **Framework**      | Next.js 15 (App Router) | Full-stack React framework with RSC support                |
+| **Language**       | TypeScript              | End-to-end type safety across the entire codebase          |
+| **Styling**        | TailwindCSS + ShadCN UI | Utility-first styling with accessible component primitives |
+| **Animations**     | Framer Motion           | Page transitions, scroll effects, micro-interactions       |
+| **AI Engine**      | Gemini API (Google AI)  | Resume generation, cover letters, interview questions      |
+| **Authentication** | Clerk.dev               | Session management, OAuth, user profiles                   |
+| **ORM**            | Prisma                  | Type-safe database access and schema migrations            |
+| **Database**       | PostgreSQL              | Persistent storage for user data and generated content     |
+| **Deployment**     | Vercel                  | Edge-optimized hosting with CI/CD pipelines                |
 
 ---
 
@@ -332,11 +332,11 @@ pathfinder-ai/
 
 ### Prerequisites
 
-| Tool | Version | Link |
-|---|---|---|
-| Node.js | `v18.17+` | [nodejs.org](https://nodejs.org) |
-| npm / pnpm | `v9+` / `v8+` | Bundled with Node |
-| PostgreSQL | Any recent | [Neon](https://neon.tech) · [Supabase](https://supabase.com) · [Railway](https://railway.app) |
+| Tool       | Version       | Link                                                                                          |
+| ---------- | ------------- | --------------------------------------------------------------------------------------------- |
+| Node.js    | `v18.17+`     | [nodejs.org](https://nodejs.org)                                                              |
+| npm / pnpm | `v9+` / `v8+` | Bundled with Node                                                                             |
+| PostgreSQL | Any recent    | [Neon](https://neon.tech) · [Supabase](https://supabase.com) · [Railway](https://railway.app) |
 
 ---
 
@@ -386,6 +386,7 @@ Open [http://localhost:3000](http://localhost:3000). You're in.
 ---
 
 <!-- Fix: Corrected step numbering from 5.5 to 6 for proper sequential numbering -->
+
 ### 6. Start the Inngest Dev Server (required for background jobs)
 
 In a **second terminal**, run:
@@ -445,35 +446,35 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 > **Rate limiting in production:** Redis is required for consistent multi-instance throttling. In production, set `REDIS_URL` and keep `RATE_LIMIT_STORE=auto` (or set `RATE_LIMIT_STORE=redis`).
 
-| Variable | Required | Description |
-|---|---|---|
-| `DATABASE_URL` | ✅ | PostgreSQL connection string for Prisma |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | ✅ | Clerk public key (safe to expose client-side) |
-| `CLERK_SECRET_KEY` | ✅ | Clerk secret key (server-side only — never expose) |
-| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | ✅ | Route for the sign-in page |
-| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | ✅ | Route for the sign-up page |
-| `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` | ✅ | Redirect destination after sign-in |
-| `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` | ✅ | Redirect destination after sign-up |
-| `GEMINI_API_KEY` | ✅ | Google Gemini API key for all AI features |
-| `REDIS_URL` | ⚪ | Redis connection string for production rate limiting |
-| `RATE_LIMIT_STORE` | ⚪ | Rate limiter driver (`auto` or `redis`) |
-| `NEXT_PUBLIC_APP_URL` | ⚪ | Base URL used in production builds |
+| Variable                              | Required | Description                                          |
+| ------------------------------------- | -------- | ---------------------------------------------------- |
+| `DATABASE_URL`                        | ✅       | PostgreSQL connection string for Prisma              |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`   | ✅       | Clerk public key (safe to expose client-side)        |
+| `CLERK_SECRET_KEY`                    | ✅       | Clerk secret key (server-side only — never expose)   |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL`       | ✅       | Route for the sign-in page                           |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL`       | ✅       | Route for the sign-up page                           |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` | ✅       | Redirect destination after sign-in                   |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` | ✅       | Redirect destination after sign-up                   |
+| `GEMINI_API_KEY`                      | ✅       | Google Gemini API key for all AI features            |
+| `REDIS_URL`                           | ⚪       | Redis connection string for production rate limiting |
+| `RATE_LIMIT_STORE`                    | ⚪       | Rate limiter driver (`auto` or `redis`)              |
+| `NEXT_PUBLIC_APP_URL`                 | ⚪       | Base URL used in production builds                   |
 
 ---
 
 ## 📜 Available Scripts
 
-| Script | Command | Description |
-|---|---|---|
-| Dev Server | `npm run dev` | Start with hot reload at `localhost:3000` |
-| Production Build | `npm run build` | Optimized production build |
-| Production Server | `npm run start` | Serve the production build locally |
-| Lint | `npm run lint` | Run ESLint across the codebase |
-| Type Check | `npm run type-check` | TypeScript strict type checking |
-| Prisma Studio | `npx prisma studio` | Visual database browser at `localhost:5555` |
-| Generate Client | `npx prisma generate` | Regenerate Prisma client after schema changes |
-| Migrate | `npx prisma migrate dev` | Apply pending migrations in development |
-| Reset DB | `npx prisma migrate reset` | Wipe and re-run all migrations from scratch |
+| Script            | Command                    | Description                                   |
+| ----------------- | -------------------------- | --------------------------------------------- |
+| Dev Server        | `npm run dev`              | Start with hot reload at `localhost:3000`     |
+| Production Build  | `npm run build`            | Optimized production build                    |
+| Production Server | `npm run start`            | Serve the production build locally            |
+| Lint              | `npm run lint`             | Run ESLint across the codebase                |
+| Type Check        | `npm run type-check`       | TypeScript strict type checking               |
+| Prisma Studio     | `npx prisma studio`        | Visual database browser at `localhost:5555`   |
+| Generate Client   | `npx prisma generate`      | Regenerate Prisma client after schema changes |
+| Migrate           | `npx prisma migrate dev`   | Apply pending migrations in development       |
+| Reset DB          | `npx prisma migrate reset` | Wipe and re-run all migrations from scratch   |
 
 ---
 
@@ -509,12 +510,12 @@ PathFinder AI uses **PostgreSQL** with **Prisma ORM** for all data operations �
 
 ### Recommended Providers
 
-| Provider | Free Tier | Best For |
-|---|---|---|
-| [Neon](https://neon.tech) | ✅ 512MB | Serverless, Vercel-native |
-| [Supabase](https://supabase.com) | ✅ 500MB | Postgres + realtime extras |
-| [Railway](https://railway.app) | ✅ $5 credit | Simplest one-click setup |
-| Local PostgreSQL | — | Full control, offline dev |
+| Provider                         | Free Tier    | Best For                   |
+| -------------------------------- | ------------ | -------------------------- |
+| [Neon](https://neon.tech)        | ✅ 512MB     | Serverless, Vercel-native  |
+| [Supabase](https://supabase.com) | ✅ 500MB     | Postgres + realtime extras |
+| [Railway](https://railway.app)   | ✅ $5 credit | Simplest one-click setup   |
+| Local PostgreSQL                 | —            | Full control, offline dev  |
 
 ### Setup
 
@@ -576,6 +577,7 @@ DATABASE_URL="your_prod_db_url" npx prisma migrate deploy
 PathFinder AI ships with a premium, production-grade interface designed for clarity and delight — not just functionality.
 
 ### Framer Motion Animations
+
 - Smooth page transitions between routes
 - Staggered card and list reveals on mount
 - Scroll-triggered animations on landing sections
@@ -583,13 +585,16 @@ PathFinder AI ships with a premium, production-grade interface designed for clar
 - Skeleton loading states during async operations
 
 ### Design System
+
 Built on **ShadCN UI** primitives with a custom TailwindCSS theme:
+
 - Consistent spacing scale, typography, and color system
 - Full dark mode support via `next-themes`
 - ARIA-accessible components (keyboard nav, focus rings, screen reader labels)
 - Fully responsive across mobile, tablet, and desktop
 
 ### Component Architecture
+
 - Modular, reusable components in `/components`
 - Server Components used wherever possible to minimize JS bundle
 - Client Components isolated to interactive UI islands
@@ -603,20 +608,22 @@ Performance is a first-class concern, not an afterthought.
 
 ### Next.js App Router Optimizations
 
-| Optimization | How |
-|---|---|
-| Zero-JS data fetching | React Server Components for all non-interactive data |
-| Incremental rendering | `<Suspense>` + streaming for page chunks |
-| Code splitting | Route-level — only load what each page actually needs |
-| Image optimization | `next/image` with lazy loading + auto-format |
-| Font optimization | `next/font` — zero layout shift, self-hosted |
+| Optimization          | How                                                   |
+| --------------------- | ----------------------------------------------------- |
+| Zero-JS data fetching | React Server Components for all non-interactive data  |
+| Incremental rendering | `<Suspense>` + streaming for page chunks              |
+| Code splitting        | Route-level — only load what each page actually needs |
+| Image optimization    | `next/image` with lazy loading + auto-format          |
+| Font optimization     | `next/font` — zero layout shift, self-hosted          |
 
 ### Database & API
+
 - Selective Prisma `select` fields — no over-fetching
 - Edge-compatible API route patterns
 - Deduped fetch calls to minimize redundant AI API usage
 
 ### Caching Strategy
+
 - `fetch` cache for stable AI-generated content
 - Per-type revalidation (insights refreshed more aggressively than user-generated content)
 
@@ -626,17 +633,17 @@ Performance is a first-class concern, not an afterthought.
 
 Planned for upcoming releases — contributions welcome!
 
-| Feature | Status | Description |
-|---|---|---|
-| 🔴 Job Board Integration | Planned | Pull live listings and auto-match to your resume |
-| 🔴 LinkedIn Import | Planned | Parse LinkedIn profiles to auto-populate resume builder |
-| 🔴 Resume Scoring | Planned | Real-time ATS score with targeted improvement tips |
-| 🟡 AI Chat Assistant | In Progress | Streaming conversational career guidance |
-| 🔴 Multi-language Support | Planned | i18n for global users |
-| 🔴 Portfolio Generator | Planned | AI-generated personal portfolio pages |
-| 🔴 Team / Org Mode | Planned | HR teams managing candidate pipelines |
-| 🔴 Mobile App | Planned | React Native companion |
-| 🔴 Slack / Discord Bot | Planned | Daily career tips and job alerts |
+| Feature                   | Status      | Description                                             |
+| ------------------------- | ----------- | ------------------------------------------------------- |
+| 🔴 Job Board Integration  | Planned     | Pull live listings and auto-match to your resume        |
+| 🔴 LinkedIn Import        | Planned     | Parse LinkedIn profiles to auto-populate resume builder |
+| 🔴 Resume Scoring         | Planned     | Real-time ATS score with targeted improvement tips      |
+| 🟡 AI Chat Assistant      | In Progress | Streaming conversational career guidance                |
+| 🔴 Multi-language Support | Planned     | i18n for global users                                   |
+| 🔴 Portfolio Generator    | Planned     | AI-generated personal portfolio pages                   |
+| 🔴 Team / Org Mode        | Planned     | HR teams managing candidate pipelines                   |
+| 🔴 Mobile App             | Planned     | React Native companion                                  |
+| 🔴 Slack / Discord Bot    | Planned     | Daily career tips and job alerts                        |
 
 > 🟡 In Progress &nbsp;&nbsp;🔴 Planned
 
@@ -734,12 +741,14 @@ Before claiming an issue, join our Discord server and introduce yourself:
 👉 https://discord.gg/EhGWV9eud
 
 You can:
+
 - Ask questions about issues
 - Discuss implementation approaches
 - Connect with mentors and maintainers
 - Receive contribution guidance
 
 **Good comment template:**
+
 ```
 Hi team 👋 I'd like to work on this issue under GSSoC'26.
 
@@ -753,13 +762,13 @@ Could you please assign it to me? Thanks!
 
 ### Issue Labels to Look For
 
-| Label | Description |
-|---|---|
+| Label              | Description                             |
+| ------------------ | --------------------------------------- |
 | `good first issue` | Great entry points for new contributors |
-| `help wanted` | Needs community attention |
-| `enhancement` | Feature additions |
-| `bug` | Something's broken |
-| `documentation` | Docs improvements |
+| `help wanted`      | Needs community attention               |
+| `enhancement`      | Feature additions                       |
+| `bug`              | Something's broken                      |
+| `documentation`    | Docs improvements                       |
 
 ---
 

@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 
 export default function AuthBackground() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 
@@ -24,7 +26,12 @@ export default function AuthBackground() {
           scale: [1, 1.08, 1],
           opacity: [0.06, 0.12, 0.06],
         }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1.5,
+        }}
         className="absolute top-[15%] right-[20%] h-[15rem] w-[15rem] rounded-full bg-cyan-500/8 blur-[80px]"
       />
       <motion.div
@@ -32,17 +39,27 @@ export default function AuthBackground() {
           scale: [1, 1.08, 1],
           opacity: [0.06, 0.12, 0.06],
         }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
         className="absolute bottom-[15%] left-[20%] h-[15rem] w-[15rem] rounded-full bg-violet-500/8 blur-[80px]"
       />
-      <div className="absolute inset-0 opacity-[0.03]"
+      <div
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(139,92,246,0.04) 0%, transparent 70%)",
+          background:
+            "radial-gradient(ellipse at center, rgba(139,92,246,0.04) 0%, transparent 70%)",
         }}
       />
       <div
         className="absolute inset-0 opacity-[0.02] mix-blend-soft-light"
-        style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}
+        style={{
+          backgroundImage:
+            "url('https://grainy-gradients.vercel.app/noise.svg')",
+        }}
       />
     </div>
   );

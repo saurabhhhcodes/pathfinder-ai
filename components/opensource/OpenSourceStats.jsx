@@ -2,7 +2,13 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Star, GitFork, Users, GitPullRequest, AlertCircle } from "lucide-react";
+import {
+  Star,
+  GitFork,
+  Users,
+  GitPullRequest,
+  AlertCircle,
+} from "lucide-react";
 import { StaggerContainer, StaggerItem } from "@/components/motion";
 
 function AnimatedCounter({ target, suffix = "", duration = 2 }) {
@@ -31,7 +37,8 @@ function AnimatedCounter({ target, suffix = "", duration = 2 }) {
 
   return (
     <span ref={ref}>
-      {count.toLocaleString()}{suffix}
+      {count.toLocaleString()}
+      {suffix}
     </span>
   );
 }
@@ -60,12 +67,12 @@ export function OpenSourceStats() {
     const fetchStats = async () => {
       try {
         const repoRes = await fetch(
-          "https://api.github.com/repos/harshdwivediiiii/pathfinder-ai"
+          "https://api.github.com/repos/harshdwivediiiii/pathfinder-ai",
         );
         const repoData = await repoRes.json();
 
         const contribRes = await fetch(
-          "https://api.github.com/repos/harshdwivediiiii/pathfinder-ai/contributors?per_page=1&anon=true"
+          "https://api.github.com/repos/harshdwivediiiii/pathfinder-ai/contributors?per_page=1&anon=true",
         );
         let contributorCount = 0;
         const linkHeader = contribRes.headers?.get?.("Link");
@@ -74,7 +81,9 @@ export function OpenSourceStats() {
           if (match) contributorCount = parseInt(match[1]);
         } else {
           const contribData = await contribRes.json();
-          contributorCount = Array.isArray(contribData) ? contribData.length : 0;
+          contributorCount = Array.isArray(contribData)
+            ? contribData.length
+            : 0;
         }
 
         setStats({
@@ -103,9 +112,24 @@ export function OpenSourceStats() {
   const statEntries = [
     { key: "stars", label: "Stars", icon: Star, value: stats.stars },
     { key: "forks", label: "Forks", icon: GitFork, value: stats.forks },
-    { key: "contributors", label: "Contributors", icon: Users, value: stats.contributors },
-    { key: "openIssues", label: "Open Issues", icon: AlertCircle, value: stats.openIssues },
-    { key: "pullRequests", label: "Pull Requests", icon: GitPullRequest, value: stats.pullRequests },
+    {
+      key: "contributors",
+      label: "Contributors",
+      icon: Users,
+      value: stats.contributors,
+    },
+    {
+      key: "openIssues",
+      label: "Open Issues",
+      icon: AlertCircle,
+      value: stats.openIssues,
+    },
+    {
+      key: "pullRequests",
+      label: "Pull Requests",
+      icon: GitPullRequest,
+      value: stats.pullRequests,
+    },
   ];
 
   return (
@@ -116,7 +140,12 @@ export function OpenSourceStats() {
           <StaggerItem key={stat.key}>
             <motion.div
               whileHover={{ y: -4, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 120, damping: 25, mass: 0.8 }}
+              transition={{
+                type: "spring",
+                stiffness: 120,
+                damping: 25,
+                mass: 0.8,
+              }}
               className="group relative p-6 rounded-2xl glass border border-border/40 hover:border-primary/25 transition-all duration-500 text-center"
             >
               <div className="absolute -top-16 -right-16 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all duration-500 pointer-events-none" />

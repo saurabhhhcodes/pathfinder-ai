@@ -37,7 +37,7 @@ export default function RoadmapGenerator() {
       toast.error(
         error.message?.includes("quota")
           ? "AI quota reached — please try again in a few minutes."
-          : error.message || "Failed to generate roadmap"
+          : error.message || "Failed to generate roadmap",
       );
     }
   }, [error]);
@@ -59,9 +59,12 @@ export default function RoadmapGenerator() {
               <Map className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <CardTitle className="text-2xl font-bold">Generate Career Roadmap</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                Generate Career Roadmap
+              </CardTitle>
               <CardDescription className="text-sm">
-                AI will analyze your profile to create a personalized step-by-step roadmap
+                AI will analyze your profile to create a personalized
+                step-by-step roadmap
               </CardDescription>
             </div>
           </div>
@@ -91,7 +94,12 @@ export default function RoadmapGenerator() {
             </ul>
             <p className="text-xs text-muted-foreground/60 mt-2">
               Make sure your profile is complete in{" "}
-              <a href="/settings" className="text-primary hover:underline font-medium">Settings</a>{" "}
+              <a
+                href="/settings"
+                className="text-primary hover:underline font-medium"
+              >
+                Settings
+              </a>{" "}
               for the most accurate roadmap.
             </p>
           </div>

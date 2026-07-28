@@ -37,7 +37,13 @@ it("deduplicates concurrent identical Gemini calls and reuses the cached respons
   mocks.generateGeminiContent.mockResolvedValue({
     response: {
       text: () => "cached response",
-      candidates: [{ groundingMetadata: { groundingChunks: [{ web: { uri: "https://example.com" } }] } }],
+      candidates: [
+        {
+          groundingMetadata: {
+            groundingChunks: [{ web: { uri: "https://example.com" } }],
+          },
+        },
+      ],
     },
   });
 
@@ -51,10 +57,18 @@ it("deduplicates concurrent identical Gemini calls and reuses the cached respons
   expect(second.response.text()).toBe("cached response");
   expect(mocks.cacheStore.set).toHaveBeenCalledTimes(1);
 
-  const cached = await cachedGenerateGeminiContent("prompt", {}, { key: "demo:key", ttl: 60_000 });
+  const cached = await cachedGenerateGeminiContent(
+    "prompt",
+    {},
+    { key: "demo:key", ttl: 60_000 },
+  );
   expect(mocks.generateGeminiContent).toHaveBeenCalledTimes(1);
   expect(cached.response.text()).toBe("cached response");
   expect(cached.response.candidates).toEqual([
-    { groundingMetadata: { groundingChunks: [{ web: { uri: "https://example.com" } }] } },
+    {
+      groundingMetadata: {
+        groundingChunks: [{ web: { uri: "https://example.com" } }],
+      },
+    },
   ]);
 });

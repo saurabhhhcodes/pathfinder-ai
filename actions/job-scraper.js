@@ -12,7 +12,8 @@ export async function parseJobUrl(url) {
   try {
     const response = await fetch(url, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
     });
 
@@ -25,13 +26,19 @@ export async function parseJobUrl(url) {
     const document = dom.window.document;
 
     // Remove scripts, styles, etc.
-    const elementsToRemove = document.querySelectorAll('script, style, noscript, iframe, img, svg');
+    const elementsToRemove = document.querySelectorAll(
+      "script, style, noscript, iframe, img, svg",
+    );
     elementsToRemove.forEach((el) => el.remove());
 
-    const textContent = document.body.textContent.replace(/\s+/g, ' ').trim().slice(0, 15000); // Limit to 15k chars
+    const textContent = document.body.textContent
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 15000); // Limit to 15k chars
 
     const prompt = buildSecurePrompt({
-      context: "You are an expert ATS and job parser. Extract the job details from the scraped raw text.",
+      context:
+        "You are an expert ATS and job parser. Extract the job details from the scraped raw text.",
       task: `Analyze the provided raw text from a job posting and extract the following:
       1. Company Name
       2. Job Title
@@ -48,23 +55,33 @@ export async function parseJobUrl(url) {
         "jobDescription": "..."
       }`,
       untrustedData: [
-        { label: "scrapedText", value: textContent, maxLength: 15000 }
-      ]
+        { label: "scrapedText", value: textContent, maxLength: 15000 },
+      ],
     });
 
     const aiResult = await generateGeminiContent(prompt);
     let rawText = aiResult.response.text();
     if (rawText.startsWith("\`\`\`json")) {
-      rawText = rawText.replace(/\`\`\`json/g, "").replace(/\`\`\`/g, "").trim();
+      rawText = rawText
+        .replace(/\`\`\`json/g, "")
+        .replace(/\`\`\`/g, "")
+        .trim();
     }
     const parsed = JSON.parse(rawText);
 
     return {
       success: true,
-      data: parsed
+      data: parsed,
     };
   } catch (error) {
     console.error("Job URL Parse Error:", error);
-    return { success: false, errors: { _form: ["Failed to parse the job URL. The site might be blocking scrapers or the URL is invalid."] } };
+    return {
+      success: false,
+      errors: {
+        _form: [
+          "Failed to parse the job URL. The site might be blocking scrapers or the URL is invalid.",
+        ],
+      },
+    };
   }
 }

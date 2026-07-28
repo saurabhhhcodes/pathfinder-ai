@@ -32,12 +32,14 @@ export function CTASection() {
               </h2>
 
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Join thousands of ambitious professionals using AI to land their dream jobs,
-                master interviews, and accelerate their career growth.
+                Join thousands of ambitious professionals using AI to land their
+                dream jobs, master interviews, and accelerate their career
+                growth.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                <Button asChild
+                <Button
+                  asChild
                   size="lg"
                   className="h-14 px-10 rounded-2xl text-lg font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform duration-300 group bg-primary text-primary-foreground"
                 >
@@ -46,14 +48,13 @@ export function CTASection() {
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button asChild
+                <Button
+                  asChild
                   size="lg"
                   variant="outline"
                   className="h-14 px-10 rounded-2xl text-lg font-bold border-border/50 glass hover:bg-muted/50 transition-all duration-300"
                 >
-                  <Link href="#features">
-                    Learn More
-                  </Link>
+                  <Link href="#features">Learn More</Link>
                 </Button>
               </div>
             </div>

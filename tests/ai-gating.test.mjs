@@ -18,7 +18,7 @@ describe("AI Feature Gating", () => {
 
   it("should report general AI as disabled when GEMINI_API_KEY is empty or missing", async () => {
     const { isAiEnabled } = await import("../lib/ai-gating.js");
-    
+
     vi.stubEnv("GEMINI_API_KEY", "");
     expect(isAiEnabled()).toBe(false);
 
@@ -44,7 +44,7 @@ describe("AI Feature Gating", () => {
 
   it("should fallback to general AI check for unknown features", async () => {
     const { isFeatureEnabled } = await import("../lib/ai-gating.js");
-    
+
     expect(isFeatureEnabled("someUnknownFeature")).toBe(true);
 
     vi.stubEnv("GEMINI_API_KEY", "");
@@ -57,13 +57,17 @@ describe("AI Feature Gating", () => {
     expect(() => assertFeatureEnabled("chat")).not.toThrow();
 
     vi.stubEnv("GEMINI_API_KEY", "");
-    expect(() => assertFeatureEnabled("chat")).toThrow(/disabled because the required environment variables/);
+    expect(() => assertFeatureEnabled("chat")).toThrow(
+      /disabled because the required environment variables/,
+    );
   });
 
   it("should enforce feature gating inside the Gemini client", async () => {
     vi.stubEnv("GEMINI_API_KEY", "");
     const { generateGeminiContent } = await import("../lib/gemini.js");
 
-    await expect(generateGeminiContent("test")).rejects.toThrow("GEMINI_API_KEY is not configured");
+    await expect(generateGeminiContent("test")).rejects.toThrow(
+      "GEMINI_API_KEY is not configured",
+    );
   });
 });

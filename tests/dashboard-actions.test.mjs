@@ -93,10 +93,13 @@ describe("getIndustryInsights", () => {
 
       await expect(getIndustryInsights()).resolves.toEqual({ id: "insight-1" });
 
-      expect(mocks.generateIndustryInsightData).toHaveBeenCalledWith("technology", expect.any(Object));
       expect(mocks.generateIndustryInsightData).toHaveBeenCalledWith(
         "technology",
-        expect.objectContaining({ industry: "technology" })
+        expect.any(Object),
+      );
+      expect(mocks.generateIndustryInsightData).toHaveBeenCalledWith(
+        "technology",
+        expect.objectContaining({ industry: "technology" }),
       );
       expect(mocks.upsert).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -108,12 +111,16 @@ describe("getIndustryInsights", () => {
           update: expect.objectContaining({
             isGrounded: true,
           }),
-        })
+        }),
       );
 
       const upsertArgs = mocks.upsert.mock.calls[0][0];
-      expect(upsertArgs.create.nextUpdate).toEqual(new Date("2026-05-28T12:00:00.000Z"));
-      expect(upsertArgs.update.nextUpdate).toEqual(new Date("2026-05-28T12:00:00.000Z"));
+      expect(upsertArgs.create.nextUpdate).toEqual(
+        new Date("2026-05-28T12:00:00.000Z"),
+      );
+      expect(upsertArgs.update.nextUpdate).toEqual(
+        new Date("2026-05-28T12:00:00.000Z"),
+      );
     } finally {
       vi.useRealTimers();
     }

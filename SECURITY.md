@@ -4,10 +4,10 @@
 
 The following versions of Pathfinder AI are currently receiving security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| `main` (latest) | ✅ Yes |
-| Older branches  | ❌ No  |
+| Version         | Supported |
+| --------------- | --------- |
+| `main` (latest) | ✅ Yes    |
+| Older branches  | ❌ No     |
 
 We recommend always running the latest code from the `main` branch or the most recent deployment on Vercel.
 
@@ -49,18 +49,18 @@ To help us triage and resolve the issue quickly, please include:
 - **Steps to reproduce** – A minimal, reliable reproduction path (URL, payload, request/response, screenshots).
 - **Environment** – Browser, OS, Node.js version, deployment target (local / Vercel), and any relevant config.
 - **Impact assessment** – What data or functionality could be compromised? (e.g., authentication bypass, data exfiltration, privilege escalation)
-- **Suggested fix** *(optional)* – If you have a proposed patch or mitigation.
+- **Suggested fix** _(optional)_ – If you have a proposed patch or mitigation.
 
 ---
 
 ## Response Timeline
 
-| Stage | Target timeframe |
-|---|---|
-| Acknowledgement of report | Within **48 hours** |
-| Initial triage and severity assessment | Within **5 business days** |
-| Status update / patch ETA | Within **10 business days** |
-| Public disclosure (after fix) | Coordinated with reporter |
+| Stage                                  | Target timeframe            |
+| -------------------------------------- | --------------------------- |
+| Acknowledgement of report              | Within **48 hours**         |
+| Initial triage and severity assessment | Within **5 business days**  |
+| Status update / patch ETA              | Within **10 business days** |
+| Public disclosure (after fix)          | Coordinated with reporter   |
 
 We aim to resolve critical vulnerabilities within **14 days** of confirmed reproduction.
 
@@ -71,12 +71,15 @@ We aim to resolve critical vulnerabilities within **14 days** of confirmed repro
 The following areas handle sensitive data and are especially important from a security perspective:
 
 ### Authentication — Clerk
+
 Pathfinder AI uses [Clerk.dev](https://clerk.dev) for user authentication. Issues such as session fixation, token leakage, or broken auth flows in `app/` and `middleware.js` should be reported privately.
 
 ### Database — Prisma / PostgreSQL
+
 The `prisma/` directory contains the database schema. SQL injection vectors, insecure queries, or privilege escalation through the ORM layer are in scope.
 
 ### AI Inputs — Gemini API
+
 User-supplied text is passed to the Gemini API. Prompt injection attacks that cause unintended data disclosure or manipulation are in scope.
 
 ### Environment Variables and Credentials
@@ -125,4 +128,4 @@ We are grateful to security researchers and contributors who responsibly disclos
 
 ---
 
-*This policy follows the principles of [Responsible Disclosure](https://en.wikipedia.org/wiki/Coordinated_vulnerability_disclosure). Thank you for helping keep Pathfinder AI safe for everyone.*
+_This policy follows the principles of [Responsible Disclosure](https://en.wikipedia.org/wiki/Coordinated_vulnerability_disclosure). Thank you for helping keep Pathfinder AI safe for everyone._

@@ -156,7 +156,10 @@ export function EntryForm({ type, entries, onChange }) {
                 )}
               </div>
               <div className="space-y-2">
-                <label htmlFor="entry-organization" className="text-sm font-medium">
+                <label
+                  htmlFor="entry-organization"
+                  className="text-sm font-medium"
+                >
                   Organization / Company
                 </label>
                 <Input
@@ -174,7 +177,10 @@ export function EntryForm({ type, entries, onChange }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label htmlFor="entry-startDate" className="text-sm font-medium">
+                <label
+                  htmlFor="entry-startDate"
+                  className="text-sm font-medium"
+                >
                   Start Date
                 </label>
                 <Input
@@ -213,13 +219,19 @@ export function EntryForm({ type, entries, onChange }) {
                 className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 {...register("current")}
               />
-              <label htmlFor="entry-current" className="text-sm font-medium cursor-pointer">
+              <label
+                htmlFor="entry-current"
+                className="text-sm font-medium cursor-pointer"
+              >
                 I am currently working / studying here
               </label>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="entry-description" className="text-sm font-medium">
+              <label
+                htmlFor="entry-description"
+                className="text-sm font-medium"
+              >
                 Description / Highlights
               </label>
               <Textarea

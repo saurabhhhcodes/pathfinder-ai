@@ -15,11 +15,15 @@ export async function planCareerBreak(duration, reason, returnGoals) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!duration || !reason || !returnGoals) {
-    return { success: false, errors: { _form: ["Duration, reason, and return goals are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Duration, reason, and return goals are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are a Career Strategist who helps professionals take sabbaticals, parental leave, or health breaks without derailing their career.",
+    context:
+      "You are a Career Strategist who helps professionals take sabbaticals, parental leave, or health breaks without derailing their career.",
     task: `Analyze the user's plan to take a career break.
     Generate a graceful exit plan for their current role, strategies to stay relevant during the break, and the exact wording to use on their resume and LinkedIn to explain the gap when they return to the workforce.`,
     untrustedData: [
@@ -55,7 +59,10 @@ export async function planCareerBreak(duration, reason, returnGoals) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Career Break Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate plan"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate plan"] },
+    };
   }
 }
 

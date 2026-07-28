@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const AuthLayout = ({ children }) => {
   return (
@@ -7,7 +7,7 @@ const AuthLayout = ({ children }) => {
     </div>
   );
 };
-  
+
 AuthLayout.propTypes = {
   children: PropTypes.node,
 };

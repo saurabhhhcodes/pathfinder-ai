@@ -40,37 +40,43 @@ flowchart TD
 ## Layer Breakdown
 
 ### 1. Auth — Clerk.dev
+
 Handles all authentication: sign-up, sign-in, session management, and route protection. Configured via environment variables (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`). Supports **keyless mode** for local development — auth routes degrade gracefully without API keys, making frontend work possible without a Clerk account.
 
 ### 2. App Router — `app/`
+
 The Next.js 14 App Router is the backbone of the platform. Every page, layout, and API route lives here. Key sub-routes include onboarding (`/onboarding`), the resume builder, cover letter generator, interview prep, and the industry insights dashboard. Server components fetch data directly; client components handle interactivity.
 
 ### 3. AI Engine — Gemini API (`lib/`)
+
 All AI features are powered by Google's Gemini API. Prompts are constructed in `lib/` utilities and sent server-side to avoid exposing the API key. The engine handles four workflows: resume bullet generation, cover letter writing, interview question generation, and career guidance. Prompt engineering and fallback handling are critical here.
 
 ### 4. Data Layer — Prisma ORM + PostgreSQL (`prisma/`)
+
 `prisma/schema.prisma` defines all data models (users, resumes, cover letters, etc.). Prisma Client is the only way to interact with the PostgreSQL database — no raw SQL. Run `npx prisma generate` after schema changes and `npx prisma migrate dev` to apply them locally.
 
 ### 5. UI Layer — `components/` + `hooks/` + `styles/`
+
 Reusable UI components are built with **ShadCN UI** (accessible, unstyled primitives) styled with **TailwindCSS**. Custom hooks in `hooks/` encapsulate client-side logic. Global styles live in `styles/`. All components must be responsive and accessible.
 
 ### 6. Shared Utilities — `utils/` + `constants/` + `lib/`
+
 `utils/` holds helper functions, `constants/` stores app-wide static values, and `lib/` contains integrations (Prisma client singleton, Gemini API wrappers, etc.).
 
 ---
 
 ## Key Files
 
-| File / Folder | What it does |
-|---|---|
-| `app/` | All pages, layouts, and API routes (Next.js App Router) |
-| `prisma/schema.prisma` | Database schema — all models defined here |
-| `lib/` | Gemini API wrappers, Prisma client singleton, shared integrations |
-| `components/` | Reusable UI components (ShadCN + Tailwind) |
-| `hooks/` | Custom React hooks for client-side logic |
-| `utils/` | Helper functions used across the app |
-| `constants/` | App-wide static values |
-| `.env.local` | Environment variables (never commit this) |
+| File / Folder          | What it does                                                      |
+| ---------------------- | ----------------------------------------------------------------- |
+| `app/`                 | All pages, layouts, and API routes (Next.js App Router)           |
+| `prisma/schema.prisma` | Database schema — all models defined here                         |
+| `lib/`                 | Gemini API wrappers, Prisma client singleton, shared integrations |
+| `components/`          | Reusable UI components (ShadCN + Tailwind)                        |
+| `hooks/`               | Custom React hooks for client-side logic                          |
+| `utils/`               | Helper functions used across the app                              |
+| `constants/`           | App-wide static values                                            |
+| `.env.local`           | Environment variables (never commit this)                         |
 
 ---
 

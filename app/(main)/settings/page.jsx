@@ -19,7 +19,6 @@ export default async function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
         <div className="space-y-4 mb-12">
           <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.2em]">
@@ -32,7 +31,8 @@ export default async function SettingsPage() {
               User <span className="text-gradient-primary">Settings</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base font-medium mt-2">
-              Manage your profile preferences, privacy settings, and AI engine parameters.
+              Manage your profile preferences, privacy settings, and AI engine
+              parameters.
             </p>
           </div>
         </div>

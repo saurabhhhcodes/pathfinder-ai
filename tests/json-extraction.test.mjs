@@ -20,7 +20,8 @@ describe("extractJSON", () => {
   });
 
   it("extracts JSON surrounded by leading and trailing chatter", () => {
-    const raw = 'Sure! Here you go:\n{ "a": 1, "b": "two" }\nLet me know if you need more.';
+    const raw =
+      'Sure! Here you go:\n{ "a": 1, "b": "two" }\nLet me know if you need more.';
     expect(parseAIJson(raw)).toEqual({ a: 1, b: "two" });
   });
 
@@ -57,12 +58,12 @@ describe("extractJSON", () => {
   });
 
   it("extracts valid JSON even when preceded by conversational/explanatory braces", () => {
-    const raw = "Here is some {placeholder} text.\nActual JSON: { \"a\": 1 }";
+    const raw = 'Here is some {placeholder} text.\nActual JSON: { "a": 1 }';
     expect(parseAIJson(raw)).toEqual({ a: 1 });
   });
 
   it("extracts valid JSON even when multiple invalid balanced blocks precede it", () => {
-    const raw = "Note: {foo} and {bar} are used.\nResult: {\"status\": \"ok\"}";
+    const raw = 'Note: {foo} and {bar} are used.\nResult: {"status": "ok"}';
     expect(parseAIJson(raw)).toEqual({ status: "ok" });
   });
 
@@ -74,27 +75,37 @@ describe("extractJSON", () => {
 
   it("throws when no JSON is present", () => {
     expect(() => extractJSON("there is no json here")).toThrow(
-      "No JSON payload found in AI response"
+      "No JSON payload found in AI response",
     );
     expect(() => parseAIJson("there is no json here")).toThrow(
-      "No JSON payload found in AI response"
+      "No JSON payload found in AI response",
     );
   });
 
   it("throws on an empty string", () => {
-    expect(() => extractJSON("")).toThrow("No JSON payload found in AI response");
-    expect(() => parseAIJson("")).toThrow("No JSON payload found in AI response");
+    expect(() => extractJSON("")).toThrow(
+      "No JSON payload found in AI response",
+    );
+    expect(() => parseAIJson("")).toThrow(
+      "No JSON payload found in AI response",
+    );
   });
 
   it("throws on non-string input", () => {
-    expect(() => extractJSON(null)).toThrow("No JSON payload found in AI response");
-    expect(() => extractJSON(undefined)).toThrow("No JSON payload found in AI response");
-    expect(() => extractJSON(42)).toThrow("No JSON payload found in AI response");
+    expect(() => extractJSON(null)).toThrow(
+      "No JSON payload found in AI response",
+    );
+    expect(() => extractJSON(undefined)).toThrow(
+      "No JSON payload found in AI response",
+    );
+    expect(() => extractJSON(42)).toThrow(
+      "No JSON payload found in AI response",
+    );
   });
 
   it("throws when brackets never close", () => {
     expect(() => extractJSON('{ "a": 1 ')).toThrow(
-      "No JSON payload found in AI response"
+      "No JSON payload found in AI response",
     );
   });
 });
@@ -102,7 +113,7 @@ describe("extractJSON", () => {
 describe("parseAIJson", () => {
   it("throws a descriptive parse error on malformed-but-bracketed content", () => {
     expect(() => parseAIJson('{ "a": 1, }')).toThrow(
-      /Failed to parse JSON payload from AI response/
+      /Failed to parse JSON payload from AI response/,
     );
   });
 });
@@ -135,7 +146,8 @@ Note: scores are approximate and based on keyword overlap.`;
       atsScore: 82,
       matchedKeywords: ["react", "node.js", "typescript"],
       missingKeywords: ["graphql", "kubernetes"],
-      summary: "Strong frontend match; consider adding {cloud} and [devops] skills.",
+      summary:
+        "Strong frontend match; consider adding {cloud} and [devops] skills.",
     });
   });
 
@@ -146,7 +158,8 @@ Note: scores are approximate and based on keyword overlap.`;
   });
 
   it("returns field errors when JSON parses but fails schema validation", () => {
-    const raw = '{ "atsScore": "high", "matchedKeywords": [], "missingKeywords": [], "summary": "x" }';
+    const raw =
+      '{ "atsScore": "high", "matchedKeywords": [], "missingKeywords": [], "summary": "x" }';
     const result = validateOutput(atsSchema, raw);
     expect(result.success).toBe(false);
     expect(result.errors.atsScore).toBeDefined();

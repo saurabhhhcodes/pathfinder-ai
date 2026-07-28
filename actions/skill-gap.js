@@ -14,7 +14,9 @@ export async function generateSkillGapAnalysis(data) {
 
     const limit = await checkRateLimit(userId, "skill-gap");
     if (!limit.allowed) {
-      throw new Error(`Limit reached. Resets in ${formatResetTime(limit.resetAt)}.`);
+      throw new Error(
+        `Limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+      );
     }
 
     const user = await db.user.findUnique({
@@ -30,8 +32,16 @@ export async function generateSkillGapAnalysis(data) {
       untrustedData: [
         { label: "currentSkills", value: data.currentSkills, maxLength: 1000 },
         { label: "targetRole", value: data.targetRole, maxLength: 200 },
-        { label: "jobDescription", value: data.jobDescription || "Not provided", maxLength: 3000 },
-        { label: "learningDuration", value: data.learningDuration || "1 month", maxLength: 100 },
+        {
+          label: "jobDescription",
+          value: data.jobDescription || "Not provided",
+          maxLength: 3000,
+        },
+        {
+          label: "learningDuration",
+          value: data.learningDuration || "1 month",
+          maxLength: 100,
+        },
       ],
       outputRules: `Output ONLY a valid JSON object matching exactly this schema, without markdown code fences or extra text:
 {
@@ -53,9 +63,13 @@ export async function generateSkillGapAnalysis(data) {
     const aiResult = await generateGeminiContent(prompt);
     let rawText = aiResult.response.text();
     // Clean up potential markdown formatting
-    if (rawText.startsWith('```json')) rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
-    if (rawText.startsWith('```')) rawText = rawText.replace(/```/g, '').trim();
-    
+    if (rawText.startsWith("```json"))
+      rawText = rawText
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+    if (rawText.startsWith("```")) rawText = rawText.replace(/```/g, "").trim();
+
     const analysisJson = JSON.parse(rawText);
 
     const saved = await db.skillGapAnalysis.upsert({
@@ -80,7 +94,10 @@ export async function generateSkillGapAnalysis(data) {
     return { data: saved, error: null };
   } catch (error) {
     console.error("Error generating skill gap analysis:", error);
-    return { data: null, error: error.message || "Failed to generate analysis" };
+    return {
+      data: null,
+      error: error.message || "Failed to generate analysis",
+    };
   }
 }
 

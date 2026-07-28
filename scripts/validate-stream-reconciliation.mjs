@@ -91,14 +91,17 @@ function reconcileStream(chunks) {
       if (event === "error") {
         state.errored = true;
         state.errorMessage =
-          (typeof parsed.message === "string" && parsed.message) || "Stream failed";
+          (typeof parsed.message === "string" && parsed.message) ||
+          "Stream failed";
         break;
       }
 
       if (event === "done") {
         state.done = true;
         state.finalText =
-          typeof parsed.finalText === "string" ? parsed.finalText : state.streamText;
+          typeof parsed.finalText === "string"
+            ? parsed.finalText
+            : state.streamText;
         if (state.finalText.trim()) {
           state.messages.push({ role: "assistant", content: state.finalText });
         }
@@ -114,7 +117,7 @@ function testDoneCommitsOnce() {
   const payload =
     encodeEvent("delta", { text: "Hello " }) +
     encodeEvent("delta", { text: "world" }) +
-    "event: delta\ndata: {\"text\":\"!\"}\n\n" +
+    'event: delta\ndata: {"text":"!"}\n\n' +
     "event: delta\ndata: {not-json}\n\n" +
     encodeEvent("done", { finalText: "Hello world!" }) +
     encodeEvent("delta", { text: " should-not-append" });
@@ -125,12 +128,20 @@ function testDoneCommitsOnce() {
   assert.equal(state.errored, false, "stream should not error");
   assert.equal(state.done, true, "stream should complete");
   assert.equal(state.streamText, "Hello world!", "delta buffer should match");
-  assert.equal(state.finalText, "Hello world!", "final text should match done payload");
-  assert.equal(state.messages.length, 1, "assistant message should be committed once");
+  assert.equal(
+    state.finalText,
+    "Hello world!",
+    "final text should match done payload",
+  );
+  assert.equal(
+    state.messages.length,
+    1,
+    "assistant message should be committed once",
+  );
   assert.equal(
     state.messages[0].content,
     "Hello world!",
-    "assistant message content should match final text"
+    "assistant message content should match final text",
   );
 }
 
@@ -145,8 +156,16 @@ function testErrorStopsCommit() {
 
   assert.equal(state.errored, true, "error event should set errored state");
   assert.equal(state.done, false, "done should be ignored after error");
-  assert.equal(state.messages.length, 0, "no final assistant message should be committed");
-  assert.equal(state.errorMessage, "Upstream failure", "error message should be preserved");
+  assert.equal(
+    state.messages.length,
+    0,
+    "no final assistant message should be committed",
+  );
+  assert.equal(
+    state.errorMessage,
+    "Upstream failure",
+    "error message should be preserved",
+  );
 }
 
 function main() {

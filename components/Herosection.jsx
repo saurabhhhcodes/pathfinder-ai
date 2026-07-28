@@ -15,7 +15,7 @@ const HeroSection = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
@@ -32,11 +32,17 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="relative w-full pt-24 sm:pt-28 md:pt-40 lg:pt-48 pb-16 md:pb-20 overflow-hidden">
+    <section
+      id="home"
+      className="relative w-full pt-24 sm:pt-28 md:pt-40 lg:pt-48 pb-16 md:pb-20 overflow-hidden"
+    >
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full -z-10 opacity-30 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] bg-purple-500/20 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: "2s" }} />
+        <div
+          className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] bg-purple-500/20 rounded-full blur-[100px] animate-pulse-slow"
+          style={{ animationDelay: "2s" }}
+        />
       </div>
 
       <motion.div
@@ -71,10 +77,11 @@ const HeroSection = () => {
               Your Professional Future, <br />
               <span className="text-gradient-primary">Reimagined with AI.</span>
             </h1>
-            
+
             <p className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
-              Unlock your true potential with PathFinder AI. Get personalized career coaching, 
-              precision-engineered resumes, and expert-level interview preparation.
+              Unlock your true potential with PathFinder AI. Get personalized
+              career coaching, precision-engineered resumes, and expert-level
+              interview preparation.
             </p>
           </motion.div>
 
@@ -99,7 +106,10 @@ const HeroSection = () => {
               onClick={() => {
                 const featuresSection = document.getElementById("features");
                 if (featuresSection) {
-                  featuresSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                  featuresSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
                 }
               }}
               className="h-14 px-8 rounded-2xl glass hover:bg-muted/50 transition-all duration-300 font-bold group"
@@ -117,7 +127,7 @@ const HeroSection = () => {
           className="mt-12 sm:mt-16 md:mt-20 relative group"
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-          
+
           <motion.div
             ref={imageRef}
             onMouseEnter={() => setIsHovered(true)}
@@ -134,9 +144,10 @@ const HeroSection = () => {
               rotateY: isHovered ? mousePosition.x * 10 : 0,
               transformStyle: "preserve-3d",
             }}
-className="relative mx-auto max-w-5xl rounded-2xl glass border border-white/20 dark:border-white/10 shadow-2xl transition-all duration-200 overflow-visible"          >
+            className="relative mx-auto max-w-5xl rounded-2xl glass border border-white/20 dark:border-white/10 shadow-2xl transition-all duration-200 overflow-visible"
+          >
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent z-10 pointer-events-none" />
-            
+
             <video
               src="/pathfinder-ai.mp4"
               autoPlay
@@ -171,7 +182,9 @@ className="relative mx-auto max-w-5xl rounded-2xl glass border border-white/20 d
                 <Sparkles className="h-6 w-6" />
               </div>
               <div>
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Growth</p>
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                  Growth
+                </p>
                 <p className="text-xl font-bold">+124% Reach</p>
               </div>
             </div>
@@ -179,7 +192,12 @@ className="relative mx-auto max-w-5xl rounded-2xl glass border border-white/20 d
 
           <motion.div
             animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
             className="absolute -bottom-10 -right-10 hidden lg:block p-6 glass rounded-2xl shadow-xl z-20 border border-white/20"
           >
             <div className="flex items-center gap-4">
@@ -187,7 +205,9 @@ className="relative mx-auto max-w-5xl rounded-2xl glass border border-white/20 d
                 <Play className="h-6 w-6 fill-current" />
               </div>
               <div>
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Status</p>
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                  Status
+                </p>
                 <p className="text-xl font-bold">Onboarding Ready</p>
               </div>
             </div>

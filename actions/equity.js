@@ -14,16 +14,24 @@ export async function decodeEquityOffer(offerDetails) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!offerDetails || !offerDetails.equityType) {
-    return { success: false, errors: { _form: ["Equity details are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Equity details are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an expert startup equity compensation consultant and financial advisor.",
+    context:
+      "You are an expert startup equity compensation consultant and financial advisor.",
     task: `Analyze the following equity offer details provided by the candidate.
     Decode what the equity actually means, calculate potential values under 3 scenarios (Base Case, 3x Growth, 10x Unicorn Exit), and highlight any red flags (e.g. weird vesting schedules, high strike prices).
     Explain it so a beginner can understand.`,
     untrustedData: [
-      { label: "offerDetails", value: JSON.stringify(offerDetails), maxLength: 1000 },
+      {
+        label: "offerDetails",
+        value: JSON.stringify(offerDetails),
+        maxLength: 1000,
+      },
     ],
     outputRules: `Provide the output in the following JSON format ONLY:
 {
@@ -60,7 +68,10 @@ export async function decodeEquityOffer(offerDetails) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Equity Decoder Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to decode equity"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to decode equity"] },
+    };
   }
 }
 

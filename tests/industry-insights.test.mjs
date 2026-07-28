@@ -35,15 +35,18 @@ describe("industry insights helper", () => {
   it("ensures no user context is passed to the prompt builder", async () => {
     mocks.cachedGenerateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          salaryRanges: [{ role: "Role", min: 1, max: 2, median: 1.5, location: "Loc" }],
-          growthRate: 1,
-          demandLevel: "High",
-          topSkills: ["A"],
-          marketOutlook: "Positive",
-          keyTrends: ["B"],
-          recommendedSkills: ["C"],
-        }),
+        text: () =>
+          JSON.stringify({
+            salaryRanges: [
+              { role: "Role", min: 1, max: 2, median: 1.5, location: "Loc" },
+            ],
+            growthRate: 1,
+            demandLevel: "High",
+            topSkills: ["A"],
+            marketOutlook: "Positive",
+            keyTrends: ["B"],
+            recommendedSkills: ["C"],
+          }),
       },
     });
 
@@ -54,12 +57,12 @@ describe("industry insights helper", () => {
     expect(mocks.buildSecurePrompt).toHaveBeenCalledWith(
       expect.objectContaining({
         context: expect.stringContaining("Industry Context:"),
-      })
+      }),
     );
     expect(mocks.buildSecurePrompt).toHaveBeenCalledWith(
       expect.objectContaining({
         context: expect.not.stringContaining("User Profile Context:"),
-      })
+      }),
     );
   });
 
@@ -88,9 +91,24 @@ describe("industry insights helper", () => {
           {
             groundingMetadata: {
               groundingChunks: [
-                { web: { uri: "https://example.com/salary-a", title: "Salary A" } },
-                { web: { uri: "https://example.com/salary-a", title: "Salary A duplicate" } },
-                { web: { uri: "https://example.com/salary-b", title: "Salary B" } },
+                {
+                  web: {
+                    uri: "https://example.com/salary-a",
+                    title: "Salary A",
+                  },
+                },
+                {
+                  web: {
+                    uri: "https://example.com/salary-a",
+                    title: "Salary A duplicate",
+                  },
+                },
+                {
+                  web: {
+                    uri: "https://example.com/salary-b",
+                    title: "Salary B",
+                  },
+                },
               ],
             },
           },
@@ -115,7 +133,7 @@ describe("industry insights helper", () => {
       expect.objectContaining({
         key: expect.stringMatching(/^industry:/),
         ttl: 5 * 60 * 1000,
-      })
+      }),
     );
   });
 
@@ -159,7 +177,7 @@ describe("industry insights helper", () => {
       expect.objectContaining({
         key: expect.stringMatching(/^industry:/),
         ttl: 5 * 60 * 1000,
-      })
+      }),
     );
     expect(mocks.cachedGenerateGeminiContent).toHaveBeenNthCalledWith(
       2,
@@ -170,14 +188,18 @@ describe("industry insights helper", () => {
       expect.objectContaining({
         key: expect.stringMatching(/^industry:/),
         ttl: 5 * 60 * 1000,
-      })
+      }),
     );
   });
 
   it("treats missing nextUpdate as stale", () => {
     expect(isIndustryInsightStale(null)).toBe(true);
     expect(isIndustryInsightStale({ nextUpdate: null })).toBe(true);
-    expect(isIndustryInsightStale({ nextUpdate: new Date(Date.now() + 60_000) })).toBe(false);
-    expect(isIndustryInsightStale({ nextUpdate: new Date(Date.now() - 60_000) })).toBe(true);
+    expect(
+      isIndustryInsightStale({ nextUpdate: new Date(Date.now() + 60_000) }),
+    ).toBe(false);
+    expect(
+      isIndustryInsightStale({ nextUpdate: new Date(Date.now() - 60_000) }),
+    ).toBe(true);
   });
 });

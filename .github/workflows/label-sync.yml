@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - '.github/labels.json'
-      - '.github/workflows/label-sync.yml'
+      - ".github/labels.json"
+      - ".github/workflows/label-sync.yml"
 
 jobs:
   label_sync:
@@ -22,7 +22,7 @@ jobs:
           script: |
             const fs = require('fs');
             const labels = JSON.parse(fs.readFileSync('.github/labels.json', 'utf8'));
-            
+
             const { data: currentLabels } = await github.rest.issues.listLabelsForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,

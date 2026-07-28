@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { founderReadinessOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  founderReadinessOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -14,15 +17,16 @@ describe("founderReadinessOutputSchema", () => {
       blindSpots: [
         {
           issue: "Lack of technical co-founder",
-          mitigation: "Start networking at tech events"
-        }
+          mitigation: "Start networking at tech events",
+        },
       ],
-      businessIdeaFeedback: "The idea is sound but needs a clearer go-to-market strategy.",
+      businessIdeaFeedback:
+        "The idea is sound but needs a clearer go-to-market strategy.",
       ninetyDayRoadmap: [
         { phase: "Month 1", actionItems: ["Validate problem"] },
         { phase: "Month 2", actionItems: ["Build MVP"] },
-        { phase: "Month 3", actionItems: ["Launch to beta"] }
-      ]
+        { phase: "Month 3", actionItems: ["Launch to beta"] },
+      ],
     });
     const result = validateOutput(founderReadinessOutputSchema, raw);
     expect(result.success).toBe(true);
@@ -35,7 +39,7 @@ describe("founderReadinessOutputSchema", () => {
   it("rejects output missing required fields", () => {
     const raw = JSON.stringify({
       founderScore: 90,
-      strengths: ["Visionary"]
+      strengths: ["Visionary"],
     });
     const result = validateOutput(founderReadinessOutputSchema, raw);
     expect(result.success).toBe(false);
@@ -49,7 +53,7 @@ describe("SCHEMA_DESCRIPTIONS.founderReadiness", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Create a founder plan.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.founderReadiness
+      SCHEMA_DESCRIPTIONS.founderReadiness,
     );
     expect(prompt).toContain("founderScore");
     expect(prompt).toContain("ninetyDayRoadmap");
@@ -99,7 +103,8 @@ describe("generateFounderReadiness", () => {
   });
 
   it("generates a founder readiness plan successfully", async () => {
-    const { generateFounderReadiness } = await import("../actions/founder-readiness.js");
+    const { generateFounderReadiness } =
+      await import("../actions/founder-readiness.js");
 
     actionMocks.auth.mockResolvedValue({ userId: "user-1" });
     actionMocks.checkRateLimit.mockResolvedValue({ allowed: true });
@@ -110,17 +115,18 @@ describe("generateFounderReadiness", () => {
     });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          founderScore: 90,
-          strengths: ["Grit"],
-          blindSpots: [{ issue: "Sales", mitigation: "Hire" }],
-          businessIdeaFeedback: "Good.",
-          ninetyDayRoadmap: [
-            { phase: "Month 1", actionItems: ["Act 1"] },
-            { phase: "Month 2", actionItems: ["Act 2"] },
-            { phase: "Month 3", actionItems: ["Act 3"] }
-          ]
-        }),
+        text: () =>
+          JSON.stringify({
+            founderScore: 90,
+            strengths: ["Grit"],
+            blindSpots: [{ issue: "Sales", mitigation: "Hire" }],
+            businessIdeaFeedback: "Good.",
+            ninetyDayRoadmap: [
+              { phase: "Month 1", actionItems: ["Act 1"] },
+              { phase: "Month 2", actionItems: ["Act 2"] },
+              { phase: "Month 3", actionItems: ["Act 3"] },
+            ],
+          }),
       },
     });
     actionMocks.founderReadinessCreate.mockResolvedValue({ id: "plan-1" });
@@ -133,7 +139,10 @@ describe("generateFounderReadiness", () => {
     const result = await generateFounderReadiness(formData);
 
     expect(actionMocks.auth).toHaveBeenCalled();
-    expect(actionMocks.checkRateLimit).toHaveBeenCalledWith("user-1", "founder_readiness");
+    expect(actionMocks.checkRateLimit).toHaveBeenCalledWith(
+      "user-1",
+      "founder_readiness",
+    );
     expect(actionMocks.generateGeminiContent).toHaveBeenCalled();
     expect(actionMocks.founderReadinessCreate).toHaveBeenCalled();
     expect(result.id).toBe("plan-1");

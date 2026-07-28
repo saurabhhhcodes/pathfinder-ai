@@ -23,10 +23,10 @@ export function createSseResponse(chunks) {
 export const handlers = [
   http.post("http://localhost/api/generate", () => {
     return createSseResponse([
-      "event: delta\ndata: {\"text\":\"Hello \"}\n\n",
-      "event: delta\ndata: {\"text\":\"career \"}\n\n",
-      "event: delta\ndata: {\"text\":\"world\"}\n\n",
-      "event: done\ndata: {\"finalText\":\"Hello career world\",\"hasContent\":true}\n\n",
+      'event: delta\ndata: {"text":"Hello "}\n\n',
+      'event: delta\ndata: {"text":"career "}\n\n',
+      'event: delta\ndata: {"text":"world"}\n\n',
+      'event: done\ndata: {"finalText":"Hello career world","hasContent":true}\n\n',
     ]);
   }),
 
@@ -37,8 +37,8 @@ export const handlers = [
           new TextEncoder().encode(
             `event: delta\ndata: ${JSON.stringify({
               text: "Hello career ",
-            })}\n\n`
-          )
+            })}\n\n`,
+          ),
         );
 
         controller.enqueue(
@@ -46,8 +46,8 @@ export const handlers = [
             `event: done\ndata: ${JSON.stringify({
               finalText: "Hello career world",
               hasContent: true,
-            })}\n\n`
-          )
+            })}\n\n`,
+          ),
         );
 
         controller.close();

@@ -31,9 +31,7 @@ export default function QuizList({ assessments }) {
     if (!assessments) return [];
     if (filter === "all") return assessments;
 
-    return assessments.filter(
-      (assessment) => assessment.category === filter
-    );
+    return assessments.filter((assessment) => assessment.category === filter);
   }, [assessments, filter]);
 
   return (
@@ -45,9 +43,7 @@ export default function QuizList({ assessments }) {
               Recent Quizzes
             </CardTitle>
 
-            <CardDescription>
-              Review your past quiz performance
-            </CardDescription>
+            <CardDescription>Review your past quiz performance</CardDescription>
           </div>
 
           <Button
@@ -58,11 +54,7 @@ export default function QuizList({ assessments }) {
           </Button>
         </div>
 
-        <Tabs
-          value={filter}
-          onValueChange={setFilter}
-          className="mt-4"
-        >
+        <Tabs value={filter} onValueChange={setFilter} className="mt-4">
           <TabsList className="flex flex-wrap">
             {CATEGORY_FILTERS.map((cat) => (
               <TabsTrigger key={cat.value} value={cat.value}>
@@ -76,9 +68,7 @@ export default function QuizList({ assessments }) {
       <CardContent>
         {filteredAssessments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center border rounded-xl text-muted-foreground">
-            <p className="text-lg font-semibold">
-              No quizzes found
-            </p>
+            <p className="text-lg font-semibold">No quizzes found</p>
 
             <p className="text-sm mt-2">
               {filter === "all"
@@ -89,21 +79,17 @@ export default function QuizList({ assessments }) {
         ) : (
           <div className="space-y-4">
             {filteredAssessments.map((assessment, i) => {
-              const correctCount =
-                assessment.questions.filter(
-                  (q) => q.isCorrect
-                ).length;
+              const correctCount = assessment.questions.filter(
+                (q) => q.isCorrect,
+              ).length;
 
-              const totalCount =
-                assessment.questions.length;
+              const totalCount = assessment.questions.length;
 
               return (
                 <Card
                   key={assessment.id}
                   className="cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() =>
-                    router.push(`/interview/${assessment.id}`)
-                  }
+                  onClick={() => router.push(`/interview/${assessment.id}`)}
                 >
                   <CardHeader>
                     <div className="flex items-center justify-between">
@@ -116,14 +102,9 @@ export default function QuizList({ assessments }) {
 
                     <CardDescription className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span>
-                          Score: {assessment.quizScore.toFixed(1)}%
-                        </span>
+                        <span>Score: {assessment.quizScore.toFixed(1)}%</span>
 
-                        <Badge
-                          variant="secondary"
-                          className="text-xs"
-                        >
+                        <Badge variant="secondary" className="text-xs">
                           {assessment.category}
                         </Badge>
                       </div>
@@ -131,7 +112,7 @@ export default function QuizList({ assessments }) {
                       <div>
                         {format(
                           new Date(assessment.createdAt),
-                          "MMMM dd, yyyy HH:mm"
+                          "MMMM dd, yyyy HH:mm",
                         )}
                       </div>
                     </CardDescription>

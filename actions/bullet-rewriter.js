@@ -2,10 +2,16 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { generateWithStructuredOutput, buildSecurePrompt } from "@/lib/prompt-safety";
+import {
+  generateWithStructuredOutput,
+  buildSecurePrompt,
+} from "@/lib/prompt-safety";
 import { buildUserProfileContext } from "@/lib/ai-context";
 import { validateInput, validateOutput } from "@/lib/validate";
-import { bulletRewriterSchema, bulletRewriterOutputSchema } from "@/lib/schemas/forms";
+import {
+  bulletRewriterSchema,
+  bulletRewriterOutputSchema,
+} from "@/lib/schemas/forms";
 import { checkRateLimit, formatResetTime } from "@/lib/rate-limit-actions";
 import { assertFeatureEnabled } from "@/lib/ai-gating";
 import { generateGeminiContent } from "@/lib/gemini";
@@ -19,7 +25,10 @@ export async function rewriteBullet(rawParams) {
 
   const { userId } = await auth();
   if (!userId) {
-    return { success: false, errors: { _form: ["Sign-in required to use the Bullet Rewriter."] } };
+    return {
+      success: false,
+      errors: { _form: ["Sign-in required to use the Bullet Rewriter."] },
+    };
   }
 
   const validation = validateInput(bulletRewriterSchema, rawParams);
@@ -32,7 +41,9 @@ export async function rewriteBullet(rawParams) {
     return {
       success: false,
       errors: {
-        _form: [`Bullet Rewriter limit reached. Resets in ${formatResetTime(limit.resetAt)}.`],
+        _form: [
+          `Bullet Rewriter limit reached. Resets in ${formatResetTime(limit.resetAt)}.`,
+        ],
       },
     };
   }
@@ -47,7 +58,10 @@ export async function rewriteBullet(rawParams) {
   });
 
   if (!user) {
-    return { success: false, errors: { _form: ["Active database profile not found."] } };
+    return {
+      success: false,
+      errors: { _form: ["Active database profile not found."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
@@ -101,12 +115,24 @@ Respond ONLY with a valid JSON object in this exact format:
 
     if (!result.success) {
       console.error("Output validation failed:", result.errors);
-      return { success: false, errors: { _form: ["AI returned an unexpected format. Please try again."] } };
+      return {
+        success: false,
+        errors: {
+          _form: ["AI returned an unexpected format. Please try again."],
+        },
+      };
     }
 
     return { success: true, data: result.data };
   } catch (error) {
     console.error("Error rewriting bullet:", error);
-    return { success: false, errors: { _form: ["An unexpected error occurred while rewriting your bullet. Please try again later."] } };
+    return {
+      success: false,
+      errors: {
+        _form: [
+          "An unexpected error occurred while rewriting your bullet. Please try again later.",
+        ],
+      },
+    };
   }
 }

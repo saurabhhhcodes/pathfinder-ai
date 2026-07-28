@@ -16,14 +16,14 @@ export default async function ResumeMatchRoute() {
 
   // Bypass redirect for local development to allow taking screenshots
   const isDevBypass = process.env.NODE_ENV === "development";
-  
+
   if (!user && !isDevBypass) redirect("/sign-in");
   if (!isOnboarded && !isDevBypass) redirect("/onboarding");
 
   // Load in parallel
   let historyResult = { data: [] };
   let savedResume = { content: "" };
-  
+
   try {
     const results = await Promise.all([
       getResumeMatchHistory().catch(() => ({ data: [] })),
@@ -32,7 +32,10 @@ export default async function ResumeMatchRoute() {
     historyResult = results[0];
     savedResume = results[1];
   } catch (error) {
-    console.warn("Failed to load initial data, likely due to local DB connection:", error);
+    console.warn(
+      "Failed to load initial data, likely due to local DB connection:",
+      error,
+    );
   }
 
   return (
@@ -49,7 +52,9 @@ export default async function ResumeMatchRoute() {
               Resume <span className="text-gradient-primary">Match Score</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base font-medium mt-2 max-w-2xl">
-              Benchmark your resume against a specific job description. Get detailed feedback on skills, experience, and keywords to optimize your application.
+              Benchmark your resume against a specific job description. Get
+              detailed feedback on skills, experience, and keywords to optimize
+              your application.
             </p>
           </div>
         </div>
@@ -57,7 +62,9 @@ export default async function ResumeMatchRoute() {
         <div className="glass rounded-[2.5rem] p-1 border border-white/10 shadow-2xl overflow-hidden">
           <div className="bg-background/40 backdrop-blur-md rounded-[2.2rem] p-4 md:p-8">
             <MatchScorePage
-              initialHistory={Array.isArray(historyResult?.data) ? historyResult.data : []}
+              initialHistory={
+                Array.isArray(historyResult?.data) ? historyResult.data : []
+              }
               savedResumeContent={savedResume?.content || ""}
             />
           </div>

@@ -12,7 +12,9 @@ import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
 async function explain(sql) {
-  const rows = await db.$queryRawUnsafe(`EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT) ${sql}`);
+  const rows = await db.$queryRawUnsafe(
+    `EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT) ${sql}`,
+  );
   return rows.map((r) => r["QUERY PLAN"]).join("\n");
 }
 
@@ -38,14 +40,18 @@ async function main() {
     ON CONFLICT (id) DO NOTHING
   `);
 
-  console.log("--- Prisma: conversations by user, ordered by updatedAt desc ---");
+  console.log(
+    "--- Prisma: conversations by user, ordered by updatedAt desc ---",
+  );
   const conversations = await db.conversation.findMany({
     where: { userId },
     orderBy: { updatedAt: "desc" },
   });
   console.log(`Found ${conversations.length} conversation(s)`);
 
-  console.log("\n--- Prisma: messages by conversation, ordered by createdAt asc ---");
+  console.log(
+    "\n--- Prisma: messages by conversation, ordered by createdAt asc ---",
+  );
   const messages = await db.message.findMany({
     where: { conversationId },
     orderBy: { createdAt: "asc" },
@@ -55,15 +61,15 @@ async function main() {
   console.log("\n--- EXPLAIN ANALYZE: Message composite index ---");
   console.log(
     await explain(
-      `SELECT * FROM "Message" WHERE "conversationId" = '${conversationId}' ORDER BY "createdAt" ASC`
-    )
+      `SELECT * FROM "Message" WHERE "conversationId" = '${conversationId}' ORDER BY "createdAt" ASC`,
+    ),
   );
 
   console.log("\n--- EXPLAIN ANALYZE: Conversation composite index ---");
   console.log(
     await explain(
-      `SELECT * FROM "Conversation" WHERE "userId" = '${userId}' ORDER BY "updatedAt" DESC`
-    )
+      `SELECT * FROM "Conversation" WHERE "userId" = '${userId}' ORDER BY "updatedAt" DESC`,
+    ),
   );
 }
 

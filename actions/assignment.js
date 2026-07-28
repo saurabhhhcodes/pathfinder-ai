@@ -15,11 +15,15 @@ export async function gradeAssignment(promptText, solutionText) {
   if (!user) return USER_NOT_FOUND_RESPONSE;
 
   if (!promptText || !solutionText) {
-    return { success: false, errors: { _form: ["Both prompt and solution are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Both prompt and solution are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are a Senior Staff Engineer or Consulting Partner grading a candidate's take-home assignment.",
+    context:
+      "You are a Senior Staff Engineer or Consulting Partner grading a candidate's take-home assignment.",
     task: `Analyze the provided prompt/instructions and the candidate's proposed solution.
     Grade the solution out of 100, provide a critical analysis of edge cases they missed, logic gaps, and suggest optimizations to make it perfect.`,
     untrustedData: [
@@ -54,7 +58,10 @@ export async function gradeAssignment(promptText, solutionText) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Assignment Grader Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to grade assignment"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to grade assignment"] },
+    };
   }
 }
 

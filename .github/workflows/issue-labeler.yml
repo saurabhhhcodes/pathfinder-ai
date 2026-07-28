@@ -17,9 +17,9 @@ jobs:
             const title = issue.title.toLowerCase();
             const body = (issue.body || "").toLowerCase();
             const content = `${title} ${body}`;
-            
+
             const labelsToAdd = new Set();
-            
+
             // Type Mapping
             const typeMap = {
               'type:bug': ['bug', 'error', 'fix', 'broken', 'issue', 'fail'],

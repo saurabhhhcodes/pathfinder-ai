@@ -12,7 +12,10 @@ export async function generateResignationLetter(circumstance, lastDay) {
   if (!userId) return { success: false, errors: { _form: ["Unauthorized"] } };
 
   if (!circumstance || !lastDay) {
-    return { success: false, errors: { _form: ["Circumstance and Last Day are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Circumstance and Last Day are required."] },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -48,7 +51,12 @@ export async function generateResignationLetter(circumstance, lastDay) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Resignation Letter Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate resignation letter"] } };
+    return {
+      success: false,
+      errors: {
+        _form: [error.message || "Failed to generate resignation letter"],
+      },
+    };
   }
 }
 

@@ -2,11 +2,22 @@
 
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { FileText, Mail, Mic, ChevronRight, Clock, MoreHorizontal } from "lucide-react";
+import {
+  FileText,
+  Mail,
+  Mic,
+  ChevronRight,
+  Clock,
+  MoreHorizontal,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-export default function RecentDocs({ resumes = [], coverLetters = [], interviews = [] }) {
+export default function RecentDocs({
+  resumes = [],
+  coverLetters = [],
+  interviews = [],
+}) {
   const merged = [
     ...resumes.map((r) => ({
       id: r.id,
@@ -40,7 +51,9 @@ export default function RecentDocs({ resumes = [], coverLetters = [], interviews
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground px-2">Recent Activity</h3>
+          <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground px-2">
+            Recent Activity
+          </h3>
           <div className="h-px bg-border flex-grow" />
         </div>
         <div className="rounded-[2rem] border border-dashed border-border p-12 text-center space-y-4">
@@ -49,7 +62,9 @@ export default function RecentDocs({ resumes = [], coverLetters = [], interviews
           </div>
           <div className="space-y-1">
             <p className="text-sm font-bold">No documents yet</p>
-            <p className="text-xs text-muted-foreground">Start building your professional profile today.</p>
+            <p className="text-xs text-muted-foreground">
+              Start building your professional profile today.
+            </p>
           </div>
           <Link href="/resume" className="inline-block pt-2">
             <button className="text-xs font-bold text-primary hover:underline">
@@ -65,7 +80,9 @@ export default function RecentDocs({ resumes = [], coverLetters = [], interviews
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 flex-grow">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground px-2">Recent Activity</h3>
+          <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground px-2">
+            Recent Activity
+          </h3>
           <div className="h-px bg-border flex-grow" />
         </div>
       </div>
@@ -80,12 +97,16 @@ export default function RecentDocs({ resumes = [], coverLetters = [], interviews
           >
             <Link href={doc.href} className="group block">
               <div className="flex items-center gap-4 p-4 rounded-2xl border border-border bg-card hover:border-primary/50 hover:shadow-md transition-all duration-300">
-                <div className={cn(
-                  "h-12 w-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300",
-                  doc.type === "Resume" && "bg-blue-500/10 text-blue-500",
-                  doc.type === "Cover Letter" && "bg-emerald-500/10 text-emerald-500",
-                  doc.type === "Interview" && "bg-amber-500/10 text-amber-500"
-                )}>
+                <div
+                  className={cn(
+                    "h-12 w-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300",
+                    doc.type === "Resume" && "bg-blue-500/10 text-blue-500",
+                    doc.type === "Cover Letter" &&
+                      "bg-emerald-500/10 text-emerald-500",
+                    doc.type === "Interview" &&
+                      "bg-amber-500/10 text-amber-500",
+                  )}
+                >
                   {doc.type === "Resume" && <FileText className="h-5 w-5" />}
                   {doc.type === "Cover Letter" && <Mail className="h-5 w-5" />}
                   {doc.type === "Interview" && <Mic className="h-5 w-5" />}
@@ -93,13 +114,19 @@ export default function RecentDocs({ resumes = [], coverLetters = [], interviews
 
                 <div className="flex-grow min-w-0 space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{doc.type}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                      {doc.type}
+                    </span>
                     <span className="h-1 w-1 rounded-full bg-border" />
                     {doc.status && (
-                      <span className="text-[10px] font-bold text-primary">{doc.status}</span>
+                      <span className="text-[10px] font-bold text-primary">
+                        {doc.status}
+                      </span>
                     )}
                   </div>
-                  <h4 className="text-sm font-bold text-foreground truncate group-hover:text-primary transition-colors">{doc.name}</h4>
+                  <h4 className="text-sm font-bold text-foreground truncate group-hover:text-primary transition-colors">
+                    {doc.name}
+                  </h4>
                 </div>
 
                 <div className="flex flex-col items-end gap-1.5 min-w-[80px]">

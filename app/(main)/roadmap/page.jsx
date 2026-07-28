@@ -23,7 +23,8 @@ export default async function RoadmapPage() {
                 Career <span className="text-gradient-primary">Roadmap</span>
               </h1>
               <p className="text-muted-foreground text-sm md:text-base font-medium mt-2">
-                Personalized, step-by-step milestones tailored to your skills and goals.
+                Personalized, step-by-step milestones tailored to your skills
+                and goals.
               </p>
             </div>
           </div>
@@ -35,9 +36,12 @@ export default async function RoadmapPage() {
                   <Map className="h-10 w-10 text-red-500" />
                 </div>
                 <div className="max-w-md space-y-2">
-                  <h2 className="text-2xl font-bold text-foreground">Unable to load roadmap</h2>
+                  <h2 className="text-2xl font-bold text-foreground">
+                    Unable to load roadmap
+                  </h2>
                   <p className="text-muted-foreground">
-                    {error || "There was an error loading your roadmap. Please try again."}
+                    {error ||
+                      "There was an error loading your roadmap. Please try again."}
                   </p>
                 </div>
                 <Button asChild size="lg" className="rounded-2xl font-bold">
@@ -70,11 +74,13 @@ export default async function RoadmapPage() {
                 Career <span className="text-gradient-primary">Roadmap</span>
               </h1>
               <p className="text-muted-foreground text-sm md:text-base font-medium mt-2">
-                Personalized, step-by-step milestones tailored to your skills and goals.
+                Personalized, step-by-step milestones tailored to your skills
+                and goals.
               </p>
             </div>
 
-            <Button asChild
+            <Button
+              asChild
               size="lg"
               className="h-14 px-8 rounded-2xl font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-all group"
             >
@@ -90,7 +96,9 @@ export default async function RoadmapPage() {
           <div className="bg-background/40 backdrop-blur-md rounded-[2.2rem] p-6 md:p-10 min-h-[400px]">
             {roadmap?.isFallback && (
               <div className="mb-6 p-4 bg-yellow-50 text-yellow-900 border border-yellow-200 rounded-lg text-sm">
-                <strong>Note:</strong> AI generation is currently unavailable. Displaying a general career roadmap template. Try regenerating later for a personalized roadmap.
+                <strong>Note:</strong> AI generation is currently unavailable.
+                Displaying a general career roadmap template. Try regenerating
+                later for a personalized roadmap.
               </div>
             )}
             {roadmap ? (
@@ -101,10 +109,13 @@ export default async function RoadmapPage() {
                   <Map className="h-10 w-10 text-primary" />
                 </div>
                 <div className="max-w-md space-y-2">
-                  <h2 className="text-2xl font-bold text-foreground">No roadmap yet</h2>
+                  <h2 className="text-2xl font-bold text-foreground">
+                    No roadmap yet
+                  </h2>
                   <p className="text-muted-foreground">
-                    Generate a personalized career roadmap based on your current profile, skills, and target role.
-                    Make sure your profile is complete in Settings first.
+                    Generate a personalized career roadmap based on your current
+                    profile, skills, and target role. Make sure your profile is
+                    complete in Settings first.
                   </p>
                 </div>
                 <Button asChild size="lg" className="rounded-2xl font-bold">

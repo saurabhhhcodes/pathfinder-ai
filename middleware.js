@@ -14,7 +14,7 @@ const clerkHandler = clerkMiddleware(async (auth, req) => {
     case "deny":
       return NextResponse.json(
         { error: "Unauthorized" },
-        { status: decision.status || 401 }
+        { status: decision.status || 401 },
       );
     default:
       return NextResponse.next();
@@ -22,7 +22,10 @@ const clerkHandler = clerkMiddleware(async (auth, req) => {
 });
 
 export default function middleware(req, event) {
-  if (process.env.NODE_ENV === "development" && process.env.SKIP_AUTH === "true") {
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.SKIP_AUTH === "true"
+  ) {
     return NextResponse.next();
   }
   return clerkHandler(req, event);
@@ -31,8 +34,8 @@ export default function middleware(req, event) {
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.[^?]*$).*)',
+    "/((?!_next|[^?]*\\.[^?]*$).*)",
     // Always run for API/TRPC routes
-    '/(api|trpc)(.*)',
+    "/(api|trpc)(.*)",
   ],
 };

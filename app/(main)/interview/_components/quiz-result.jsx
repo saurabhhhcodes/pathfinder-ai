@@ -19,7 +19,9 @@ export default function QuizResult({
         <div className="h-12 w-12 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
           <XCircle className="h-6 w-6 text-destructive" />
         </div>
-        <h3 className="text-lg font-bold text-destructive">Invalid Quiz Result</h3>
+        <h3 className="text-lg font-bold text-destructive">
+          Invalid Quiz Result
+        </h3>
         <p className="text-muted-foreground text-sm">
           The quiz result data is formatted incorrectly or incomplete.
         </p>

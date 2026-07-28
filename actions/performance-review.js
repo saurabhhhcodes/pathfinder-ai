@@ -18,7 +18,10 @@ export async function generateSelfAssessment(achievements, challenges, goals) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!achievements || !goals) {
-    return { success: false, errors: { _form: ["Achievements and goals are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Achievements and goals are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
@@ -28,7 +31,11 @@ export async function generateSelfAssessment(achievements, challenges, goals) {
     The tone should be confident but not arrogant, framing challenges as growth opportunities.`,
     untrustedData: [
       { label: "achievements", value: achievements, maxLength: 2000 },
-      { label: "challenges", value: challenges || "None noted", maxLength: 1000 },
+      {
+        label: "challenges",
+        value: challenges || "None noted",
+        maxLength: 1000,
+      },
       { label: "goals", value: goals, maxLength: 1000 },
     ],
     outputRules: `Provide the output in the following JSON format ONLY:
@@ -64,7 +71,10 @@ export async function generateSelfAssessment(achievements, challenges, goals) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Performance Review Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate review"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate review"] },
+    };
   }
 }
 

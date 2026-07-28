@@ -15,11 +15,15 @@ export async function assessBurnout(symptoms, workload) {
   if (!user) return USER_NOT_FOUND_RESPONSE;
 
   if (!symptoms || !workload) {
-    return { success: false, errors: { _form: ["Both symptoms and workload details are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Both symptoms and workload details are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an empathetic Career Wellness and Leadership Coach. You help professionals set boundaries and recover from burnout.",
+    context:
+      "You are an empathetic Career Wellness and Leadership Coach. You help professionals set boundaries and recover from burnout.",
     task: `Analyze the user's reported symptoms and current workload.
     Assess their burnout risk level. Provide empathetic advice, and generate three specific, highly professional scripts they can use to set boundaries with their manager or team without sounding lazy or uncooperative.`,
     untrustedData: [
@@ -56,7 +60,10 @@ export async function assessBurnout(symptoms, workload) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Burnout Assessment Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to assess burnout"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to assess burnout"] },
+    };
   }
 }
 

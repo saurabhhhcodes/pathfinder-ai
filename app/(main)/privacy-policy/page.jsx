@@ -85,11 +85,18 @@ export default function PrivacyPolicyPage() {
             >
               Privacy Policy
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-muted-foreground text-lg">
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground text-lg"
+            >
               Last updated: June 2026
             </motion.p>
-            <motion.p variants={fadeUp} className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              At PathFinder AI, your privacy matters. This policy explains what data we collect, how we use it, and the choices you have.
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground mt-4 max-w-xl mx-auto"
+            >
+              At PathFinder AI, your privacy matters. This policy explains what
+              data we collect, how we use it, and the choices you have.
             </motion.p>
           </motion.div>
         </div>
@@ -126,7 +133,8 @@ export default function PrivacyPolicyPage() {
             >
               <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
               <p className="text-muted-foreground mb-4">
-                If you have any questions about this Privacy Policy, please reach out:
+                If you have any questions about this Privacy Policy, please
+                reach out:
               </p>
               <a
                 href="mailto:harshvardhandwivedi18@gmail.com"

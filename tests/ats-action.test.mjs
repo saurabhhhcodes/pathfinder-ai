@@ -56,24 +56,28 @@ describe("analyzeATS", () => {
     };
 
     mocks.auth.mockResolvedValue({ userId: "user-1" });
-    mocks.findUnique.mockResolvedValue({ id: "db-user-1", clerkUserId: "user-1" });
+    mocks.findUnique.mockResolvedValue({
+      id: "db-user-1",
+      clerkUserId: "user-1",
+    });
     mocks.generateCacheKey.mockReturnValue("ats:test-key");
     mocks.cachedGenerateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          atsScore: 85,
-          matchedKeywords: ["React", "Node.js"],
-          missingKeywords: ["GraphQL"],
-          suggestions: [{ category: "Skills", tip: "Add GraphQL" }],
-          highlights: [
-            {
-              type: "weak_impact",
-              text: "Experienced Developer...",
-              suggestion: "Quantify your achievements."
-            }
-          ],
-          overallFeedback: "Great match!",
-        }),
+        text: () =>
+          JSON.stringify({
+            atsScore: 85,
+            matchedKeywords: ["React", "Node.js"],
+            missingKeywords: ["GraphQL"],
+            suggestions: [{ category: "Skills", tip: "Add GraphQL" }],
+            highlights: [
+              {
+                type: "weak_impact",
+                text: "Experienced Developer...",
+                suggestion: "Quantify your achievements.",
+              },
+            ],
+            overallFeedback: "Great match!",
+          }),
       },
     });
     mocks.create.mockResolvedValue({ id: "analysis-1" });
@@ -86,7 +90,7 @@ describe("analyzeATS", () => {
       rawParams.resumeContent,
       rawParams.jobDescription,
       rawParams.jobTitle,
-      rawParams.companyName
+      rawParams.companyName,
     );
     expect(mocks.cachedGenerateGeminiContent).toHaveBeenCalledWith(
       expect.any(String),
@@ -94,7 +98,7 @@ describe("analyzeATS", () => {
       expect.objectContaining({
         key: "ats:test-key",
         ttl: expect.any(Number),
-      })
+      }),
     );
     expect(mocks.create).toHaveBeenCalled();
   });

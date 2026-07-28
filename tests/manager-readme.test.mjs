@@ -1,6 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
-import { managerReadmeOutputSchema, SCHEMA_DESCRIPTIONS } from "../lib/schemas/outputs.js";
+import {
+  managerReadmeOutputSchema,
+  SCHEMA_DESCRIPTIONS,
+} from "../lib/schemas/outputs.js";
 import { validateOutput } from "../lib/validate.js";
 import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 
@@ -9,7 +12,8 @@ import { buildFormatCorrectionPrompt } from "../lib/prompt-safety.js";
 describe("managerReadmeOutputSchema", () => {
   it("accepts valid manager readme output", () => {
     const raw = JSON.stringify({
-      readmeMarkdown: "# Working with Me\n\n## My Role\nI am the Engineering Manager for the Core Product team.\n\n## Communication Style\nI prefer async communication via Slack for non-urgent matters. If it's urgent, please call me.\n\n## Boundaries & Quirks\nI do not check Slack after 6 PM on weekdays or at all on weekends.\n\n## How I give and receive feedback\nI believe in radical candor and will give feedback directly and privately."
+      readmeMarkdown:
+        "# Working with Me\n\n## My Role\nI am the Engineering Manager for the Core Product team.\n\n## Communication Style\nI prefer async communication via Slack for non-urgent matters. If it's urgent, please call me.\n\n## Boundaries & Quirks\nI do not check Slack after 6 PM on weekdays or at all on weekends.\n\n## How I give and receive feedback\nI believe in radical candor and will give feedback directly and privately.",
     });
     const result = validateOutput(managerReadmeOutputSchema, raw);
     expect(result.success).toBe(true);
@@ -18,7 +22,7 @@ describe("managerReadmeOutputSchema", () => {
 
   it("rejects output missing required fields", () => {
     const raw = JSON.stringify({
-      otherField: "This is wrong"
+      otherField: "This is wrong",
     });
     const result = validateOutput(managerReadmeOutputSchema, raw);
     expect(result.success).toBe(false);
@@ -32,7 +36,7 @@ describe("SCHEMA_DESCRIPTIONS.managerReadme", () => {
     const prompt = buildFormatCorrectionPrompt(
       "Create a readme.",
       "This is not JSON",
-      SCHEMA_DESCRIPTIONS.managerReadme
+      SCHEMA_DESCRIPTIONS.managerReadme,
     );
     expect(prompt).toContain("readmeMarkdown");
   });
@@ -85,9 +89,10 @@ describe("buildReadme", () => {
     });
     actionMocks.generateGeminiContent.mockResolvedValue({
       response: {
-        text: () => JSON.stringify({
-          readmeMarkdown: "# My Readme\nI am great."
-        }),
+        text: () =>
+          JSON.stringify({
+            readmeMarkdown: "# My Readme\nI am great.",
+          }),
       },
     });
     actionMocks.managerReadmeCreate.mockResolvedValue({ id: "readme-1" });

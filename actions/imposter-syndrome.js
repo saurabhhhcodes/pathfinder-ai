@@ -18,7 +18,8 @@ export async function reframeThoughts(doubts, achievements) {
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an empathetic Executive Coach trained in Cognitive Behavioral Therapy techniques for high-achievers.",
+    context:
+      "You are an empathetic Executive Coach trained in Cognitive Behavioral Therapy techniques for high-achievers.",
     task: `Analyze the user's imposter syndrome doubts and cross-reference them with their actual achievements.
     Generate a cognitive reframing exercise that validates their feelings but gently dismantles the imposter syndrome logic using their own factual accomplishments.`,
     untrustedData: [
@@ -56,7 +57,10 @@ export async function reframeThoughts(doubts, achievements) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Imposter Syndrome Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate reframes"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate reframes"] },
+    };
   }
 }
 

@@ -1,18 +1,20 @@
-import 'dotenv/config';
-import { PrismaClient } from '@prisma/client';
+import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
 
 const db = new PrismaClient();
 
-const industry = process.argv[2] || 'Technology';
+const industry = process.argv[2] || "Technology";
 
-async function main(){
-  try{
-    const insight = await db.industryInsight.findUnique({ where: { industry } });
+async function main() {
+  try {
+    const insight = await db.industryInsight.findUnique({
+      where: { industry },
+    });
     console.log(JSON.stringify({ industry, insight }, null, 2));
-  }catch(e){
-    console.error('Error querying IndustryInsight:', e);
+  } catch (e) {
+    console.error("Error querying IndustryInsight:", e);
     process.exitCode = 1;
-  }finally{
+  } finally {
     await db.$disconnect();
   }
 }

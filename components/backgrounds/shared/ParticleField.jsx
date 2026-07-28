@@ -29,7 +29,9 @@ export default function ParticleField({
   }, [count, minSize, maxSize, spread]);
 
   return (
-    <div className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
+    <div
+      className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
+    >
       {particles.map((p, i) => (
         <motion.div
           key={i}

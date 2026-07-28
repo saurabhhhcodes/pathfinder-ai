@@ -2,8 +2,22 @@
 
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Trash2, ExternalLink, FileText, ScanSearch, MapPin, DollarSign, Calendar, Clock, AlertCircle, Wand2 } from "lucide-react";
-import { deleteJobApplication, updateJobApplicationInterviewDate } from "@/actions/job-tracker";
+import {
+  Trash2,
+  ExternalLink,
+  FileText,
+  ScanSearch,
+  MapPin,
+  DollarSign,
+  Calendar,
+  Clock,
+  AlertCircle,
+  Wand2,
+} from "lucide-react";
+import {
+  deleteJobApplication,
+  updateJobApplicationInterviewDate,
+} from "@/actions/job-tracker";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -55,24 +69,27 @@ export default function JobCard({ job, onDelete }) {
     const details = `Interview for the ${job.jobTitle} position at ${job.companyName}.\nNotes: ${job.notes || ""}`;
     const start = new Date(job.interviewDate);
     const end = new Date(start.getTime() + 60 * 60 * 1000); // 1 hour duration
-    
+
     const formatDate = (date) => {
       return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
     };
-    
+
     return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDate(start)}/${formatDate(end)}&details=${encodeURIComponent(details)}`;
   };
 
   const updateDate = new Date(job.updatedAt);
   const isValidDate = !isNaN(updateDate.getTime());
-  const daysSinceUpdate = isValidDate ? Math.floor((new Date() - updateDate) / (1000 * 60 * 60 * 24)) : 0;
-  const needsFollowUp = job.status === "Applied" && isValidDate && daysSinceUpdate >= 7;
+  const daysSinceUpdate = isValidDate
+    ? Math.floor((new Date() - updateDate) / (1000 * 60 * 60 * 24))
+    : 0;
+  const needsFollowUp =
+    job.status === "Applied" && isValidDate && daysSinceUpdate >= 7;
 
   return (
     <div className="group relative bg-background border border-border p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-        <button 
-          onClick={handleDelete} 
+        <button
+          onClick={handleDelete}
           disabled={isDeleting}
           className="p-1.5 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors"
           title="Delete"
@@ -127,7 +144,7 @@ export default function JobCard({ job, onDelete }) {
                   <Calendar className="h-3.5 w-3.5" />
                   Interview Scheduled
                 </span>
-                <button 
+                <button
                   onClick={() => setShowDatePicker(!showDatePicker)}
                   className="text-[10px] hover:underline"
                 >
@@ -165,7 +182,10 @@ export default function JobCard({ job, onDelete }) {
       )}
 
       {showDatePicker && (
-        <form onSubmit={handleUpdateDate} className="mt-3 p-3 bg-muted/50 rounded-xl border border-border flex flex-col gap-2">
+        <form
+          onSubmit={handleUpdateDate}
+          className="mt-3 p-3 bg-muted/50 rounded-xl border border-border flex flex-col gap-2"
+        >
           <label className="text-[10px] font-bold text-muted-foreground uppercase">
             Interview Date & Time
           </label>
@@ -195,18 +215,17 @@ export default function JobCard({ job, onDelete }) {
       )}
 
       <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/50">
-        
         {/* Tailored Generation Buttons */}
         <div className="grid grid-cols-2 gap-2 mb-2">
           <Link
-            href={`/resume-builder?jobTitle=${encodeURIComponent(job.jobTitle || 'unknown')}&company=${encodeURIComponent(job.companyName || 'unknown')}`}
+            href={`/resume-builder?jobTitle=${encodeURIComponent(job.jobTitle || "unknown")}&company=${encodeURIComponent(job.companyName || "unknown")}`}
             className="flex items-center justify-center gap-1.5 py-1.5 px-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 border border-blue-500/20 rounded-lg text-[10px] font-bold transition-colors"
           >
             <Wand2 className="h-3 w-3" />
             Tailor Resume
           </Link>
           <Link
-            href={`/ai-cover-letter?jobTitle=${encodeURIComponent(job.jobTitle || 'unknown')}&company=${encodeURIComponent(job.companyName || 'unknown')}`}
+            href={`/ai-cover-letter?jobTitle=${encodeURIComponent(job.jobTitle || "unknown")}&company=${encodeURIComponent(job.companyName || "unknown")}`}
             className="flex items-center justify-center gap-1.5 py-1.5 px-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 border border-purple-500/20 rounded-lg text-[10px] font-bold transition-colors"
           >
             <Wand2 className="h-3 w-3" />
@@ -217,9 +236,9 @@ export default function JobCard({ job, onDelete }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {job.url && (
-              <a 
-                href={job.url} 
-                target="_blank" 
+              <a
+                href={job.url}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="p-1.5 bg-muted text-muted-foreground rounded-lg hover:bg-primary/10 hover:text-primary transition-colors"
                 title="Job Posting URL"
@@ -227,8 +246,8 @@ export default function JobCard({ job, onDelete }) {
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             )}
-            
-            <Link 
+
+            <Link
               href="/resume"
               className="p-1.5 bg-muted text-muted-foreground rounded-lg hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-1"
               title="View Resume"
@@ -237,7 +256,7 @@ export default function JobCard({ job, onDelete }) {
             </Link>
 
             {job.coverLetterId && (
-              <Link 
+              <Link
                 href={`/ai-cover-letter?id=${job.coverLetterId}`}
                 className="p-1.5 bg-muted text-muted-foreground rounded-lg hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-1"
                 title="View Linked Cover Letter"
@@ -247,21 +266,25 @@ export default function JobCard({ job, onDelete }) {
             )}
 
             {job.atsAnalysisId && (
-              <Link 
+              <Link
                 href={`/ats-analyzer?id=${job.atsAnalysisId}`}
                 className="p-1.5 bg-muted text-muted-foreground rounded-lg hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-1"
                 title="View ATS Analysis"
               >
                 <ScanSearch className="h-3.5 w-3.5 text-green-500" />
                 {job.atsAnalysis?.atsScore && (
-                  <span className="text-[10px] font-bold text-green-500">{job.atsAnalysis.atsScore}</span>
+                  <span className="text-[10px] font-bold text-green-500">
+                    {job.atsAnalysis.atsScore}
+                  </span>
                 )}
               </Link>
             )}
           </div>
-          
+
           <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
-            {isValidDate ? formatDistanceToNow(updateDate, { addSuffix: true }) : "—"}
+            {isValidDate
+              ? formatDistanceToNow(updateDate, { addSuffix: true })
+              : "—"}
           </span>
         </div>
       </div>

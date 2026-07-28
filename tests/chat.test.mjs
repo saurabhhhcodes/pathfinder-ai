@@ -56,8 +56,15 @@ describe("chatWithGemini", () => {
     // Set up default mock for auth to return no user (null userId)
     mocks.auth.mockResolvedValue({ userId: null });
     mocks.headers.mockResolvedValue(new Map());
-    mocks.getRateLimitIdentifier.mockReturnValue({ kind: "ip", value: "127.0.0.1" });
-    mocks.enforceRateLimit.mockResolvedValue({ allowed: true, remaining: 10, retryAfterSeconds: 0 });
+    mocks.getRateLimitIdentifier.mockReturnValue({
+      kind: "ip",
+      value: "127.0.0.1",
+    });
+    mocks.enforceRateLimit.mockResolvedValue({
+      allowed: true,
+      remaining: 10,
+      retryAfterSeconds: 0,
+    });
   });
 
   it("returns validation errors for an empty prompt", async () => {
@@ -67,26 +74,26 @@ describe("chatWithGemini", () => {
         errors: expect.objectContaining({
           prompt: expect.any(Array),
         }),
-      })
+      }),
     );
   });
 
   it("rejects whitespace-only prompts", async () => {
-  await expect(chatWithGemini("   ")).resolves.toEqual(
-    expect.objectContaining({
-      success: false,
-      errors: expect.objectContaining({
-        prompt: expect.any(Array),
+    await expect(chatWithGemini("   ")).resolves.toEqual(
+      expect.objectContaining({
+        success: false,
+        errors: expect.objectContaining({
+          prompt: expect.any(Array),
         }),
-      })
+      }),
     );
   });
 
   it("enforces rate limits", async () => {
-    mocks.enforceRateLimit.mockResolvedValue({ 
-      allowed: false, 
-      remaining: 0, 
-      retryAfterSeconds: 60 
+    mocks.enforceRateLimit.mockResolvedValue({
+      allowed: false,
+      remaining: 0,
+      retryAfterSeconds: 60,
     });
 
     await expect(chatWithGemini("Hello")).resolves.toEqual({
@@ -104,7 +111,7 @@ describe("chatWithGemini", () => {
     });
 
     await expect(chatWithGemini("How do I improve my resume?")).resolves.toBe(
-      "career advice"
+      "career advice",
     );
 
     expect(mocks.buildSecurePrompt).toHaveBeenCalledWith(
@@ -116,7 +123,7 @@ describe("chatWithGemini", () => {
             maxLength: 4000,
           },
         ],
-      })
+      }),
     );
     expect(mocks.generateGeminiContent).toHaveBeenCalledWith("secure prompt");
   });
@@ -130,7 +137,9 @@ describe("chatWithGemini", () => {
 
     await expect(chatWithGemini("Help me with interviews")).resolves.toEqual({
       success: false,
-      errors: { _form: ["Failed to get response from Gemini AI. Please try again."] },
+      errors: {
+        _form: ["Failed to get response from Gemini AI. Please try again."],
+      },
     });
     expect(consoleErrorSpy).toHaveBeenCalled();
   });

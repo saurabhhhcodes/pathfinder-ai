@@ -15,9 +15,7 @@ export default function GenerateRoadmapPage() {
         </Button>
 
         <div className="pb-6">
-          <h1 className="text-6xl font-bold gradient-title">
-            Create Roadmap
-          </h1>
+          <h1 className="text-6xl font-bold gradient-title">Create Roadmap</h1>
           <p className="text-muted-foreground">
             Generate a personalized career roadmap based on your profile
           </p>

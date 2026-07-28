@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 
 export default function InterviewBackground() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 
@@ -29,14 +31,19 @@ export default function InterviewBackground() {
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[22rem] w-[22rem] rounded-full border border-cyan-500/5 opacity-20"
       />
-      <div className="absolute inset-0 opacity-[0.04]"
+      <div
+        className="absolute inset-0 opacity-[0.04]"
         style={{
-          background: "radial-gradient(ellipse at bottom, rgba(6,182,212,0.08) 0%, transparent 60%)",
+          background:
+            "radial-gradient(ellipse at bottom, rgba(6,182,212,0.08) 0%, transparent 60%)",
         }}
       />
       <div
         className="absolute inset-0 opacity-[0.02] mix-blend-soft-light"
-        style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}
+        style={{
+          backgroundImage:
+            "url('https://grainy-gradients.vercel.app/noise.svg')",
+        }}
       />
     </div>
   );

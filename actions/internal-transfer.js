@@ -6,7 +6,11 @@ import { revalidatePath } from "next/cache";
 import { buildSecurePrompt, parseAIJson } from "@/lib/prompt-safety";
 import { generateGeminiContent } from "@/lib/gemini";
 
-export async function generateTransferStrategy(currentRole, targetRole, reasons) {
+export async function generateTransferStrategy(
+  currentRole,
+  targetRole,
+  reasons,
+) {
   const { userId } = await auth();
   if (!userId) return { success: false, errors: { _form: ["Unauthorized"] } };
 
@@ -14,11 +18,17 @@ export async function generateTransferStrategy(currentRole, targetRole, reasons)
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!currentRole || !targetRole || !reasons) {
-    return { success: false, errors: { _form: ["Current role, target role, and reasons are required."] } };
+    return {
+      success: false,
+      errors: {
+        _form: ["Current role, target role, and reasons are required."],
+      },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an Executive Career Coach specializing in internal corporate mobility.",
+    context:
+      "You are an Executive Career Coach specializing in internal corporate mobility.",
     task: `Analyze the user's desire to transfer from their current role to a new target role.
     Generate a pitch for the hiring manager of the new team, and a highly tactful script to break the news to their CURRENT manager without burning bridges. Provide a step-by-step strategy for the transition.`,
     untrustedData: [
@@ -53,7 +63,10 @@ export async function generateTransferStrategy(currentRole, targetRole, reasons)
     return { success: true, data: record };
   } catch (error) {
     console.error("Internal Transfer Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate strategy"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate strategy"] },
+    };
   }
 }
 

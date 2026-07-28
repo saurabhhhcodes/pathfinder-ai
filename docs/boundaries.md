@@ -26,9 +26,11 @@ The boundary is guarded by two layers of defense:
 ## Conventions & Rules
 
 ### When creating a new module:
+
 - If it uses `process.env` (non-public vars), database access, or external private APIs, place `import "server-only";` at the top of the file.
 - If it uses Web Storage, DOM elements, or browser-only features, place `import "client-only";` at the top of the file.
 
 ### How to consume server data in a client component:
+
 1. **Server Actions**: Define or export a function in the `actions/` folder, mark the file with `"use server";` at the top, and import that action into your client component.
 2. **API Routes**: Create an endpoint under `app/api/.../route.js`, make a request using `fetch` or a client-side library.

@@ -8,12 +8,7 @@ export default function CitationRenderer({ text }) {
     <>
       {parts.map((part, index) => {
         if (part.type === "citation") {
-          return (
-            <CitationChip
-              key={index}
-              citation={part.content}
-            />
-          );
+          return <CitationChip key={index} citation={part.content} />;
         }
 
         return <span key={index}>{part.content}</span>;

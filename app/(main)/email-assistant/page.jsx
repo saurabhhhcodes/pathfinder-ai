@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { generateEmailReply, getEmailHistory } from "@/actions/email-assistant";
-import { Mail, Sparkles, Send, Copy, MessageSquareText, CheckCircle2, XCircle, CalendarClock } from "lucide-react";
+import {
+  Mail,
+  Sparkles,
+  Send,
+  Copy,
+  MessageSquareText,
+  CheckCircle2,
+  XCircle,
+  CalendarClock,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,7 +22,7 @@ export default function EmailAssistantPage() {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [activeReply, setActiveReply] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     originalEmail: "",
     goal: "Accept Interview",
@@ -53,9 +62,9 @@ export default function EmailAssistantPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
@@ -78,18 +87,24 @@ export default function EmailAssistantPage() {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-card border border-border p-6 rounded-3xl shadow-sm">
               <h3 className="font-bold text-lg mb-6">Received Email</h3>
-              
+
               <form onSubmit={handleGenerate} className="space-y-5">
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider ml-1 flex items-center gap-1.5">
-                      <MessageSquareText className="h-3.5 w-3.5" /> Paste Recruiter Email
+                      <MessageSquareText className="h-3.5 w-3.5" /> Paste
+                      Recruiter Email
                     </label>
                     <Textarea
                       placeholder="Paste the email you received here..."
                       className="min-h-[200px] rounded-xl resize-none bg-background focus-visible:ring-primary text-sm leading-relaxed"
                       value={formData.originalEmail}
-                      onChange={(e) => setFormData({ ...formData, originalEmail: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          originalEmail: e.target.value,
+                        })
+                      }
                       required
                     />
                   </div>
@@ -100,18 +115,36 @@ export default function EmailAssistantPage() {
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                       {[
-                        { id: 'Accept Interview', icon: CheckCircle2, color: 'text-green-500' },
-                        { id: 'Ask for Extension', icon: CalendarClock, color: 'text-blue-500' },
-                        { id: 'Decline Gracefully', icon: XCircle, color: 'text-red-500' },
-                        { id: 'Negotiate Offer', icon: Sparkles, color: 'text-purple-500' },
+                        {
+                          id: "Accept Interview",
+                          icon: CheckCircle2,
+                          color: "text-green-500",
+                        },
+                        {
+                          id: "Ask for Extension",
+                          icon: CalendarClock,
+                          color: "text-blue-500",
+                        },
+                        {
+                          id: "Decline Gracefully",
+                          icon: XCircle,
+                          color: "text-red-500",
+                        },
+                        {
+                          id: "Negotiate Offer",
+                          icon: Sparkles,
+                          color: "text-purple-500",
+                        },
                       ].map((option) => (
                         <div
                           key={option.id}
-                          onClick={() => setFormData({ ...formData, goal: option.id })}
+                          onClick={() =>
+                            setFormData({ ...formData, goal: option.id })
+                          }
                           className={`cursor-pointer border p-3 rounded-xl flex items-center gap-2 transition-all ${
-                            formData.goal === option.id 
-                              ? 'border-primary bg-primary/10 font-bold' 
-                              : 'border-border hover:border-primary/50 text-muted-foreground hover:text-foreground'
+                            formData.goal === option.id
+                              ? "border-primary bg-primary/10 font-bold"
+                              : "border-border hover:border-primary/50 text-muted-foreground hover:text-foreground"
                           }`}
                         >
                           <option.icon className={`h-4 w-4 ${option.color}`} />
@@ -127,7 +160,8 @@ export default function EmailAssistantPage() {
                   disabled={loading || !formData.originalEmail}
                   className="w-full h-12 rounded-xl font-bold mt-4"
                 >
-                  {loading ? "Drafting..." : "Draft Reply"} <Send className="ml-2 h-4 w-4" />
+                  {loading ? "Drafting..." : "Draft Reply"}{" "}
+                  <Send className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </div>
@@ -135,7 +169,7 @@ export default function EmailAssistantPage() {
 
           <div className="lg:col-span-7">
             {activeReply ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-card border border-border p-8 rounded-3xl shadow-xl space-y-6"
@@ -147,7 +181,7 @@ export default function EmailAssistantPage() {
                       Goal: {activeReply.goal}
                     </p>
                   </div>
-                  <button 
+                  <button
                     onClick={() => copyToClipboard(activeReply.replyContent)}
                     className="flex items-center gap-2 px-4 py-2 bg-muted text-foreground rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
                   >
@@ -158,7 +192,6 @@ export default function EmailAssistantPage() {
                 <div className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground bg-muted/30 p-6 rounded-2xl border border-border">
                   <ReactMarkdown>{activeReply.replyContent}</ReactMarkdown>
                 </div>
-
               </motion.div>
             ) : (
               <div className="h-full flex items-center justify-center p-12 border-2 border-dashed border-border rounded-3xl text-center">
@@ -168,7 +201,8 @@ export default function EmailAssistantPage() {
                   </div>
                   <h3 className="text-xl font-bold">No Reply Drafted</h3>
                   <p className="text-muted-foreground text-sm">
-                    Paste an email from a recruiter on the left, select your goal, and we'll write the perfect professional response.
+                    Paste an email from a recruiter on the left, select your
+                    goal, and we'll write the perfect professional response.
                   </p>
                 </div>
               </div>

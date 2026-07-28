@@ -14,11 +14,15 @@ export async function generateCheatSheet(company, role) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!company || !role) {
-    return { success: false, errors: { _form: ["Company and Role are required."] } };
+    return {
+      success: false,
+      errors: { _form: ["Company and Role are required."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an expert career strategist and executive interview coach.",
+    context:
+      "You are an expert career strategist and executive interview coach.",
     task: `Generate a 1-page 'Day Before' Interview Briefing for a candidate interviewing for ${role} at ${company}.
     Provide insights into the company's likely culture, common interview questions for this specific role, and 3 killer, highly strategic questions the candidate should ask at the end of the interview.`,
     untrustedData: [
@@ -59,7 +63,10 @@ export async function generateCheatSheet(company, role) {
     return { success: true, data: record };
   } catch (error) {
     console.error("Cheat Sheet Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate cheat sheet"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate cheat sheet"] },
+    };
   }
 }
 

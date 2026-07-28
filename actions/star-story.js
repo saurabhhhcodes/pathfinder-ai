@@ -14,11 +14,15 @@ export async function generateStarStory(rawExperience) {
   if (!user) return { success: false, errors: { _form: ["User not found"] } };
 
   if (!rawExperience || rawExperience.trim().length < 20) {
-    return { success: false, errors: { _form: ["Please provide a valid experience description."] } };
+    return {
+      success: false,
+      errors: { _form: ["Please provide a valid experience description."] },
+    };
   }
 
   const prompt = buildSecurePrompt({
-    context: "You are an expert career coach helping a candidate prepare for behavioral interviews.",
+    context:
+      "You are an expert career coach helping a candidate prepare for behavioral interviews.",
     task: `Transform the candidate's raw experience into a perfectly structured STAR format (Situation, Task, Action, Result). 
     Enhance the professional tone, highlight the impact, and ensure it sounds compelling for an interview.`,
     untrustedData: [
@@ -50,7 +54,10 @@ export async function generateStarStory(rawExperience) {
     return { success: true, data: record };
   } catch (error) {
     console.error("STAR Story Generation Error:", error);
-    return { success: false, errors: { _form: [error.message || "Failed to generate STAR story"] } };
+    return {
+      success: false,
+      errors: { _form: [error.message || "Failed to generate STAR story"] },
+    };
   }
 }
 

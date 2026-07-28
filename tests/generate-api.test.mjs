@@ -32,22 +32,41 @@ it("enforceRateLimit allows first request and blocks immediate second when burst
   const subject = getRateLimitIdentifier(req, null);
   const endpoint = "/test/rl";
 
-  const first = await enforceRateLimit({ endpoint, subject, limitPerMinute: 1, burstCapacity: 1 });
+  const first = await enforceRateLimit({
+    endpoint,
+    subject,
+    limitPerMinute: 1,
+    burstCapacity: 1,
+  });
   expect(first.allowed).toBe(true);
 
-  const second = await enforceRateLimit({ endpoint, subject, limitPerMinute: 1, burstCapacity: 1 });
+  const second = await enforceRateLimit({
+    endpoint,
+    subject,
+    limitPerMinute: 1,
+    burstCapacity: 1,
+  });
   expect(second.allowed).toBe(false);
-  expect(typeof second.retryAfterSeconds === "number" && second.retryAfterSeconds >= 1).toBe(true);
+  expect(
+    typeof second.retryAfterSeconds === "number" &&
+      second.retryAfterSeconds >= 1,
+  ).toBe(true);
 });
 
 it("buildRateLimitResponse returns SSE body and correct headers when sse=true", async () => {
-  const res = buildRateLimitResponse({ message: "Too Many Requests", retryAfterSeconds: 10, sse: true });
+  const res = buildRateLimitResponse({
+    message: "Too Many Requests",
+    retryAfterSeconds: 10,
+    sse: true,
+  });
   expect(res.status).toBe(429);
   expect(res.headers.get("Content-Type")).toBe("text/event-stream");
   const text = await res.text();
   expect(text).toContain("event: error");
   expect(text).toContain("data:");
-  const payloadLine = text.split("\n").find((line) => line.startsWith("data: "));
+  const payloadLine = text
+    .split("\n")
+    .find((line) => line.startsWith("data: "));
   expect(payloadLine).toBeTruthy();
   const payload = JSON.parse(payloadLine.slice(6));
   expect(payload.error).toBe("Too Many Requests");
@@ -60,7 +79,9 @@ it("buildSseErrorResponse streams an SSE error and terminates with [DONE]", asyn
   expect(res.headers.get("Content-Type")).toBe("text/event-stream");
   const text = await res.text();
   expect(text).toContain("data:");
-  const payloadLine = text.split("\n").find((line) => line.startsWith("data: {"));
+  const payloadLine = text
+    .split("\n")
+    .find((line) => line.startsWith("data: {"));
   expect(payloadLine).toBeTruthy();
   const payload = JSON.parse(payloadLine.slice(6));
   expect(payload.error).toBe("Prompt is required");

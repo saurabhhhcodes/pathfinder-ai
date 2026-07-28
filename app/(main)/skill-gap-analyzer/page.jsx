@@ -5,7 +5,10 @@ import { toast } from "sonner";
 import { Activity } from "lucide-react";
 import SkillGapForm from "./_components/SkillGapForm";
 import SkillGapResult from "./_components/SkillGapResult";
-import { generateSkillGapAnalysis, getSkillGapAnalysis } from "@/actions/skill-gap";
+import {
+  generateSkillGapAnalysis,
+  getSkillGapAnalysis,
+} from "@/actions/skill-gap";
 
 export default function SkillGapAnalyzerPage() {
   const [data, setData] = useState(null);
@@ -41,7 +44,7 @@ export default function SkillGapAnalyzerPage() {
       setData(response.data?.analysis);
       toast.success("Skill Gap Analysis generated successfully!");
       // Optionally scroll to results here
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     } catch (error) {
       toast.error(error.message || "Failed to generate analysis.");
     } finally {
@@ -63,21 +66,26 @@ export default function SkillGapAnalyzerPage() {
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-primary/10 mb-4">
           <Activity className="w-8 h-8 text-primary" />
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">Skill Gap Analyzer</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          Skill Gap Analyzer
+        </h1>
         <p className="text-lg text-muted-foreground">
-          Compare your current skills with your target role requirements and get a personalized, actionable learning roadmap to bridge the gap.
+          Compare your current skills with your target role requirements and get
+          a personalized, actionable learning roadmap to bridge the gap.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-12">
         <SkillGapForm onSubmit={onSubmit} isGenerating={isGenerating} />
-        
+
         {data && (
           <div className="space-y-6">
             <div className="flex items-center justify-between border-b pb-4">
-              <h2 className="text-2xl font-bold tracking-tight">Your Analysis Results</h2>
-              <button 
-                onClick={() => setData(null)} 
+              <h2 className="text-2xl font-bold tracking-tight">
+                Your Analysis Results
+              </h2>
+              <button
+                onClick={() => setData(null)}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 Clear Results

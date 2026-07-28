@@ -2,7 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Sparkles, Bug, Lightbulb, BookText, FlaskConical, Palette, Zap } from "lucide-react";
+import {
+  Github,
+  Sparkles,
+  Bug,
+  Lightbulb,
+  BookText,
+  FlaskConical,
+  Palette,
+  Zap,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { ContributorsMarquee } from "@/components/opensource/ContributorsMarquee";
@@ -13,12 +22,36 @@ import { MaintainersSection } from "@/components/opensource/MaintainersSection";
 import { CommunityCTA } from "@/components/opensource/CommunityCTA";
 
 const contributionTypes = [
-  { icon: Bug, label: "Bug Fixes", description: "Help squash bugs and improve stability." },
-  { icon: Lightbulb, label: "Features", description: "Build new capabilities and enhancements." },
-  { icon: BookText, label: "Documentation", description: "Improve guides, API docs, and wikis." },
-  { icon: FlaskConical, label: "Testing", description: "Write tests and improve coverage." },
-  { icon: Palette, label: "UI/UX", description: "Polish interfaces and user experience." },
-  { icon: Zap, label: "Performance", description: "Optimize speed, memory, and efficiency." },
+  {
+    icon: Bug,
+    label: "Bug Fixes",
+    description: "Help squash bugs and improve stability.",
+  },
+  {
+    icon: Lightbulb,
+    label: "Features",
+    description: "Build new capabilities and enhancements.",
+  },
+  {
+    icon: BookText,
+    label: "Documentation",
+    description: "Improve guides, API docs, and wikis.",
+  },
+  {
+    icon: FlaskConical,
+    label: "Testing",
+    description: "Write tests and improve coverage.",
+  },
+  {
+    icon: Palette,
+    label: "UI/UX",
+    description: "Polish interfaces and user experience.",
+  },
+  {
+    icon: Zap,
+    label: "Performance",
+    description: "Optimize speed, memory, and efficiency.",
+  },
 ];
 
 const springTransition = {
@@ -33,7 +66,9 @@ export function OpenSourceCommunity() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://api.github.com/repos/harshdwivediiiii/pathfinder-ai/contributors?per_page=100")
+    fetch(
+      "https://api.github.com/repos/harshdwivediiiii/pathfinder-ai/contributors?per_page=100",
+    )
       .then((res) => res.json())
       .then((data) => {
         setContributors(Array.isArray(data) ? data : []);
@@ -64,31 +99,44 @@ export function OpenSourceCommunity() {
 
           <h2 className="text-3xl md:text-6xl font-bold tracking-tight text-foreground leading-tight">
             Built in Public.{" "}
-            <span className="text-gradient-primary">Powered by Contributors.</span>
+            <span className="text-gradient-primary">
+              Powered by Contributors.
+            </span>
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            PathFinder AI is an open-source project built by developers, students, and contributors
-            from around the world. Join us and help shape the future of AI-powered career growth.
+            PathFinder AI is an open-source project built by developers,
+            students, and contributors from around the world. Join us and help
+            shape the future of AI-powered career growth.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button asChild
+            <Button
+              asChild
               size="lg"
               className="h-14 px-10 rounded-2xl text-base font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform duration-300 group bg-primary text-primary-foreground"
             >
-              <a href="https://github.com/harshdwivediiiii/pathfinder-ai" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/harshdwivediiiii/pathfinder-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="mr-2 h-5 w-5" />
                 Star on GitHub
                 <Sparkles className="ml-2 h-4 w-4 text-primary-foreground/60" />
               </a>
             </Button>
-            <Button asChild
+            <Button
+              asChild
               size="lg"
               variant="outline"
               className="h-14 px-10 rounded-2xl text-base font-bold border-border/50 glass hover:bg-muted/50 transition-all duration-300 group"
             >
-              <a href="https://github.com/harshdwivediiiii/pathfinder-ai/issues" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/harshdwivediiiii/pathfinder-ai/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Start Contributing
                 <Sparkles className="ml-2 h-4 w-4" />
               </a>
@@ -100,8 +148,7 @@ export function OpenSourceCommunity() {
         <div className="space-y-8">
           <FadeUp className="text-center space-y-2">
             <h3 className="text-xl md:text-2xl font-bold text-foreground">
-              Our{" "}
-              <span className="text-gradient-primary">Contributors</span>
+              Our <span className="text-gradient-primary">Contributors</span>
             </h3>
             <p className="text-sm text-muted-foreground">
               Amazing people who have contributed to PathFinder AI
@@ -114,8 +161,7 @@ export function OpenSourceCommunity() {
         <div className="space-y-10">
           <FadeUp className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-              Top{" "}
-              <span className="text-gradient-primary">Contributors</span>
+              Top <span className="text-gradient-primary">Contributors</span>
             </h3>
             <p className="text-sm text-muted-foreground">
               Leading the charge in building PathFinder AI
@@ -128,8 +174,7 @@ export function OpenSourceCommunity() {
         <div className="space-y-10">
           <FadeUp className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-              Ways to{" "}
-              <span className="text-gradient-primary">Contribute</span>
+              Ways to <span className="text-gradient-primary">Contribute</span>
             </h3>
             <p className="text-sm text-muted-foreground">
               There&apos;s a place for every skill set
@@ -171,8 +216,7 @@ export function OpenSourceCommunity() {
         <div className="space-y-10">
           <FadeUp className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-              How to{" "}
-              <span className="text-gradient-primary">Contribute</span>
+              How to <span className="text-gradient-primary">Contribute</span>
             </h3>
             <p className="text-sm text-muted-foreground">
               Four simple steps to become a contributor
@@ -185,8 +229,7 @@ export function OpenSourceCommunity() {
         <div className="space-y-10">
           <FadeUp className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-              Open Source{" "}
-              <span className="text-gradient-primary">Stats</span>
+              Open Source <span className="text-gradient-primary">Stats</span>
             </h3>
             <p className="text-sm text-muted-foreground">
               Live GitHub statistics for PathFinder AI
